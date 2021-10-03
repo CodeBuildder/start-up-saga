@@ -46,11 +46,10 @@ export const registerUser = async (userData: userType) => {
 }
 
 export const loginUser = async (email: string, password: string) => {
-    // console.log(email)
-    // console.log(password)
+
     try {
         const client: mongodb.MongoClient = await getClient();
-        const verifyUser = await client.db().collection('users').find({ email: email })
+        const verifyUser = await client.db().collection('users').findOne({ email: email })
 
         console.log(verifyUser)
 
@@ -58,11 +57,11 @@ export const loginUser = async (email: string, password: string) => {
             throw HttpError(401, "Email does not exist, please create a new account!")
         }
 
-        //const correctPassword = await bcrypt.compare(password, verifyUser.password)
+        const correctPassword = await bcrypt.compare(password, verifyUser.password)
 
-        // if (!correctPassword) {
-        //     throw HttpError(401, "Password Incorrect, please try again.")
-        // }
+        if (!correctPassword) {
+            throw HttpError(401, "Password Incorrect, please try again.")
+        }
 
         return {
             success: true,
