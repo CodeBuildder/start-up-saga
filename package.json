@@ -56,11 +56,8 @@
   "scripts": {
     "start": "node ./build/index.js",
     "start:dev": "npx nodemon ./build/index.js",
-    "start:client": "cd client && yarn start",
-    "build": "yarn build:client && yarn build:server",
+    "build": "yarn build:server",
     "build:server": "npx tsc",
-    "build:dev": "npx tsc --watch",
-    "build:client": "cd client && yarn build",
-    "postinstall": "cd client && yarn"
+    "build:dev": "npx tsc --watch"
   }
 }
