@@ -4,3 +4,11 @@ export interface userDB {
     password: string,
     phone: number
 }
+
+export interface adminDB {
+    name: string,
+    email: string,
+    password: string,
+    address: string,
+    phone: number
+}
