@@ -8,6 +8,7 @@ dotenv.config({ path: "./.env" });
 connectDB();
 
 import authRoute from "./auth/auth.routes";
+import adminRoute from './admin/admin.route'
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use(authRoute)
+app.use(adminRoute)
 
 
 app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {

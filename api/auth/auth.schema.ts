@@ -3,7 +3,7 @@ import * as yup from 'yup'
 
 const userSchema = yup.object({
     name: yup.string().trim().required().lowercase(),
-    email: yup.string().email().required().required(),
+    email: yup.string().email().required(),
     password: yup.string().trim().required(),
     phone: yup.number().required()
 })
