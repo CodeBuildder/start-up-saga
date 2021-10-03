@@ -1,9 +1,8 @@
 import * as mongodb from "mongodb";
 import { userType, userSchema } from "./auth.schema";
-import { getClient } from "../db/db.connect";
 import HttpError from "http-errors";
 import bcrypt from 'bcryptjs';
-
+import { getClient } from "../db/db.connect";
 
 export const registerUser = async (userData: userType) => {
 
@@ -38,6 +37,7 @@ export const registerUser = async (userData: userType) => {
         return {
             success: true,
             _id: response.insertedId,
+
         }
 
     } catch (err) {
@@ -45,3 +45,31 @@ export const registerUser = async (userData: userType) => {
     }
 }
 
+export const loginUser = async (email: string, password: string) => {
+    // console.log(email)
+    // console.log(password)
+    try {
+        const client: mongodb.MongoClient = await getClient();
+        const verifyUser = await client.db().collection('users').find({ email: email })
+
+        console.log(verifyUser)
+
+        if (!verifyUser) {
+            throw HttpError(401, "Email does not exist, please create a new account!")
+        }
+
+        //const correctPassword = await bcrypt.compare(password, verifyUser.password)
+
+        // if (!correctPassword) {
+        //     throw HttpError(401, "Password Incorrect, please try again.")
+        // }
+
+        return {
+            success: true,
+            status: 201
+        }
+
+    } catch (err) {
+        throw err
+    }
+}
