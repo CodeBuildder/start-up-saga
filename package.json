@@ -2,7 +2,7 @@
   "name": "start-up-saga",
   "version": "1.0.0",
   "description": "Hackthon Official Repositary!",
-  "main": "\\",
+  "main": "./build/app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/whitedevil31/start-up-saga.git"
@@ -50,10 +50,17 @@
     "@types/react-router-dom": "^5.3.0",
     "@types/yup": "^0.29.11",
     "ts-node": "^9.1.1",
+    "tsc": "^2.0.3",
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "start": "ts-node api/index.ts",
-    "dev": "nodemon --exec ts-node api/index.ts "
+    "start": "node ./build/index.js",
+    "start:dev": "npx nodemon ./build/index.js",
+    "start:client": "cd client && yarn start",
+    "build": "yarn build:client && yarn build:server",
+    "build:server": "npx tsc",
+    "build:dev": "npx tsc --watch",
+    "build:client": "cd client && yarn build",
+    "postinstall": "cd client && yarn"
   }
 }
