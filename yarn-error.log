@@ -1,0 +1,44 @@
+Arguments: 
+  C:\Program Files (x86)\nodejs\node.exe C:\Users\KumsujaKS\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add express mongodb bcrypt jsonwebtokens dotenv
+
+PATH: 
+  C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python38\Scripts\;C:\Python38\;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\PuTTY\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\MinGW\bin;C:\Program Files (x86)\nodejs\;%ANDROID_HOME%\tools;%ANDROID_HOME%\tools\bin;%ANDROID_HOME%\platform-tools;C:\src\fluter\flutter\bin;D:\Anaconda;D:\Anaconda\Library\mingw-w64\bin;D:\Anaconda\Library\usr\bin;D:\Anaconda\Library\bin;D:\Anaconda\Scripts;C:\Users\KumsujaKS\AppData\Local\Microsoft\WindowsApps;E:\Microsoft VS Code\bin;C:\Users\KumsujaKS\heroku\bin;C:\Users\KumsujaKS\AppData\Local\Microsoft\WindowsApps;C:\Users\KumsujaKS\AppData\Roaming\npm;C:\Users\KumsujaKS\AppData\Local\Android\Sdk\emulator;C:\Users\KumsujaKS\AppData\Local\Android\Sdk\platform-tools;C:\Users\KumsujaKS\AppData\Local\Android\Sdk;C:\Program Files\Java\jdk-15.0.1\bin;C:\Users\KumsujaKS\AppData\Local\Android\Sdk\platform-tools;C:\Users\KumsujaKS\AppData\Local\Android\Sdk\tools\bin;C:\Users\KumsujaKS\AppData\Local\Android\Sdk\tools;
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.17.0
+
+Platform: 
+  win32 ia32
+
+Trace: 
+  Error: https://registry.yarnpkg.com/jsonwebtokens: Not found
+      at Request.params.callback [as _callback] (C:\Users\KumsujaKS\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66988:18)
+      at Request.self.callback (C:\Users\KumsujaKS\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140662:22)
+      at Request.emit (events.js:376:20)
+      at Request.<anonymous> (C:\Users\KumsujaKS\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141634:10)
+      at Request.emit (events.js:376:20)
+      at IncomingMessage.<anonymous> (C:\Users\KumsujaKS\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141556:12)
+      at Object.onceWrapper (events.js:482:28)
+      at IncomingMessage.emit (events.js:388:22)
+      at endReadableNT (internal/streams/readable.js:1336:12)
+      at processTicksAndRejections (internal/process/task_queues.js:82:21)
+
+npm manifest: 
+  {
+    "name": "start-up-saga",
+    "version": "1.0.0",
+    "description": "Hackthon Official Repositary!",
+    "main": "\\",
+    "repository": "https://github.com/whitedevil31/start-up-saga.git",
+    "author": "Codebuilder2022 <kumarankaushik@gmail.com>",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
