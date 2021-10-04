@@ -19,12 +19,12 @@ const Hero: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = async (data: FormData) => {
+    console.log(data);
     const postData: AxiosResponse = await axios.post(
       `${constants.BASE_URL}/register`,
       data
     );
     if (postData.status === 200) {
-      console.log("sucess");
       toast.success("Registered successfully !");
       setTimeout(() => {
         history.push("/");
@@ -40,7 +40,6 @@ const Hero: React.FC = () => {
         <div className="m-6 card bg-base-200 w-2/3  rounded h-2/3 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex ml-6">
-              {" "}
               <div className="form-control my-4 mx-2 w-52">
                 <label className="label">
                   <span className="label-text">Username</span>
