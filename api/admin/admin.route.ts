@@ -54,6 +54,7 @@ router.post(
 
 router.post(
     "/api/admin/company",
+    verifiedAdmin,
     async (req: Request, res: Response, next: NextFunction) => {
         const companyData = req.body as companyType
 
@@ -64,9 +65,9 @@ router.post(
                 companyData,
                 message: "You have successfully posted the job!",
             });
-            next()
+
         } catch (err) {
-            throw err;
+            next(err);
         }
     }
 );

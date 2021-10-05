@@ -37,13 +37,13 @@ router.post(
         }
       );
 
-      res.json({
+      res.status(201).json({
         result,
         token,
         message: "User successfully logged in!",
       });
     } catch (err) {
-      throw err;
+      next(err);
     }
   }
 );

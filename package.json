@@ -58,6 +58,7 @@
     "start": "node dist/api/index.js",
     "postinstall": "tsc",
     "watch-node": "nodemon dist/api/index.js",
-    "watch-ts": "tsc -w"
+    "watch-ts": "tsc -w",
+    "dev": "nodemon --exec ts-node api/index.ts"
   }
 }
