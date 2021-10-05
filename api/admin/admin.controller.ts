@@ -87,6 +87,9 @@ export const postCompanyDetails = async (companyData: companyType) => {
         const client: mongodb.MongoClient = await getClient();
         const DB = await client.db().collection("admin");
 
+
+
+
         const newAdminData = {
             name: companyData.companyName,
             fromAddress: companyData.fromAddress,
@@ -95,6 +98,8 @@ export const postCompanyDetails = async (companyData: companyType) => {
             weight: companyData.weight,
             price: companyData.price
         };
+
+
 
         const response = await DB.insertOne(newAdminData);
 
