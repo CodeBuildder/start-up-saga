@@ -23,7 +23,10 @@ export const verifiedAdmin = async (req: Request, res: Response, next: NextFunct
         } catch (err) {
             console.log(err)
         }
+
+        next()
     } catch (err) {
         next(err)
+
     }
 }

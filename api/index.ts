@@ -17,9 +17,9 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-app.use("/", (req, res) => {
-  res.json({ success: true, message: "Namma lost maara !" });
-});
+// app.use("/", (req, res) => {
+//   res.json({ success: true, message: "Namma lost maara !" });
+// });
 app.use(authRoute);
 app.use(adminRoute);
 
