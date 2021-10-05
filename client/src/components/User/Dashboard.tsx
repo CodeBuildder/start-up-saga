@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [fromLocation, setFromLocation] = useState<string>("");
   const [toLocation, setToLocation] = useState<string>("");
   const [search, setSearch] = useState<boolean>(false);
-
+  // const sample={'from':"chennai",to:"banglore",}
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
   const ref = useRef<HTMLDivElement>(null);
@@ -26,7 +26,6 @@ const Dashboard = () => {
     document.addEventListener("mousedown", checkIfClickedOutside);
 
     return () => {
-      // Cleanup the event listener
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [displayCalendar]);
