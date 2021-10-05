@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import UserDashboard from "./pages/User/Dashboard";
+import UserOrder from "./pages/User/Orders";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
@@ -26,6 +27,11 @@ function App() {
       <Switch>
         <Route path="/dashboard">
           <UserDashboard />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/myorders">
+          <UserOrder />
         </Route>
       </Switch>
     </Router>
