@@ -14,7 +14,7 @@ router.post(
       const result = await registerUser(userData);
       res.json(result).status(201);
     } catch (err) {
-      throw err;
+      next(err);
     }
   }
 );

@@ -17,7 +17,7 @@ router.post(
             res.json(result).status(201);
             next()
         } catch (err) {
-            throw err;
+            next(err);
         }
     }
 );
