@@ -1,6 +1,6 @@
 import React from "react";
 import constants from "../../constants/constants";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
@@ -19,19 +19,22 @@ const Hero: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = async (data: FormData) => {
-    console.log(data);
-    const postData: AxiosResponse = await axios.post(
-      `${constants.BASE_URL}/login`,
-      data
-    );
-    if (postData.status === 200) {
-      toast.success("Login successful!");
-      setTimeout(() => {
-        history.push("/dashboard");
-      }, 2000);
+    try {
+      const postData: AxiosResponse = await axios.post(
+        `${constants.BASE_URL}/login`,
+        data
+      );
+      if (postData.status === 201) {
+        toast.success("Login successful!");
+        setTimeout(() => {
+          history.push("/dashboard");
+        }, 2000);
+      }
+    } catch (err: any) {
+      if (err.response.status === 401) {
+        toast.warn("Incorrect password");
+      }
     }
-    console.log(postData);
-    console.log(constants.BASE_URL);
   };
   return (
     <div className="hero min-h-screen bg-base-200 ">
