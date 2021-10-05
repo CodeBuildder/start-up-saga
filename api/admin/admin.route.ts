@@ -47,7 +47,7 @@ router.post(
             });
             next()
         } catch (err) {
-            throw err;
+            next(err);
         }
     }
 );
