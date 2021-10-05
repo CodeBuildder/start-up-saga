@@ -1,10 +1,17 @@
 import * as mongodb from "mongodb";
-import { adminType } from "./admin.schema";
+import { adminType, adminSchema, companySchema, companyType } from "./admin.schema";
 import HttpError from "http-errors";
 import bcrypt from "bcryptjs";
 import { getClient } from "../db/db.connect";
 
+
+
 export const registerAdmin = async (adminData: adminType) => {
+
+    await adminSchema.validate(adminData).catch((err: any) => {
+        throw HttpError(400, 'Validation Error!');
+    })
+
     try {
         const client: mongodb.MongoClient = await getClient();
         const DB = await client.db().collection("admin");
@@ -24,7 +31,7 @@ export const registerAdmin = async (adminData: adminType) => {
             address: adminData.address
         };
 
-        console.log(newAdminData);
+
 
         const response = await DB.insertOne(newAdminData);
 
@@ -57,10 +64,9 @@ export const loginAdmin = async (email: string, password: string) => {
                 "Email does not exist, please create a new account!"
             );
         }
-        console.log(password);
-        console.log(verifyAdmin.password);
+
         const correctPassword = await bcrypt.compare(password, verifyAdmin.password);
-        console.log(correctPassword);
+
         if (!correctPassword) {
             throw HttpError(401, "Password Incorrect, please try again.");
         }
@@ -73,3 +79,41 @@ export const loginAdmin = async (email: string, password: string) => {
         throw err;
     }
 };
+
+
+export const postCompanyDetails = async (companyData: companyType) => {
+
+    try {
+        const client: mongodb.MongoClient = await getClient();
+        const DB = await client.db().collection("admin");
+
+
+
+
+        const newAdminData = {
+            name: companyData.companyName,
+            fromAddress: companyData.fromAddress,
+            toAddress: companyData.toAddress,
+            date: companyData.date,
+            weight: companyData.weight,
+            price: companyData.price
+        };
+
+
+
+        const response = await DB.insertOne(newAdminData);
+
+        if (!response) {
+            throw HttpError(500, "Internal Server Error!");
+        }
+
+        return {
+            response,
+            success: true,
+            _id: response.insertedId,
+        };
+    } catch (err) {
+        throw err;
+    }
+};
+
