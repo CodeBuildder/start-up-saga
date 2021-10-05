@@ -1,6 +1,7 @@
 import React from "react";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 import UserDashboard from "./pages/User/Dashboard";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
@@ -15,6 +16,11 @@ function App() {
       <Switch>
         <Route path="/signup">
           <Signup />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/login">
+          <Login />
         </Route>
       </Switch>
       <Switch>

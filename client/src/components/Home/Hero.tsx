@@ -18,7 +18,8 @@ const Hero = () => {
         </div>
         <div className="flex-none hidden px-2 mx-2 lg:flex">
           <div className="flex items-stretch">
-            <a className="btn btn-ghost btn-sm rounded-btn">
+            <a className="btn btn-ghost btn-sm rounded-btn"
+            onClick={() => history.push("/login")}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
