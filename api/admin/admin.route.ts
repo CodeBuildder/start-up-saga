@@ -1,5 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { registerAdmin, loginAdmin } from "./admin.controller";
+import { companyType } from "./admin.schema";
+import { verifiedAdmin } from "../middleware/auth";
+import { registerAdmin, loginAdmin, postCompanyDetails } from "./admin.controller";
 
 import jwt from "jsonwebtoken";
 
@@ -9,10 +11,11 @@ router.post(
     "/api/admin/register",
     async (req: Request, res: Response, next: NextFunction) => {
         const adminData = req.body;
-        console.log(adminData)
+
         try {
             const result = await registerAdmin(adminData);
             res.json(result).status(201);
+            next()
         } catch (err) {
             throw err;
         }
@@ -42,10 +45,32 @@ router.post(
                 token,
                 message: "Hello, Welcome to Post.io",
             });
+            next()
         } catch (err) {
             throw err;
         }
     }
 );
+
+router.post(
+    "/api/admin/company",
+    async (req: Request, res: Response, next: NextFunction) => {
+        const companyData = req.body as companyType
+
+
+        try {
+            const result = await postCompanyDetails(companyData);
+            res.status(201).json({
+                companyData,
+                message: "You have successfully posted the job!",
+            });
+            next()
+        } catch (err) {
+            throw err;
+        }
+    }
+);
+
+
 
 export default router;
