@@ -13,7 +13,7 @@ import adminRoute from './admin/admin.route'
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-// app.use(errorHandler);
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

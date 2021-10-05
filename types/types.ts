@@ -12,3 +12,12 @@ export interface adminDB {
     address: string,
     phone: number
 }
+
+export interface companyData {
+    companyName: string,
+    fromAddress: string,
+    toAddress: string,
+    date: Date,
+    weight: number,
+    price: number
+}
