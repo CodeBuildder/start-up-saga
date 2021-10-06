@@ -51,7 +51,7 @@ const Hero: React.FC = () => {
   return (
     <div className="hero min-h-screen bg-base-200 ">
       <ToastContainer />
-      <div className="flex-col hero-content lg:flex-row flex-row bg-blue-400">
+      <div className="flex-col hero-content lg:flex-row bg-blue-400">
         <div className="m-6 card bg-base-200 w-2/3  rounded h-2/3 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex ml-6">

@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     const t = localStorage.getItem("token");
     if (t != null) {
-      console.log("yesss");
+      //console.log("yesss");
       setLoggedIn(true);
     }
     setLoading(true);
