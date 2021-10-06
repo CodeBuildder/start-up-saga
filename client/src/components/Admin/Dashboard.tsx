@@ -6,7 +6,7 @@ const Dashboard = () => {
   const [calendarView, setCalendarView] = useState(false);
   return (
     <div>
-      {calendarView == false ? (
+      {calendarView === false ? (
         <h1 onClick={() => setCalendarView(true)}>SELECT DATE</h1>
       ) : (
         <DatePicker
@@ -14,7 +14,6 @@ const Dashboard = () => {
           multiple={true}
           placeholder="SELECT DATE"
           id="date-picker"
-          onlyMonthPicker={true}
         />
       )}
 
