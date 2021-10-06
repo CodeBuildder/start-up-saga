@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import constants from "../../constants/constants";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../userContext/context";
 type FormData = {
   email: string;
   password: string;
 };
 const AdminLogin: React.FC = () => {
+  const { setLoggedIn } = useAuth();
   const history = useHistory();
   const {
     register,
@@ -22,11 +24,12 @@ const AdminLogin: React.FC = () => {
         `${constants.BASE_URL}/admin/login`,
         data
       );
-      if (postData.status === 201) {
+      if (postData.status === 200) {
+        localStorage.setItem("token", postData.data["token"]);
+        setLoggedIn(true);
         toast.success("Login successful!");
-        setTimeout(() => {
-          history.push("/dashboard");
-        }, 2000);
+
+        history.push("/admin/dashboard");
       }
     } catch (err: any) {
       if (err.response.status === 401) {
@@ -73,7 +76,10 @@ const AdminLogin: React.FC = () => {
                 <input
                   type="password"
                   className="input rounded-sm"
-                  {...register("password", { required: true, minLength: 6 })}
+                  {...register("password", {
+                    required: true,
+                    minLength: 6,
+                  })}
                 />
                 {errors.password?.type === "required" && (
                   <p className="text-sm text-red-500 pt-2 ">
@@ -101,6 +107,7 @@ const AdminLogin: React.FC = () => {
             <h1 className="mb-5 text-5xl font-bold">
               Lorem Ipsum re quia dolor sit a
             </h1>
+
             <p className="mb-5">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dui
               sem, pellentesque ut fermentum ut, aliquet ac lacus. In hac

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -8,76 +8,99 @@ import AdminDashboard from "./pages/Admin/Dashboard";
 import AdminOrder from "./pages/Admin/Orders";
 import AdminLogin from "./components/Admin/Login";
 import AdminSignup from "./components/Admin/Signup";
+// @ts-ignore
+import Loading from "react-fullscreen-loading";
+
 import {
   Switch,
   Route,
   BrowserRouter as Router,
   Redirect,
-  Link,
-  useHistory,
 } from "react-router-dom";
-import { AuthProvider } from "./userContext/context";
 import { useAuth } from "./userContext/context";
+
 function App() {
-  const { loggedIn } = useAuth();
-  if (loggedIn === false)
-    return (
+  const { loggedIn, setLoggedIn } = useAuth();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const t = localStorage.getItem("token");
+    if (t != null) {
+      console.log("yesss");
+      setLoggedIn(true);
+    }
+    setLoading(true);
+  }, [loggedIn, setLoggedIn]);
+
+  let protectedRoutes = (
+    <>
+      {" "}
       <Router>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-          <Route path="/admin/signup" component={AdminSignup} />
-          <Route path="/admin/login" component={AdminLogin} />
-          <Redirect to="/" />
+          <Route path="/admin/dashboard" exact component={AdminDashboard} />
+          <Route path="/admin/myorders" exact component={AdminOrder} />
+          <Route path="/dashboard" exact component={UserDashboard} />
+          <Route path="/myorders" exact component={UserOrder} />
         </Switch>
       </Router>
-    );
+    </>
+  );
+  let unProtectedRoutes = (
+    <>
+      {" "}
+      <Router>
+        <Switch>
+          <Redirect from="/admin/dashboard" to="/" />
+          <Redirect from="/admin/orders" to="/" />
+          <Redirect from="/dashboard" to="/" />
+          <Redirect from="/orders" to="/" />
+          <Route path="/admin/login" exact component={AdminLogin} />
+          <Route path="/admin/signup" exact component={AdminSignup} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/" exact component={Home} />
+        </Switch>
+      </Router>
+    </>
+  );
   return (
-    <Router>
-      <AuthProvider>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-
-          <Route path="/signup">
-            <Signup />
-          </Route>
-
-          <Route path="/login">
-            <Login />
-          </Route>
-
-          <Route path="/dashboard">
-            <UserDashboard />
-          </Route>
-
-          <Route path="/myorders">
-            <UserOrder />
-          </Route>
-        </Switch>
-
-        <Switch>
-          <Route path="/admin/dashboard">
-            <AdminDashboard />
-          </Route>
-
-          <Route path="/admin/login">
-            <AdminLogin />
-          </Route>
-
-          <Route path="/admin/signup">
-            <AdminSignup />
-          </Route>
-
-          <Route path="/admin/myorders">
-            <AdminOrder />
-          </Route>
-        </Switch>
-      </AuthProvider>
-    </Router>
+    <>
+      {loading === true ? (
+        loggedIn === true ? (
+          protectedRoutes
+        ) : (
+          unProtectedRoutes
+        )
+      ) : (
+        <Loading loading background="#D3D3D3" loaderColor="#f2ff00" />
+      )}
+    </>
   );
 }
+
+// const AuthenticatedRoutes = () => {
+//   return (
+//     <Router>
+//       {" "}
+//       <Switch>
+//         <Redirect path="/admin/login" to="/admin/dashboard" />
+
+//         <Route path="/" exact component={Home} />
+//       </Switch>
+//     </Router>
+//   );
+// };
+
+//   return loggedIn === true ? (
+//     <>
+//       {console.log("authenticated routes")}
+//       <AuthenticatedRoutes />
+//     </>
+//   ) : (
+//     <>
+//       {console.log("not authenticated routes")}
+//       <UnAuthenticatedRoutes />
+//     </>
+//   );
+// }
 
 export default App;

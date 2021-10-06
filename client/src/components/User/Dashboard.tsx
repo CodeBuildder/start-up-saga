@@ -5,10 +5,8 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useAuth } from "../../userContext/context";
+
 const Dashboard = () => {
-  const { loggedIn } = useAuth();
-  console.log(loggedIn);
   const [value, onChange] = useState(new Date());
   const [fromLocation, setFromLocation] = useState<string>("");
   const [toLocation, setToLocation] = useState<string>("");

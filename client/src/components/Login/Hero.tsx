@@ -5,7 +5,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../../userContext/context";
 type FormData = {
   username: string;
   email: string;
@@ -24,8 +23,7 @@ const Hero: React.FC = () => {
     success: string;
     token: string;
   }
-  const { loggedIn, login, logout } = useAuth();
-  console.log(loggedIn);
+
   const onSubmit = async (data: FormData) => {
     try {
       let postData: AxiosResponse = await axios.post(
@@ -36,12 +34,11 @@ const Hero: React.FC = () => {
       // let responseData: responseData = postData.data;
       if (postData.status === 201) {
         localStorage.setItem("token", postData.data["token"]);
-        login();
-        console.log(loggedIn);
+
         toast.success("Login successful!");
         setTimeout(() => {
           history.push("/dashboard");
-        }, 2000);
+        }, 4000);
       }
     } catch (err: any) {
       if (err.response) {

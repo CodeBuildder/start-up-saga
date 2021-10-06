@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-multi-date-picker";
-
 const Dashboard = () => {
   const [value, setValue] = useState<any>([]);
   const [calendarView, setCalendarView] = useState(false);
+
   return (
     <div>
       {calendarView === false ? (
@@ -30,6 +30,10 @@ const Dashboard = () => {
       </button>
       <button onClick={() => console.log(value)}>CALC</button>
     </div>
+    //   ) : (
+    //     <Redirect to="/" />
+    //   )}
+    // </>
   );
 };
 export default Dashboard;

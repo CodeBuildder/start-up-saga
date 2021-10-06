@@ -1,32 +1,30 @@
 import React, { createContext, useState, useEffect } from "react";
 
-export const AuthContext = createContext({
-  login: () => {},
-  logout: () => {},
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+const AuthContext = createContext({
   loggedIn: false,
+  setLoggedIn: (data: boolean) => {},
 });
 
 const AuthProvider = (props: any) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setLoggedIn(true);
-    }
-  }, [loggedIn]);
-
   const login = () => {
-    setLoggedIn(true);
+    sleep(2000).then(() => setLoggedIn(true));
   };
 
   const logout = () => {
-    setLoggedIn(false);
+    sleep(2000).then(() => setLoggedIn(false));
   };
 
   const authContextValue = {
     login,
     loggedIn,
     logout,
+    setLoggedIn,
   };
 
   return <AuthContext.Provider value={authContextValue} {...props} />;
