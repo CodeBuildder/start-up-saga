@@ -18,20 +18,20 @@ const Hero: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+
   const onSubmit = async (data: FormData) => {
-    console.log(data);
-    const postData: AxiosResponse = await axios.post(
+    let postData: AxiosResponse = await axios.post(
       `${constants.BASE_URL}/register`,
       data
     );
+
     if (postData.status === 200) {
       toast.success("Registered successfully !");
+
       setTimeout(() => {
         history.push("/");
       }, 2000);
     }
-    console.log(postData);
-    console.log(constants.BASE_URL);
   };
   return (
     <div className="hero min-h-screen bg-base-200 ">

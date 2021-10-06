@@ -8,56 +8,74 @@ import AdminDashboard from "./pages/Admin/Dashboard";
 import AdminOrder from "./pages/Admin/Orders";
 import AdminLogin from "./components/Admin/Login";
 import AdminSignup from "./components/Admin/Signup";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  Redirect,
+  Link,
+  useHistory,
+} from "react-router-dom";
+import { AuthProvider } from "./userContext/context";
+import { useAuth } from "./userContext/context";
 function App() {
+  const { loggedIn } = useAuth();
+  if (loggedIn === false)
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/admin/signup" component={AdminSignup} />
+          <Route path="/admin/login" component={AdminLogin} />
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    );
   return (
     <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/login">
-          <Login />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/dashboard">
-          <UserDashboard />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/myorders">
-          <UserOrder />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/admin/dashboard">
-          <AdminDashboard />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/admin/login">
-          <AdminLogin />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/admin/signup">
-          <AdminSignup />
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/admin/myorders">
-          <AdminOrder />
-        </Route>
-      </Switch>
+      <AuthProvider>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+
+          <Route path="/signup">
+            <Signup />
+          </Route>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/dashboard">
+            <UserDashboard />
+          </Route>
+
+          <Route path="/myorders">
+            <UserOrder />
+          </Route>
+        </Switch>
+
+        <Switch>
+          <Route path="/admin/dashboard">
+            <AdminDashboard />
+          </Route>
+
+          <Route path="/admin/login">
+            <AdminLogin />
+          </Route>
+
+          <Route path="/admin/signup">
+            <AdminSignup />
+          </Route>
+
+          <Route path="/admin/myorders">
+            <AdminOrder />
+          </Route>
+        </Switch>
+      </AuthProvider>
     </Router>
   );
 }
