@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { companyType } from "./admin.schema";
 import { verifiedAdmin } from "../middleware/auth";
-import { registerAdmin, loginAdmin, postCompanyDetails } from "./admin.controller";
+import { registerAdmin, loginAdmin, postCompanyDetails, getCompanyDetails } from "./admin.controller";
 
 import jwt from "jsonwebtoken";
 
@@ -64,6 +64,23 @@ router.post(
             res.status(201).json({
                 companyData,
                 message: "You have successfully posted the job!",
+            });
+
+        } catch (err) {
+            next(err);
+        }
+    }
+);
+
+router.get(
+    "/api/admin/company",
+    async (req: Request, res: Response, next: NextFunction) => {
+
+        try {
+            const result = await getCompanyDetails();
+            console.log(result)
+            res.status(201).json({
+                result
             });
 
         } catch (err) {

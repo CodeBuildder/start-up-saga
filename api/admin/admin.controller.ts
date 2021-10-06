@@ -85,10 +85,7 @@ export const postCompanyDetails = async (companyData: companyType) => {
 
     try {
         const client: mongodb.MongoClient = await getClient();
-        const DB = await client.db().collection("admin");
-
-
-
+        const DB = await client.db().collection("companyDetails");
 
         const newAdminData = {
             name: companyData.companyName,
@@ -98,9 +95,6 @@ export const postCompanyDetails = async (companyData: companyType) => {
             weight: companyData.weight,
             price: companyData.price
         };
-
-
-
         const response = await DB.insertOne(newAdminData);
 
         if (!response) {
@@ -117,3 +111,21 @@ export const postCompanyDetails = async (companyData: companyType) => {
     }
 };
 
+export const getCompanyDetails = async () => {
+    try {
+        const client: mongodb.MongoClient = await getClient();
+        const DB = await client.db().collection("companyDetails");
+
+        const response = DB.find({})
+        console.log(response)
+        if (!response) {
+            throw HttpError(404, "Postal Services Unavialble at the moment.");
+        }
+        return {
+            response,
+            success: true
+        }
+    } catch (error) {
+        throw error
+    }
+}
