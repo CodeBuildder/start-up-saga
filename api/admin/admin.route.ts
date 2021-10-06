@@ -1,7 +1,12 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { companyType } from "./admin.schema";
 import { verifiedAdmin } from "../middleware/auth";
-import { registerAdmin, loginAdmin, postCompanyDetails, getCompanyDetails } from "./admin.controller";
+import {
+    registerAdmin,
+    loginAdmin,
+    postCompanyDetails,
+    getFilterCompanyDetails,
+} from "./admin.controller";
 
 import jwt from "jsonwebtoken";
 
@@ -15,7 +20,7 @@ router.post(
         try {
             const result = await registerAdmin(adminData);
             res.json(result).status(201);
-            next()
+            next();
         } catch (err) {
             next(err);
         }
@@ -45,7 +50,7 @@ router.post(
                 token,
                 message: "Hello, Welcome to Post.io",
             });
-            next()
+            next();
         } catch (err) {
             next(err);
         }
@@ -56,8 +61,7 @@ router.post(
     "/api/admin/company",
     verifiedAdmin,
     async (req: Request, res: Response, next: NextFunction) => {
-        const companyData = req.body as companyType
-
+        const companyData = req.body as companyType;
 
         try {
             const result = await postCompanyDetails(companyData);
@@ -65,30 +69,29 @@ router.post(
                 companyData,
                 message: "You have successfully posted the job!",
             });
-
         } catch (err) {
             next(err);
         }
     }
 );
-
+interface filterData {
+    fromAddress: string;
+    toAddress: string;
+    date: Date;
+}
 router.get(
-    "/api/admin/company",
+    "/api/admin/company/filter",
+    verifiedAdmin,
     async (req: Request, res: Response, next: NextFunction) => {
+        const filterData = req.body as filterData;
 
         try {
-            const result = await getCompanyDetails();
-            console.log(result)
-            res.status(201).json({
-                result
-            });
-
+            const result = await getFilterCompanyDetails(filterData);
+            res.json({ result });
         } catch (err) {
             next(err);
         }
     }
 );
-
-
 
 export default router;

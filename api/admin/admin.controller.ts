@@ -1,16 +1,18 @@
 import * as mongodb from "mongodb";
-import { adminType, adminSchema, companySchema, companyType } from "./admin.schema";
+import {
+    adminType,
+    adminSchema,
+    companySchema,
+    companyType,
+} from "./admin.schema";
 import HttpError from "http-errors";
 import bcrypt from "bcryptjs";
 import { getClient } from "../db/db.connect";
 
-
-
 export const registerAdmin = async (adminData: adminType) => {
-
     await adminSchema.validate(adminData).catch((err: any) => {
-        throw HttpError(400, 'Validation Error!');
-    })
+        throw HttpError(400, "Validation Error!");
+    });
 
     try {
         const client: mongodb.MongoClient = await getClient();
@@ -28,10 +30,8 @@ export const registerAdmin = async (adminData: adminType) => {
             password: hashedPassword,
             email: adminData.email,
             phone: adminData.phone,
-            address: adminData.address
+            address: adminData.address,
         };
-
-
 
         const response = await DB.insertOne(newAdminData);
 
@@ -65,7 +65,10 @@ export const loginAdmin = async (email: string, password: string) => {
             );
         }
 
-        const correctPassword = await bcrypt.compare(password, verifyAdmin.password);
+        const correctPassword = await bcrypt.compare(
+            password,
+            verifyAdmin.password
+        );
 
         if (!correctPassword) {
             throw HttpError(401, "Password Incorrect, please try again.");
@@ -80,12 +83,10 @@ export const loginAdmin = async (email: string, password: string) => {
     }
 };
 
-
 export const postCompanyDetails = async (companyData: companyType) => {
-
     try {
         const client: mongodb.MongoClient = await getClient();
-        const DB = await client.db().collection("companyDetails");
+        const DB = await client.db().collection("admin");
 
         const newAdminData = {
             name: companyData.companyName,
@@ -93,14 +94,33 @@ export const postCompanyDetails = async (companyData: companyType) => {
             toAddress: companyData.toAddress,
             date: companyData.date,
             weight: companyData.weight,
-            price: companyData.price
+            price: companyData.price,
         };
+
         const response = await DB.insertOne(newAdminData);
 
         if (!response) {
             throw HttpError(500, "Internal Server Error!");
         }
 
+        // export const getCompanyDetails = async () => {
+        //     try {
+        //         const client: mongodb.MongoClient = await getClient();
+        //         const DB = await client.db().collection("companyDetails");
+
+        //         const response = DB.find({})
+        //         console.log(response)
+        //         if (!response) {
+        //             throw HttpError(404, "Postal Services Unavialble at the moment.");
+        //         }
+        //         return {
+        //             response,
+        //             success: true
+        //         }
+        //     } catch (error) {
+        //         throw error
+        //     }
+        // }
         return {
             response,
             success: true,
@@ -109,23 +129,27 @@ export const postCompanyDetails = async (companyData: companyType) => {
     } catch (err) {
         throw err;
     }
-};
+}
 
-export const getCompanyDetails = async () => {
+interface filterData {
+    fromAddress: string;
+    toAddress: string;
+    date: Date;
+}
+export const getFilterCompanyDetails = async (data: filterData) => {
     try {
         const client: mongodb.MongoClient = await getClient();
-        const DB = await client.db().collection("companyDetails");
-
-        const response = DB.find({})
-        console.log(response)
-        if (!response) {
-            throw HttpError(404, "Postal Services Unavialble at the moment.");
-        }
-        return {
-            response,
-            success: true
-        }
-    } catch (error) {
-        throw error
+        const DB = await client.db().collection("admin");
+        const regexFromAddress = new RegExp(data.fromAddress, "i");
+        const regexToAddress = new RegExp(data.toAddress, "i");
+        // const test = await DB.aggregate([{ $unwind: "$date" }]).toArray();
+        const filteredData = await DB.find({
+            fromAddress: { $regex: regexFromAddress },
+            toAddress: { $regex: regexToAddress },
+            date: { $elemMatch: { $gte: data.date } },
+        }).toArray();
+        return filteredData;
+    } catch (err) {
+        throw err;
     }
-}
+};

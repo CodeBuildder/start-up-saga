@@ -1,36 +1,37 @@
 import React from "react";
 import constants from "../../constants/constants";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 type FormData = {
-  username: string;
   email: string;
-  phone: string;
   password: string;
 };
-const Hero: React.FC = () => {
+const AdminLogin: React.FC = () => {
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-
   const onSubmit = async (data: FormData) => {
-    let postData: AxiosResponse = await axios.post(
-      `${constants.BASE_URL}/register`,
-      data
-    );
-
-    if (postData.status === 200) {
-      toast.success("Registered successfully !");
-
-      setTimeout(() => {
-        history.push("/");
-      }, 2000);
+    try {
+      const postData: AxiosResponse = await axios.post(
+        `${constants.BASE_URL}/admin/login`,
+        data
+      );
+      if (postData.status === 201) {
+        toast.success("Login successful!");
+        setTimeout(() => {
+          history.push("/dashboard");
+        }, 2000);
+      }
+    } catch (err: any) {
+      if (err.response.status === 401) {
+        toast.warn("Incorrect password");
+      }
     }
   };
   return (
@@ -40,21 +41,6 @@ const Hero: React.FC = () => {
         <div className="m-6 card bg-base-200 w-2/3  rounded h-2/3 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex ml-6">
-              <div className="form-control my-4 mx-2 w-52">
-                <label className="label">
-                  <span className="label-text">Username</span>
-                </label>
-                <input
-                  type="text"
-                  className="input rounded-sm"
-                  {...register("username", { required: true })}
-                />
-                {errors.username?.type === "required" && (
-                  <p className="text-sm text-red-500 pt-2 ">
-                    *Please enter username
-                  </p>
-                )}
-              </div>
               <div className="form-control my-4 mx-2">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -80,26 +66,6 @@ const Hero: React.FC = () => {
               </div>
             </div>
             <div className="flex ml-6">
-              <div className="form-control my-4 mx-2 w-52">
-                <label className="label">
-                  <span className="label-text">Phone</span>
-                </label>
-                <input
-                  type="text"
-                  className="input rounded-sm"
-                  {...register("phone", { required: true, minLength: 10 })}
-                />
-                {errors.phone?.type === "required" && (
-                  <p className="text-sm text-red-500 pt-2 ">
-                    *Please enter phone number
-                  </p>
-                )}
-                {errors.password?.type === "minLength" && (
-                  <p className="text-sm text-red-500 pt-2 ">
-                    *Min characters required is 10
-                  </p>
-                )}
-              </div>
               <div className="form-control my-4 mx-2">
                 <label className="label">
                   <span className="label-text">Password</span>
@@ -126,7 +92,7 @@ const Hero: React.FC = () => {
               className="btn btn-outline btn-primary w-40  my-6 ml-8"
               type="submit"
             >
-              REGISTER
+              Login
             </button>
           </form>
         </div>
@@ -147,4 +113,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default AdminLogin;

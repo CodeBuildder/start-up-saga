@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import constants from "../../constants/constants";
 import axios, { AxiosResponse } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../userContext/context";
 type FormData = {
   username: string;
   email: string;
@@ -12,20 +13,31 @@ type FormData = {
   password: string;
 };
 const Hero: React.FC = () => {
+  // const authContext = useContext(AuthContext);
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
+  interface responseData {
+    success: string;
+    token: string;
+  }
+  const { loggedIn, login, logout } = useAuth();
+  console.log(loggedIn);
   const onSubmit = async (data: FormData) => {
     try {
-      const postData: AxiosResponse = await axios.post(
+      let postData: AxiosResponse = await axios.post(
         `${constants.BASE_URL}/login`,
         data
       );
+
+      // let responseData: responseData = postData.data;
       if (postData.status === 201) {
-        console.log(postData.data);
+        localStorage.setItem("token", postData.data["token"]);
+        login();
+        console.log(loggedIn);
         toast.success("Login successful!");
         setTimeout(() => {
           history.push("/dashboard");

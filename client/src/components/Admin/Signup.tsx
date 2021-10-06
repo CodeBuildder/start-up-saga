@@ -6,52 +6,54 @@ import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 type FormData = {
-  username: string;
+  name: string;
   email: string;
   phone: string;
   password: string;
+  address : string;
 };
-const Hero: React.FC = () => {
+const AdminSignup: React.FC = () => {
   const history = useHistory();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-
   const onSubmit = async (data: FormData) => {
-    let postData: AxiosResponse = await axios.post(
-      `${constants.BASE_URL}/register`,
+    console.log(data);
+    const postData: AxiosResponse = await axios.post(
+      `${constants.BASE_URL}/admin/register`,
       data
     );
-
     if (postData.status === 200) {
       toast.success("Registered successfully !");
-
       setTimeout(() => {
         history.push("/");
       }, 2000);
     }
+    console.log(postData);
+    console.log(constants.BASE_URL);
   };
   return (
     <div className="hero min-h-screen bg-base-200 ">
       <ToastContainer />
-      <div className="flex-col hero-content lg:flex-row flex-row bg-blue-400">
+      <div className="flex-col hero-content lg:flex-row flex-row bg-blue-400 pr-32">
         <div className="m-6 card bg-base-200 w-2/3  rounded h-2/3 ">
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="">
             <div className="flex ml-6">
               <div className="form-control my-4 mx-2 w-52">
                 <label className="label">
-                  <span className="label-text">Username</span>
+                  <span className="label-text">Company Name</span>
                 </label>
                 <input
                   type="text"
                   className="input rounded-sm"
-                  {...register("username", { required: true })}
+                  {...register("name", { required: true })}
                 />
-                {errors.username?.type === "required" && (
+                {errors.name?.type === "required" && (
                   <p className="text-sm text-red-500 pt-2 ">
-                    *Please enter username
+                    *Please enter the Company Name
                   </p>
                 )}
               </div>
@@ -75,6 +77,23 @@ const Hero: React.FC = () => {
                 {errors.email?.type === "pattern" && (
                   <p className="text-sm text-red-500 pt-2 ">
                     *Please enter valid Email
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="">
+              <div className="form-control my-4 mx-2 w-4/5 ml-8">
+                <label className="label">
+                  <span className="label-text">Address</span>
+                </label>
+                <input
+                  type="text"
+                  className="input rounded-sm "
+                  {...register("address", { required: true })}
+                />
+                {errors.address?.type === "required" && (
+                  <p className="text-sm text-red-500 pt-2 ">
+                    *Please enter the Address
                   </p>
                 )}
               </div>
@@ -128,17 +147,16 @@ const Hero: React.FC = () => {
             >
               REGISTER
             </button>
+            </div>
           </form>
         </div>
         <div className="flex-col justify-center hero-content lg:flex-row">
           <div className="text-center lg:text-left">
             <h1 className="mb-5 text-5xl font-bold">
-              Lorem Ipsum re quia dolor sit a
+              Admin Login
             </h1>
-            <p className="mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dui
-              sem, pellentesque ut fermentum ut, aliquet ac lacus. In hac
-              habitasse platea di
+            <p className="">
+              Enter the required details to create your new account! <br /><br /><br /> <br /><br /> <a className="" href="https://start-up-saga-api.herokuapp.com/api/admin/signup">Already have an account?</a>
             </p>
           </div>
         </div>
@@ -147,4 +165,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default AdminSignup;
