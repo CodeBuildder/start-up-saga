@@ -6,6 +6,8 @@ import UserDashboard from "./pages/User/Dashboard";
 import UserOrder from "./pages/User/Orders";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import AdminOrder from "./pages/Admin/Orders";
+import AdminLogin from "./components/Admin/Login";
+import AdminSignup from "./components/Admin/Signup";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
@@ -39,6 +41,16 @@ function App() {
       <Switch>
         <Route path="/admin/dashboard">
           <AdminDashboard />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/admin/login">
+          <AdminLogin />
+        </Route>
+      </Switch>
+      <Switch>
+        <Route path="/admin/signup">
+          <AdminSignup />
         </Route>
       </Switch>
       <Switch>
