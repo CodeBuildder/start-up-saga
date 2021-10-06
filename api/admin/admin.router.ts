@@ -5,7 +5,7 @@ import {
     registerAdmin,
     loginAdmin,
     postCompanyDetails,
-    getFilterCompanyDetails,
+    getFilterCompanyDetails
 } from "./admin.controller";
 
 import jwt from "jsonwebtoken";
@@ -20,7 +20,6 @@ router.post(
         try {
             const result = await registerAdmin(adminData);
             res.json(result).status(201);
-            next();
         } catch (err) {
             next(err);
         }
@@ -31,7 +30,6 @@ router.post(
     "/api/admin/login",
     async (req: Request, res: Response, next: NextFunction) => {
         const { password, email } = req.body;
-
         try {
             const result = await loginAdmin(email, password);
 
@@ -50,7 +48,6 @@ router.post(
                 token,
                 message: "Hello, Welcome to Post.io",
             });
-            next();
         } catch (err) {
             next(err);
         }
@@ -93,5 +90,7 @@ router.get(
         }
     }
 );
+
+
 
 export default router;
