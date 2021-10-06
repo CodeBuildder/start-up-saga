@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-multi-date-picker";
 const Dashboard = () => {
-  const [value, setValue] = useState<any>([]);
+  const [value, setValue] = useState<string | null>("");
   const [calendarView, setCalendarView] = useState(false);
 
   return (
@@ -28,7 +28,7 @@ const Dashboard = () => {
       >
         SAVE DATES
       </button>
-      <button onClick={() => console.log(value)}>CALC</button>
+      <button onClick={() => console.log(value?.split(" "))}>CALC</button>
     </div>
     //   ) : (
     //     <Redirect to="/" />
