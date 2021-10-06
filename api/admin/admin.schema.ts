@@ -13,7 +13,7 @@ const companySchema = yup.object({
     companyName: yup.string().trim().required(),
     fromAddress: yup.string().trim().required(),
     toAddress: yup.string().trim().required(),
-    date: yup.array().of(yup.number().required()).required(),
+    date: yup.array().of(yup.date().required()).required(),
     weight: yup.number().required(),
     price: yup.number().required()
 
