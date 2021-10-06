@@ -1,6 +1,6 @@
 import React from "react";
 import constants from "../../constants/constants";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
@@ -25,14 +25,19 @@ const Hero: React.FC = () => {
         data
       );
       if (postData.status === 201) {
+        console.log(postData.data);
         toast.success("Login successful!");
         setTimeout(() => {
           history.push("/dashboard");
         }, 2000);
       }
     } catch (err: any) {
-      if (err.response.status === 401) {
-        toast.warn("Incorrect password");
+      if (err.response) {
+        if (err.response.status === 401) {
+          toast.warn("Incorrect password");
+        }
+      } else {
+        toast.warn("Something went wrong ");
       }
     }
   };

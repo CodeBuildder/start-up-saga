@@ -18,8 +18,10 @@ const Hero = () => {
         </div>
         <div className="flex-none hidden px-2 mx-2 lg:flex">
           <div className="flex items-stretch">
-            <a className="btn btn-ghost btn-sm rounded-btn"
-            onClick={() => history.push("/login")}>
+            <a
+              className="btn btn-ghost btn-sm rounded-btn"
+              onClick={() => history.push("/login")}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -62,23 +64,6 @@ const Hero = () => {
             </a>
           </div>
         </div>
-        <div className="flex-none">
-          <button className="btn btn-square btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="inline-block w-6 h-6 stroke-current"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </button>
-        </div>
       </div>
 
       {/* Initial Screen */}
@@ -103,51 +88,51 @@ const Hero = () => {
       {/* Stats */}
       <div className="w-100 h-40 bg-purple-700 grid grid-flow-col justify-items-stretch py-4 px-4">
         <div className="flex justify-center">
-        <IconContext.Provider
-      value={{size: '40px' }}
-      >
-        <div>
-          <h2><BiNotepad /></h2>
-        </div>
-    </IconContext.Provider>
+          <IconContext.Provider value={{ size: "40px" }}>
+            <div>
+              <h2>
+                <BiNotepad />
+              </h2>
+            </div>
+          </IconContext.Provider>
           <pre> </pre>
           <h1 className="mb-5 text-3xl font-bold">Projects Done</h1>
           <p className="mb-5">320</p>
         </div>
         <div className="flex justify-center text-white">
-        <IconContext.Provider
-          value={{size: '40px' }}
-          >
+          <IconContext.Provider value={{ size: "40px" }}>
             <div>
-              <h2><BsGlobe2 /></h2>
+              <h2>
+                <BsGlobe2 />
+              </h2>
             </div>
-        </IconContext.Provider>
+          </IconContext.Provider>
           <pre> </pre>
           <h1 className="mb-5 text-3xl font-bold">Clients Worldwide</h1>
           <p className="mb-5">320</p>
         </div>
         <div className="flex justify-center">
-          <IconContext.Provider
-          value={{size: '40px' }}
-          >
+          <IconContext.Provider value={{ size: "40px" }}>
             <div>
-            <h2><BsTruck /></h2>
+              <h2>
+                <BsTruck />
+              </h2>
             </div>
-        </IconContext.Provider>
+          </IconContext.Provider>
           <pre> </pre>
           <h1 className="mb-5 text-3xl font-bold">Owned Vehicles</h1>
           <p className="mb-5">320</p>
         </div>
         <div className="flex justify-center">
-        <IconContext.Provider
-          value={{size: '40px' }}
-          >
+          <IconContext.Provider value={{ size: "40px" }}>
             <div>
-            <h2><FiUsers /></h2>
+              <h2>
+                <FiUsers />
+              </h2>
             </div>
-        </IconContext.Provider>
+          </IconContext.Provider>
           <pre> </pre>
-          
+
           <h1 className="mb-5 text-3xl font-bold">People in Team</h1>
           <p className="mb-5">320</p>
         </div>

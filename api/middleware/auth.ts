@@ -7,8 +7,6 @@ dotenv.config({ path: "./.env" });
 export const verifiedAdmin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { authorization } = req.headers;
-        console.log(req.headers);
-        console.log(req.headers.authorization);
 
         if (!authorization) {
             return next("Invalid JWT");
