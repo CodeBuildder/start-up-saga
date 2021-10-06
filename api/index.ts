@@ -6,8 +6,9 @@ import { HttpError } from "http-errors";
 dotenv.config({ path: "./.env" });
 connectDB();
 
-import authRoute from "./auth/auth.routes";
-import adminRoute from "./admin/admin.route";
+import authRoute from "./auth/auth.router";
+import adminRoute from "./admin/admin.router";
+import clientRoute from './client/client.router'
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +23,8 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 // });
 app.use(authRoute);
 app.use(adminRoute);
+app.use(clientRoute)
+
 
 app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
   if (error) {
