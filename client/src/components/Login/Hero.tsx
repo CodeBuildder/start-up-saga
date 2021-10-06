@@ -6,9 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 type FormData = {
-  username: string;
   email: string;
-  phone: string;
   password: string;
 };
 const Hero: React.FC = () => {
