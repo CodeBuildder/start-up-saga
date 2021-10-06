@@ -14,6 +14,7 @@ const Dashboard = () => {
           multiple={true}
           placeholder="SELECT DATE"
           id="date-picker"
+          format="DD/MM/YYYY"
         />
       )}
 
