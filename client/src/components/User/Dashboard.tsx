@@ -106,10 +106,10 @@ const Dashboard = () => {
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
             <div className="jusitfy-between p-7 w-2/3 h-66 bg-white mr-4 rounded-md  shadow-lg text-purple-400">
               <div className="flex flex-row text-6xl">
-                Company : FedEx
-                <div className="w-1/3">
+                Service Provider : FedEx 
+                <div className="w-1/4">
                   <img
-                    className="object-right-top"
+                    className=""
                     src="https://www.pymnts.com/wp-content/uploads/2021/07/FedEx-Express-India-Delhivery-shipping.jpg"
                     alt="FedEx"
                   />
