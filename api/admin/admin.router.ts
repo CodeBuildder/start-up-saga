@@ -6,9 +6,8 @@ import {
   loginAdmin,
   postCompanyDetails,
   getFilterCompanyDetails,
+  getOrderDetails
 } from "./admin.controller";
-
-import jwt from "jsonwebtoken";
 
 const router: Router = Router();
 
@@ -47,11 +46,10 @@ router.post(
     const companyData = req.body as companyType;
 
     try {
-      const result = await postCompanyDetails(companyData);
-      res.status(201).json({
-        companyData,
-        message: "You have successfully posted the job!",
-      });
+      const { user } = res.locals.user;
+      const result = await postCompanyDetails(companyData, user._id);
+
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }
@@ -62,7 +60,7 @@ interface filterData {
   toAddress: string;
   date: Date;
 }
-router.get(
+router.post(
   "/api/admin/company/filter",
   verifiedAdmin,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -76,5 +74,19 @@ router.get(
     }
   }
 );
+
+router.get(
+  "/api/admin/order",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { user } = res.locals.user;
+      const result = getOrderDetails(user._id)
+      res.status(201).json({ result })
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 export default router;

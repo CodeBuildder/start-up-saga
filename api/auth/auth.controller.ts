@@ -29,7 +29,7 @@ export const registerUser = async (userData: userType) => {
     const token = jwt.sign(
       {
         email: newUserData.email,
-
+        _id: response.insertedId,
         category: "client",
       },
       process.env.JWT_SECRET || "",
@@ -74,7 +74,7 @@ export const loginUser = async (email: string, password: string) => {
     const token = jwt.sign(
       {
         email: verifyUser.email,
-
+        _id: verifyUser._id,
         category: "client",
       },
       process.env.JWT_SECRET || "",
