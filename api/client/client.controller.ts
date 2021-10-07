@@ -55,11 +55,10 @@ export const getOrderDetails = async (id: mongodb.ObjectID) => {
     const client: mongodb.MongoClient = await getClient();
     const DB = client.db().collection("userOrder");
 
-    const userOrders = await DB.find({ id }).toArray()
+    const userOrders = await DB.find({ userId: id }).toArray();
 
-    return userOrders
-
+    return userOrders;
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};

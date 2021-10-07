@@ -6,7 +6,7 @@ import {
   loginAdmin,
   postCompanyDetails,
   getFilterCompanyDetails,
-  getOrderDetails
+  getOrderDetails,
 } from "./admin.controller";
 
 const router: Router = Router();
@@ -81,12 +81,12 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = res.locals.user;
-      const result = getOrderDetails(user._id)
-      res.status(201).json({ result })
+      const result = await getOrderDetails(user._id);
+      res.json(result);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 export default router;

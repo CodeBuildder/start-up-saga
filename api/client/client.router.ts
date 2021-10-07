@@ -1,5 +1,9 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { userOrderDetails, findLocation, getOrderDetails } from "./client.controller";
+import {
+  userOrderDetails,
+  findLocation,
+  getOrderDetails,
+} from "./client.controller";
 import { userPostType } from "./client.schema";
 import { verifiedAdmin } from "../middleware/auth";
 const router: Router = Router();
@@ -43,12 +47,12 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = res.locals.user;
-      const result = getOrderDetails(user._id)
-      res.status(201).json({ result })
+      const result = await getOrderDetails(user._id);
+      res.json(result);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 export default router;
