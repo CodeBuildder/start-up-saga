@@ -1,24 +1,37 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { userOrderDetails } from "./client.controller";
+import { userOrderDetails, findLocation } from "./client.controller";
 import { userPostType } from "./client.schema";
 
 const router: Router = Router();
 
-router.post('/api/user/order',
-    async (req: Request, res: Response, next: NextFunction) => {
+router.post(
+  "/api/user/order",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userOrderData = req.body as userPostType;
 
-        const userOrderData = req.body as userPostType
-
-        try {
-            const result = await userOrderDetails(userOrderData)
-            res.json(userOrderData).status(201)
-        } catch (error) {
-            next(error)
-            console.log(error)
-        }
-
+    try {
+      const result = await userOrderDetails(userOrderData);
+      res.json(userOrderData).status(201);
+    } catch (error) {
+      next(error);
+      console.log(error);
     }
-)
+  }
+);
 
+router.get(
+  "/api/user/location",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const location = req.body.location;
 
-export default router
+    try {
+      const result = await findLocation(location);
+      res.json(result).status(201);
+    } catch (error) {
+      next(error);
+      console.log(error);
+    }
+  }
+);
+
+export default router;
