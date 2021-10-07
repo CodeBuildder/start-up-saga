@@ -85,7 +85,7 @@ const Dashboard = () => {
             placeholder="Select Dates"
             id="date-picker"
             format="DD/MM/YYYY"
-            className="rmdp-input"
+            // className="rmdp-input"
           />
         )}
         
