@@ -145,8 +145,8 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-          <div className="pt-6" onClick={searchCompany}>
-            <button className="btn btn-outline btn-accent w-28 h-8">
+          <div className="pt-6" onClick={() => setPost(["hellp", "hi"])}>
+            <button className="btn btn-outline btn-accent w-28 h-8 ">
               SEARCH
             </button>
           </div>
