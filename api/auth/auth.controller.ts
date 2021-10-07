@@ -1,15 +1,16 @@
-import * as mongodb from "mongodb";
-import { userType, userSchema } from "./auth.schema";
+
+import { User } from "./auth.schema";
 import HttpError from "http-errors";
 import bcrypt from "bcryptjs";
-import { getClient } from "../db/db.connect";
+import mongoose from 'mongoose';
 import * as jwt from "jsonwebtoken";
-export const registerUser = async (userData: userType) => {
-  try {
-    const client: mongodb.MongoClient = await getClient();
-    const DB = await client.db().collection("users");
+import { userDB } from "../../types/types";
 
-    if (await DB.findOne({ email: userData.email })) {
+export const registerUser = async (userData: userDB) => {
+  try {
+
+
+    if (await User.findOne({ email: userData.email })) {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
@@ -23,13 +24,14 @@ export const registerUser = async (userData: userType) => {
       phone: userData.phone,
     };
 
-    console.log(newUserData);
+    const user = new User(newUserData);
 
-    const response = await DB.insertOne(newUserData);
+    const response = await user.save()
+
     const token = jwt.sign(
       {
         email: newUserData.email,
-        _id: response.insertedId,
+        _id: response._id,
         category: "client",
       },
       process.env.JWT_SECRET || "",
@@ -50,31 +52,28 @@ export const registerUser = async (userData: userType) => {
 
 export const loginUser = async (email: string, password: string) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
-    console.log(email);
 
-    const verifyUser = await client
-      .db()
-      .collection("users")
-      .findOne({ email: email });
+    const findUser = await User.findOne({
+      email: email
+    })
 
-    if (!verifyUser) {
+    if (!findUser) {
       throw HttpError(
         401,
         "Email does not exist, please create a new account!"
       );
     }
-    console.log(password);
-    console.log(verifyUser.password);
-    const correctPassword = await bcrypt.compare(password, verifyUser.password);
+
+    console.log(findUser.password);
+    const correctPassword = await bcrypt.compare(password, findUser.password);
     console.log(correctPassword);
     if (!correctPassword) {
       throw HttpError(401, "Password Incorrect, please try again.");
     }
     const token = jwt.sign(
       {
-        email: verifyUser.email,
-        _id: verifyUser._id,
+        email: findUser.email,
+        _id: findUser._id,
         category: "client",
       },
       process.env.JWT_SECRET || "",

@@ -1,5 +1,5 @@
 export interface userDB {
-    name: string,
+    username: string,
     email: string,
     password: string,
     phone: number

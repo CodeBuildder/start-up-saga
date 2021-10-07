@@ -2,12 +2,13 @@ import { Router, Request, Response, NextFunction } from "express";
 import { verifiedAdmin } from "../middleware/auth";
 import * as jwt from "jsonwebtoken";
 import {
+  loginAdmin,
   registerAdmin,
-  // loginAdmin,
-  // postCompanyDetails,
-  // getFilterCompanyDetails,
-  // getOrderDetails
+  postCompanyDetails,
+  getFilterCompanyDetails,
+  getOrderDetails
 } from "./admin.controller";
+import { companyData } from "../../types/types";
 
 const router: Router = Router();
 
@@ -36,28 +37,27 @@ router.post(
   }
 );
 
-// router.post(
-//   "/api/admin/login",
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const { password, email } = req.body;
-//     try {
-//       const result = await loginAdmin(email, password);
+router.post(
+  "/api/admin/login",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { password, email } = req.body;
+    try {
+      const result = await loginAdmin(email, password);
 
-//       res.json({ token: result, success: true });
-//     } catch (err) {
-//       next(err);
-//     }
-//   }
-// );
+      res.json({ token: result, success: true });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 // router.post(
 //   "/api/admin/company",
-//   verifiedAdmin,
 //   async (req: Request, res: Response, next: NextFunction) => {
-//     const companyData = req.body as companyType;
+//     const companyData = req.body as companyData;
 
 //     try {
-//       const { user } = res.locals.user;
+//       //const { user } = res.locals.user;
 //       const result = await postCompanyDetails(companyData, user._id);
 
 //       res.status(201).json(result);
@@ -66,38 +66,38 @@ router.post(
 //     }
 //   }
 // );
-// interface filterData {
-//   fromAddress: string;
-//   toAddress: string;
-//   date: Date;
-// }
-// router.post(
-//   "/api/admin/company/filter",
-//   verifiedAdmin,
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const filterData = req.body as filterData;
+interface filterData {
+  fromAddress: string;
+  toAddress: string;
+  date: Date;
+}
+router.post(
+  "/api/admin/company/filter",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const filterData = req.body as filterData;
 
-//     try {
-//       const result = await getFilterCompanyDetails(filterData);
-//       res.json({ result });
-//     } catch (err) {
-//       next(err);
-//     }
-//   }
-// );
+    try {
+      const result = await getFilterCompanyDetails(filterData);
+      res.json({ result });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
-// router.get(
-//   "/api/admin/order",
-//   verifiedAdmin,
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     try {
-//       const { user } = res.locals.user;
-//       const result = getOrderDetails(user._id)
-//       res.status(201).json({ result })
-//     } catch (error) {
-//       next(error)
-//     }
-//   }
-// )
+router.get(
+  "/api/admin/order",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { user } = res.locals.user;
+      const result = getOrderDetails(user._id)
+      res.status(201).json({ result })
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 export default router;

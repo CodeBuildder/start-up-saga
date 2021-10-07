@@ -6,7 +6,7 @@ import HttpError from "http-errors";
 dotenv.config({ path: "./.env" });
 import { adminSchema } from "../admin/admin.schema";
 import { userSchema } from "../auth/auth.schema";
-import { getClient } from "../db/db.connect";
+//import { connectDB } from "./db/db.connect";
 
 declare module "jsonwebtoken" {
   export interface UserIDJwtPayload extends jwt.JwtPayload {
@@ -38,18 +38,18 @@ export const verifiedAdmin = async (
     }
     let user;
 
-    const client: mongodb.MongoClient = await getClient();
-    if (payload) {
-      if (payload.category == "client") {
-        const DB = client.db().collection("users");
-        user = await DB.findOne({ email: payload.email });
-      } else {
-        const DB = client.db().collection("admin");
-        user = await DB.findOne({ email: payload.email });
-      }
-    }
-    console.log(user);
-    res.locals.user = { user };
+
+    // if (payload) {
+    //   if (payload.category == "client") {
+    //     const DB = client.db().collection("users");
+    //     user = await DB.findOne({ email: payload.email });
+    //   } else {
+    //     const DB = client.db().collection("admin");
+    //     user = await DB.findOne({ email: payload.email });
+    //   }
+    // }
+    // console.log(user);
+    // res.locals.user = { user };
     next();
   } catch (err) {
     next(err);
