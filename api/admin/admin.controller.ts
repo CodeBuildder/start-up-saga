@@ -150,17 +150,16 @@ export const getFilterCompanyDetails = async (data: filterData) => {
   }
 };
 
-
 export const getOrderDetails = async (id: mongodb.ObjectID) => {
   try {
     const client: mongodb.MongoClient = await getClient();
     const DB = client.db().collection("userOrder");
 
-    const companyOrders = await DB.find({ id }).toArray()
-
-    return companyOrders
-
+    const companyOrders = await DB.find({
+      companyId: id,
+    }).toArray();
+    return companyOrders;
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};
