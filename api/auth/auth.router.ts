@@ -27,21 +27,7 @@ router.post(
     try {
       const result = await loginUser(email, password);
 
-      const token = jwt.sign(
-        {
-          email: email.email,
-        },
-        process.env.JWT_SECRET || "",
-        {
-          expiresIn: "10d",
-        }
-      );
-
-      res.status(201).json({
-        result,
-        token,
-        message: "User successfully logged in!",
-      });
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }

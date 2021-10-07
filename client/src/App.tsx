@@ -63,6 +63,10 @@ function App() {
           <Route path="/admin/myorders" exact component={AdminOrder} />
           <Route path="/dashboard" exact component={UserDashboard} />
           <Route path="/myorders" exact component={UserOrder} />
+          <Route path="/admin/login" exact component={AdminLogin} />
+          <Route path="/admin/signup" exact component={AdminSignup} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/login" exact component={Login} />
           <Route path="/" exact component={Home} />
         </Switch>
       </Router>

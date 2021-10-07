@@ -24,6 +24,7 @@ const AdminLogin: React.FC = () => {
         `${constants.BASE_URL}/admin/login`,
         data
       );
+      console.log(postData.data);
       if (postData.status === 200) {
         localStorage.setItem("token", postData.data["token"]);
         setLoggedIn(true);

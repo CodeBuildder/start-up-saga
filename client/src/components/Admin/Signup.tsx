@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 type FormData = {
-  name: string;
+  companyName: string;
   email: string;
   phone: string;
   password: string;
@@ -49,9 +49,9 @@ const AdminSignup: React.FC = () => {
                   <input
                     type="text"
                     className="input rounded-sm"
-                    {...register("name", { required: true })}
+                    {...register("companyName", { required: true })}
                   />
-                  {errors.name?.type === "required" && (
+                  {errors.companyName?.type === "required" && (
                     <p className="text-sm text-red-500 pt-2 ">
                       *Please enter the Company Name
                     </p>
