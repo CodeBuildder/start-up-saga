@@ -67,11 +67,9 @@ const Dashboard = () => {
               className="input rounded-sm"
               {...register("companyName", { required: true })}
             /> */}
-            <div className="flex-row py-3">
-              <p className="">From </p>
-              <p className="">To Address</p>
-            </div>
-            <div className="flex-row space-x-24" />
+            <div className="flex flex-row py-3 space-x-10">
+             <div className="w-1/2">
+              <p>From </p>
             <Select
               value={fromLocation}
               options={myOptions}
@@ -81,8 +79,10 @@ const Dashboard = () => {
               openMenuOnClick={false}
               placeholder="From"
               className="w-56 py-2 h-12"
-            />
-
+            />               
+            </div> 
+            <div className="w-1/2">
+            <p>To</p>
             <Select
               value={toLocation}
               options={myOptions}
@@ -91,18 +91,23 @@ const Dashboard = () => {
               }}
               openMenuOnClick={false}
               className="w-56 py-2 h-12"
-            />
+            />                
+            </div>
+            </div>
+
+     
+
 
             <label className="label">
               <span className="label-text-black">Price</span>
             </label>
             <input
               type="text"
-              className="input rounded-sm"
+              className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("price", { required: true })}
             />
             <br />
-            <div className="flex-row pl-12 space-x-20">
+            <div className="flex-row pl-2 space-x-28">
               {calendarView === false ? (
                 <button
                   onClick={() => setCalendarView(true)}
@@ -117,7 +122,6 @@ const Dashboard = () => {
                   placeholder="Select Dates"
                   id="date-picker"
                   format="YYYY-MM-DD"
-                  className="rmdp-input"
                 />
               )}
               <button
@@ -134,7 +138,7 @@ const Dashboard = () => {
                 SAVE DATES
               </button>
               <br /> <br />
-              <div className="pl-20">
+              <div className="pl-16">
                 <button
                   className="btn btn-outline btn-primary w-28 h-14"
                   type="submit"
