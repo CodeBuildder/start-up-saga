@@ -24,9 +24,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const t = localStorage.getItem("token");
-    console.log(t);
+    
     if (t != null) {
-      console.log("yesss");
+    
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
@@ -38,7 +38,7 @@ function App() {
   }, [loggedIn, setLoggedIn]);
   let unProtectedRoutes = (
     <>
-      {console.log(" unprotected using")}
+    
       <Router>
         <Switch>
           <Redirect from="/admin/dashboard" to="/" />
@@ -56,7 +56,7 @@ function App() {
   );
   let protectedRoutes = (
     <>
-      {console.log("protected using")}
+    
       <Router>
         <Switch>
           <Route path="/admin/dashboard" exact component={AdminDashboard} />
@@ -88,30 +88,5 @@ function App() {
   );
 }
 
-// const AuthenticatedRoutes = () => {
-//   return (
-//     <Router>
-//       {" "}
-//       <Switch>
-//         <Redirect path="/admin/login" to="/admin/dashboard" />
-
-//         <Route path="/" exact component={Home} />
-//       </Switch>
-//     </Router>
-//   );
-// };
-
-//   return loggedIn === true ? (
-//     <>
-//       {console.log("authenticated routes")}
-//       <AuthenticatedRoutes />
-//     </>
-//   ) : (
-//     <>
-//       {console.log("not authenticated routes")}
-//       <UnAuthenticatedRoutes />
-//     </>
-//   );
-// }
 
 export default App;

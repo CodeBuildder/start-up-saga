@@ -13,7 +13,7 @@ export const registerUser = async (userData: userType) => {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
-    console.log(userData.password);
+  
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
     const newUserData = {
@@ -23,7 +23,7 @@ export const registerUser = async (userData: userType) => {
       phone: userData.phone,
     };
 
-    console.log(newUserData);
+   
 
     const response = await DB.insertOne(newUserData);
     const token = jwt.sign(
@@ -51,8 +51,7 @@ export const registerUser = async (userData: userType) => {
 export const loginUser = async (email: string, password: string) => {
   try {
     const client: mongodb.MongoClient = await getClient();
-    console.log(email);
-
+ 
     const verifyUser = await client
       .db()
       .collection("users")
@@ -64,10 +63,10 @@ export const loginUser = async (email: string, password: string) => {
         "Email does not exist, please create a new account!"
       );
     }
-    console.log(password);
-    console.log(verifyUser.password);
+   
+   
     const correctPassword = await bcrypt.compare(password, verifyUser.password);
-    console.log(correctPassword);
+ 
     if (!correctPassword) {
       throw HttpError(401, "Password Incorrect, please try again.");
     }

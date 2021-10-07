@@ -14,7 +14,7 @@ export const userOrderDetails = async (
     const findCompany = await companyDB.findOne({
       companyName: userOrderData.companyName,
     });
-    console.log(findCompany);
+    
     const newUserOrderData = {
       companyId: findCompany._id,
       userId: id,
@@ -24,7 +24,7 @@ export const userOrderDetails = async (
       weight: userOrderData.weight,
       price: userOrderData.price,
     };
-    console.log(newUserOrderData);
+   
     const response = await DB.insertOne(newUserOrderData);
     if (!response) {
       throw HttpError(500, "Internal Server Error!");
@@ -46,7 +46,7 @@ export const findLocation = async (data: string) => {
   //    fromAddress: { $regex: regexFromAddress },
   //   toAddress: { $regex: regexToAddress },
   //   date: { $elemMatch: { $gte: data.date } },
-  // console.log(findIt);
+
   return findIt;
 };
 

@@ -20,7 +20,7 @@ router.post(
       res.json(result).status(201);
     } catch (error) {
       next(error);
-      console.log(error);
+      
     }
   }
 );
@@ -36,7 +36,7 @@ router.post(
       res.json(result).status(201);
     } catch (error) {
       next(error);
-      console.log(error);
+
     }
   }
 );

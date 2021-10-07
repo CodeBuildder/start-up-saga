@@ -23,7 +23,7 @@ export const registerAdmin = async (adminData: adminType) => {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
-    console.log(adminData.password);
+
     const hashedPassword = await bcrypt.hash(adminData.password, salt);
 
     const newAdminData = {
@@ -61,7 +61,6 @@ export const registerAdmin = async (adminData: adminType) => {
 export const loginAdmin = async (email: string, password: string) => {
   try {
     const client: mongodb.MongoClient = await getClient();
-    console.log(email);
 
     const verifyAdmin = await client
       .db()

@@ -33,7 +33,6 @@ const Hero: React.FC = () => {
 
       // let responseData: responseData = postData.data;
       if (postData.status === 201) {
-        console.log(postData.data);
         localStorage.setItem("token", postData.data["token"]);
         setLoggedIn(true);
         toast.success("Login successful!");
