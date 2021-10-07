@@ -6,7 +6,7 @@ export interface userDB {
 }
 
 export interface adminDB {
-    name: string,
+    companyName: string,
     email: string,
     password: string,
     address: string,

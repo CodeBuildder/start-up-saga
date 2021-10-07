@@ -1,12 +1,12 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { companyType } from "./admin.schema";
 import { verifiedAdmin } from "../middleware/auth";
+import * as jwt from "jsonwebtoken";
 import {
   registerAdmin,
-  loginAdmin,
-  postCompanyDetails,
-  getFilterCompanyDetails,
-  getOrderDetails
+  // loginAdmin,
+  // postCompanyDetails,
+  // getFilterCompanyDetails,
+  // getOrderDetails
 } from "./admin.controller";
 
 const router: Router = Router();
@@ -18,6 +18,20 @@ router.post(
 
     try {
       const result = await registerAdmin(adminData);
+
+      await result.newAdminData.save()
+
+      const token = jwt.sign(
+        {
+          _id: result.newAdminData._id,
+          email: result.newAdminData.email,
+
+          category: "admin",
+        },
+        process.env.JWT_SECRET || "",
+        { expiresIn: "10d" }
+      );
+
       res.json(result).status(201);
     } catch (err) {
       next(err);
@@ -25,68 +39,68 @@ router.post(
   }
 );
 
-router.post(
-  "/api/admin/login",
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { password, email } = req.body;
-    try {
-      const result = await loginAdmin(email, password);
+// router.post(
+//   "/api/admin/login",
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const { password, email } = req.body;
+//     try {
+//       const result = await loginAdmin(email, password);
 
-      res.json({ token: result, success: true });
-    } catch (err) {
-      next(err);
-    }
-  }
-);
+//       res.json({ token: result, success: true });
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
 
-router.post(
-  "/api/admin/company",
-  verifiedAdmin,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const companyData = req.body as companyType;
+// router.post(
+//   "/api/admin/company",
+//   verifiedAdmin,
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const companyData = req.body as companyType;
 
-    try {
-      const { user } = res.locals.user;
-      const result = await postCompanyDetails(companyData, user._id);
+//     try {
+//       const { user } = res.locals.user;
+//       const result = await postCompanyDetails(companyData, user._id);
 
-      res.status(201).json(result);
-    } catch (err) {
-      next(err);
-    }
-  }
-);
-interface filterData {
-  fromAddress: string;
-  toAddress: string;
-  date: Date;
-}
-router.post(
-  "/api/admin/company/filter",
-  verifiedAdmin,
-  async (req: Request, res: Response, next: NextFunction) => {
-    const filterData = req.body as filterData;
+//       res.status(201).json(result);
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
+// interface filterData {
+//   fromAddress: string;
+//   toAddress: string;
+//   date: Date;
+// }
+// router.post(
+//   "/api/admin/company/filter",
+//   verifiedAdmin,
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     const filterData = req.body as filterData;
 
-    try {
-      const result = await getFilterCompanyDetails(filterData);
-      res.json({ result });
-    } catch (err) {
-      next(err);
-    }
-  }
-);
+//     try {
+//       const result = await getFilterCompanyDetails(filterData);
+//       res.json({ result });
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
 
-router.get(
-  "/api/admin/order",
-  verifiedAdmin,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { user } = res.locals.user;
-      const result = getOrderDetails(user._id)
-      res.status(201).json({ result })
-    } catch (error) {
-      next(error)
-    }
-  }
-)
+// router.get(
+//   "/api/admin/order",
+//   verifiedAdmin,
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const { user } = res.locals.user;
+//       const result = getOrderDetails(user._id)
+//       res.status(201).json({ result })
+//     } catch (error) {
+//       next(error)
+//     }
+//   }
+// )
 
-export default router;
+// export default router;

@@ -1,39 +1,112 @@
-import * as mongoDB from "mongodb";
-import * as yup from "yup";
+import mongoose from 'mongoose'
 
-const adminSchema = yup.object({
-  companyName: yup.string().trim().required().lowercase(),
-  email: yup.string().email().required().required(),
-  address: yup.string().trim().required(),
-  password: yup.string().trim().required(),
-  phone: yup.number().required(),
-});
+export const adminSchema = new mongoose.Schema({
+  companyName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  address: {
+    type: String,
+    trim: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 7
+  }
+})
 
-const companySchema = yup.object({
-  companyName: yup.string().trim().required(),
-  fromAddress: yup.string().trim().required(),
-  toAddress: yup.string().trim().required(),
-  date: yup.array().of(yup.date().required()).required(),
-  weight: yup.number().required(),
-  price: yup.number().required(),
-});
 
-type adminType = yup.InferType<typeof adminSchema>;
-type companyType = yup.InferType<typeof companySchema>;
+export const companySchema = new mongoose.Schema({
+  companyName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  fromAddress: {
+    type: String,
 
-interface adminInterface extends adminType {
-  _id: mongoDB.ObjectID;
-}
+    required: true,
+    trim: true,
 
-interface companyInterface extends companyType {
-  _id: mongoDB.ObjectID;
-}
+  },
+  toAddress: {
+    type: String,
+    trim: true,
+    required: true
+  },
+  date: {
+    type: Array,
+    required: true,
+    trim: true,
+  },
+  weight: {
+    type: Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  }
+})
 
-export {
-  adminSchema,
-  adminType,
-  adminInterface,
-  companySchema,
-  companyType,
-  companyInterface,
-};
+// interface CompanyInterface extends mongoose.Document {
+//   companyName: {
+//     type: String,
+//     required: true,
+//     trim: true
+//   },
+//   fromAddress: {
+//     type: String,
+
+//     required: true,
+//     trim: true,
+
+//   },
+//   toAddress: {
+//     type: String,
+//     trim: true,
+//     required: true
+//   },
+//   date: {
+//     type: [{
+//       type: Date
+//     }],
+//     required: true,
+//     trim: true,
+//   },
+//   weight: {
+//     type: Number,
+//     required: true
+//   },
+//   price: {
+//     type: Number,
+//     required: true
+//   }
+// }
+
+export const Company = mongoose.model<CompanyInterface>(
+  "company",
+  companySchema
+)
+
+// companySchema.pre<CompanyInterface>{
+//   "save", function
+// }
+
+export const Admin = mongoose.model(
+  "admin",
+  adminSchema
+)
+
+

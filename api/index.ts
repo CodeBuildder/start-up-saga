@@ -1,4 +1,4 @@
-import connectDB from "./db/db.connect";
+import { connectDB } from "./db/db.connect";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -21,9 +21,9 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 // app.use("/", (req, res) => {
 //   res.json({ success: true, message: "Namma lost maara !" });
 // });
-app.use(authRoute);
-app.use(adminRoute);
-app.use(clientRoute)
+// app.use(authRoute);
+// app.use(adminRoute);
+// app.use(clientRoute)
 
 
 app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
