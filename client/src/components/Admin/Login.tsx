@@ -32,8 +32,10 @@ const AdminLogin: React.FC = () => {
         history.push("/admin/dashboard");
       }
     } catch (err: any) {
-      if (err.response.status === 401) {
-        toast.warn("Incorrect password");
+      if (err.response) {
+        if (err.response.status === 401) {
+          toast.warn("Incorrect password");
+        }
       }
     }
   };

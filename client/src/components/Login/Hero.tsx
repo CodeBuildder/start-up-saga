@@ -5,11 +5,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../../userContext/context";
 type FormData = {
   email: string;
   password: string;
 };
 const Hero: React.FC = () => {
+  const { setLoggedIn } = useAuth();
   // const authContext = useContext(AuthContext);
   const history = useHistory();
   const {
@@ -32,11 +34,10 @@ const Hero: React.FC = () => {
       // let responseData: responseData = postData.data;
       if (postData.status === 201) {
         localStorage.setItem("token", postData.data["token"]);
-
+        setLoggedIn(true);
         toast.success("Login successful!");
-        setTimeout(() => {
-          history.push("/dashboard");
-        }, 4000);
+
+        history.push("/dashboard");
       }
     } catch (err: any) {
       if (err.response) {

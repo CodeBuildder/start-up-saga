@@ -14,7 +14,7 @@ type FormData = {
 };
 const Dashboard = () => {
   const [value, setValue] = useState<string | null>("");
-  const [calendarView, setCalendarView] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -49,7 +49,7 @@ const Dashboard = () => {
           {...register("companyName", { required: true })}
         />
         <label className="label">
-          <span className="label-text">From Address</span>
+          <span className="label-text">From </span>
         </label>
         <input
           type="text"
@@ -57,21 +57,9 @@ const Dashboard = () => {
           {...register("fromAddress", { required: true })}
         />
         <label className="label">
-          <span className="label-text">To Address</span>
+          <span className="label-text">To </span>
         </label>
-        <input
-          type="text"
-          className="input rounded-sm"
-          {...register("toAddress", { required: true })}
-        />
-        <label className="label">
-          <span className="label-text">Weight</span>
-        </label>
-        <input
-          type="text"
-          className="input rounded-sm"
-          {...register("weight", { required: true })}
-        />
+
         <label className="label">
           <span className="label-text">Price</span>
         </label>
@@ -80,17 +68,14 @@ const Dashboard = () => {
           className="input rounded-sm"
           {...register("price", { required: true })}
         />
-        {calendarView === false ? (
-          <h1 onClick={() => setCalendarView(true)}>SELECT DATE</h1>
-        ) : (
-          <DatePicker
-            value={value}
-            multiple={true}
-            placeholder="SELECT DATE"
-            id="date-picker"
-            format="DD/MM/YYYY"
-          />
-        )}
+
+        <DatePicker
+          value={value}
+          multiple={true}
+          placeholder="SELECT DATE"
+          id="date-picker"
+          format="DD/MM/YYYY"
+        />
 
         <button
           onClick={() =>
