@@ -9,6 +9,8 @@ export const userOrderDetails = async (userOrderData: userPostType) => {
     const DB = await client.db().collection("userOrder");
 
     const newUserOrderData = {
+      userID: userOrderData.userID,
+      companyID: userOrderData.companyID,
       companyName: userOrderData.companyName,
       fromAddress: userOrderData.fromAddress,
       toAddress: userOrderData.toAddress,

@@ -3,10 +3,12 @@ import * as yup from 'yup'
 
 
 const userPostSchema = yup.object({
+    companyID: yup.number(),
+    userID: yup.number(),
     companyName: yup.string().trim().required(),
     fromAddress: yup.string().trim().required(),
     toAddress: yup.string().trim().required(),
-    date: yup.array().of(yup.date().required()).required(),
+    date: yup.date().required(),
     weight: yup.number().required(),
     price: yup.number().required()
 })
