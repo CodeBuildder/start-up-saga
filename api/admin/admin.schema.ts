@@ -58,45 +58,7 @@ export const companySchema = new mongoose.Schema({
   },
 });
 
-// interface CompanyInterface extends mongoose.Document {
-//   companyName: {
-//     type: String,
-//     required: true,
-//     trim: true
-//   },
-//   fromAddress: {
-//     type: String,
-
-//     required: true,
-//     trim: true,
-
-//   },
-//   toAddress: {
-//     type: String,
-//     trim: true,
-//     required: true
-//   },
-//   date: {
-//     type: [{
-//       type: Date
-//     }],
-//     required: true,
-//     trim: true,
-//   },
-//   weight: {
-//     type: Number,
-//     required: true
-//   },
-//   price: {
-//     type: Number,
-//     required: true
-//   }
-// }
-
 export const Company = mongoose.model("company", companySchema);
 
-// companySchema.pre<CompanyInterface>{
-//   "save", function
-// }
 
 export const Admin = mongoose.model("admin", adminSchema);

@@ -29,14 +29,13 @@ router.post(
         process.env.JWT_SECRET || "",
         { expiresIn: "10d" }
       );
-
-      res.json(result).status(201);
+      res.json({ result, token }).status(201);
     } catch (err) {
       next(err);
     }
   }
 );
-export default router;
+
 // router.post(
 //   "/api/admin/login",
 //   async (req: Request, res: Response, next: NextFunction) => {
@@ -101,4 +100,4 @@ export default router;
 //   }
 // )
 
-// export default router;
+export default router;

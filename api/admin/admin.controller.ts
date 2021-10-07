@@ -29,6 +29,7 @@ export const registerAdmin = async (adminData: adminDB) => {
   }
 };
 
+
 // export const loginAdmin = async (email: string, password: string) => {
 //   try {
 //     const client: mongodb.MongoClient = await getClient();
@@ -120,6 +121,7 @@ export const registerAdmin = async (adminData: adminDB) => {
 //     throw err;
 //   }
 // };
+
 
 // export const getOrderDetails = async (id: mongodb.ObjectID) => {
 //   try {
