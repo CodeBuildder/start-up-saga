@@ -40,7 +40,7 @@ export const verifiedAdmin = async (
 
     const client: mongodb.MongoClient = await getClient();
     if (payload) {
-      if (payload.category == "user") {
+      if (payload.category == "client") {
         const DB = client.db().collection("users");
         user = await DB.findOne({ email: payload.email });
       } else {

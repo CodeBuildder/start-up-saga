@@ -11,8 +11,9 @@ router.post(
     const userOrderData = req.body as userPostType;
 
     try {
-      const result = await userOrderDetails(userOrderData);
-      res.json(userOrderData).status(201);
+      const { user } = res.locals.user;
+      const result = await userOrderDetails(userOrderData, user._id);
+      res.json(result).status(201);
     } catch (error) {
       next(error);
       console.log(error);
@@ -27,8 +28,6 @@ router.post(
     const location = req.body.location;
 
     try {
-      console.log(res.locals.user);
-
       const result = await findLocation(location);
       res.json(result).status(201);
     } catch (error) {
