@@ -47,11 +47,10 @@ router.post(
     const companyData = req.body as companyType;
 
     try {
-      const result = await postCompanyDetails(companyData);
-      res.status(201).json({
-        companyData,
-        message: "You have successfully posted the job!",
-      });
+      const { user } = res.locals.user;
+      const result = await postCompanyDetails(companyData, user._id);
+
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }

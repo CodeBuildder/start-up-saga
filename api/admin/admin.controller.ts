@@ -41,6 +41,7 @@ export const registerAdmin = async (adminData: adminType) => {
     }
     const token = jwt.sign(
       {
+        _id: response.insertedId,
         email: newAdminData.email,
 
         category: "admin",
@@ -85,7 +86,7 @@ export const loginAdmin = async (email: string, password: string) => {
     const token = jwt.sign(
       {
         email: verifyAdmin.email,
-
+        _id: verifyAdmin._id,
         category: "admin",
       },
       process.env.JWT_SECRET || "",
@@ -97,16 +98,18 @@ export const loginAdmin = async (email: string, password: string) => {
   }
 };
 
-export const postCompanyDetails = async (companyData: companyType) => {
+export const postCompanyDetails = async (
+  companyData: companyType,
+  id: mongodb.ObjectID
+) => {
   try {
     const client: mongodb.MongoClient = await getClient();
-    const DB = client.db().collection("admin");
+    const DB = client.db().collection("companyDetails");
     const newAdminData = {
-      name: companyData.companyName,
+      companyId: id,
       fromAddress: companyData.fromAddress,
       toAddress: companyData.toAddress,
       date: companyData.date,
-
       price: companyData.price,
     };
 
@@ -116,7 +119,7 @@ export const postCompanyDetails = async (companyData: companyType) => {
       throw HttpError(500, "Internal Server Error!");
     }
 
-    return { response };
+    return response.ops[0];
   } catch (err) {
     throw err;
   }

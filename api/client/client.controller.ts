@@ -6,10 +6,13 @@ import { getClient } from "../db/db.connect";
 export const userOrderDetails = async (userOrderData: userPostType) => {
   try {
     const client: mongodb.MongoClient = await getClient();
-    const DB = await client.db().collection("userOrder");
-
+    const companyDB = client.db().collection("admin");
+    const DB = client.db().collection("userOrder");
+    const findCompany = await companyDB.findOne({
+      name: userOrderData.companyName,
+    });
     const newUserOrderData = {
-      companyName: userOrderData.companyName,
+      companyId: findCompany._id,
       fromAddress: userOrderData.fromAddress,
       toAddress: userOrderData.toAddress,
       date: userOrderData.date,
@@ -42,6 +45,6 @@ export const findLocation = async (data: string) => {
   //    fromAddress: { $regex: regexFromAddress },
   //   toAddress: { $regex: regexToAddress },
   //   date: { $elemMatch: { $gte: data.date } },
-  console.log(findIt);
+  // console.log(findIt);
   return findIt;
 };
