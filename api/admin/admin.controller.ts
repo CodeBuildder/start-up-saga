@@ -149,3 +149,18 @@ export const getFilterCompanyDetails = async (data: filterData) => {
     throw err;
   }
 };
+
+
+export const getOrderDetails = async (id: mongodb.ObjectID) => {
+  try {
+    const client: mongodb.MongoClient = await getClient();
+    const DB = client.db().collection("userOrder");
+
+    const companyOrders = await DB.find({ id }).toArray()
+
+    return companyOrders
+
+  } catch (error) {
+    throw error
+  }
+}

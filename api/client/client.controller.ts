@@ -49,3 +49,17 @@ export const findLocation = async (data: string) => {
   // console.log(findIt);
   return findIt;
 };
+
+export const getOrderDetails = async (id: mongodb.ObjectID) => {
+  try {
+    const client: mongodb.MongoClient = await getClient();
+    const DB = client.db().collection("userOrder");
+
+    const userOrders = await DB.find({ id }).toArray()
+
+    return userOrders
+
+  } catch (error) {
+    throw error
+  }
+}
