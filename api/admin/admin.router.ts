@@ -30,7 +30,7 @@ router.post(
         { expiresIn: "10d" }
       );
 
-      res.json(result).status(201);
+      res.json({ token, result }).status(201);
     } catch (err) {
       next(err);
     }
