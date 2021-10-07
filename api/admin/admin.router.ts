@@ -29,7 +29,7 @@ router.post(
         process.env.JWT_SECRET || "",
         { expiresIn: "10d" }
       );
-      res.json({ result, token }).status(201);
+      res.json({ token, result }).status(201);
     } catch (err) {
       next(err);
     }
