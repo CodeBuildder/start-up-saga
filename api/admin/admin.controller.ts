@@ -133,15 +133,17 @@ interface filterData {
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
     const client: mongodb.MongoClient = await getClient();
-    const DB = await client.db().collection("admin");
-    const regexFromAddress = new RegExp(data.fromAddress, "i");
-    const regexToAddress = new RegExp(data.toAddress, "i");
+    const DB = await client.db().collection("companyDetails");
+
     // const test = await DB.aggregate([{ $unwind: "$date" }]).toArray();
     const filteredData = await DB.find({
-      fromAddress: { $regex: regexFromAddress },
-      toAddress: { $regex: regexToAddress },
+      fromAddress: { $regex: `^${data.fromAddress}`, $options: "i" },
+      toAddress: { $regex: `^${data.toAddress}`, $options: "i" },
       date: { $elemMatch: { $gte: data.date } },
     }).toArray();
+    // const findIt = await DB.find({
+    //   city: { $regex: `^${data}`, $options: "i" },
+    // }).toArray();
     return filteredData;
   } catch (err) {
     throw err;

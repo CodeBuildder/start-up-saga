@@ -6,7 +6,7 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-
+import constants from "../../constants/constants";
 import Select from "react-select";
 import { cityData } from "../../constants/cities";
 const Dashboard = () => {
@@ -37,13 +37,23 @@ const Dashboard = () => {
     };
   }, [displayCalendar]);
 
-  const searchCompany = () => {
+  const searchCompany = async () => {
+    let date = JSON.stringify(value);
+    date = date.slice(1, 11);
     const data = {
-      fromLocation: fromLocation.value,
-      toLocation: toLocation.value,
-      date: value,
+      fromAddress: fromLocation.value,
+      toAddress: toLocation.value,
+      date,
     };
     console.log(data);
+    const searchCompanies = await axios.post(
+      `${constants.BASE_URL}/admin/company/filter`,
+      data,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    console.log(searchCompanies.data);
   };
 
   return (
@@ -141,7 +151,7 @@ const Dashboard = () => {
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
             <div className="jusitfy-between p-7 w-2/3 h-66 bg-white mr-4 rounded-md  shadow-lg text-purple-400">
               <div className="flex flex-row text-6xl">
-                Service Provider : FedEx 
+                Service Provider : FedEx
                 <div className="w-1/4">
                   <img
                     className=""

@@ -59,7 +59,7 @@ interface filterData {
   toAddress: string;
   date: Date;
 }
-router.get(
+router.post(
   "/api/admin/company/filter",
   verifiedAdmin,
   async (req: Request, res: Response, next: NextFunction) => {

@@ -22,7 +22,7 @@ router.post(
 );
 
 router.post(
-  "/api/user/location",
+  "/api/user/find/location",
   verifiedAdmin,
   async (req: Request, res: Response, next: NextFunction) => {
     const location = req.body.location;
