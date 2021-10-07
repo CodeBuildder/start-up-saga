@@ -24,34 +24,26 @@ function App() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const t = localStorage.getItem("token");
+    console.log(t);
     if (t != null) {
-      //console.log("yesss");
+      console.log("yesss");
       setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
     }
-    setLoading(true);
-  }, [loggedIn, setLoggedIn]);
 
-  let protectedRoutes = (
-    <>
-      {" "}
-      <Router>
-        <Switch>
-          <Route path="/admin/dashboard" exact component={AdminDashboard} />
-          <Route path="/admin/myorders" exact component={AdminOrder} />
-          <Route path="/dashboard" exact component={UserDashboard} />
-          <Route path="/myorders" exact component={UserOrder} />
-        </Switch>
-      </Router>
-    </>
-  );
+    setTimeout(() => {
+      setLoading(true);
+    }, 1000);
+  }, [loggedIn, setLoggedIn]);
   let unProtectedRoutes = (
     <>
-      {" "}
+      {console.log(" unprotected using")}
       <Router>
         <Switch>
           <Redirect from="/admin/dashboard" to="/" />
           <Redirect from="/admin/orders" to="/" />
-          {/* <Redirect from="/dashboard" to="/" /> */}
+          <Redirect from="/dashboard" to="/" />
           <Redirect from="/orders" to="/" />
           <Route path="/admin/login" exact component={AdminLogin} />
           <Route path="/admin/signup" exact component={AdminSignup} />
@@ -62,6 +54,21 @@ function App() {
       </Router>
     </>
   );
+  let protectedRoutes = (
+    <>
+      {console.log("protected using")}
+      <Router>
+        <Switch>
+          <Route path="/admin/dashboard" exact component={AdminDashboard} />
+          <Route path="/admin/myorders" exact component={AdminOrder} />
+          <Route path="/dashboard" exact component={UserDashboard} />
+          <Route path="/myorders" exact component={UserOrder} />
+          <Route path="/" exact component={Home} />
+        </Switch>
+      </Router>
+    </>
+  );
+
   return (
     <>
       {loading === true ? (

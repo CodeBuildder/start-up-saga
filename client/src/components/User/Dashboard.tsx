@@ -103,9 +103,34 @@ const Dashboard = () => {
         </div>
         {search === true ? (
           <div className="w-full  mt-8  h-full flex justify-items-start mx-10 ">
-            <div className="w-1/5 h-80 bg-white mr-4">SIDEBAR</div>
-            <div className="w-4/5 h-44 bg-white mr-4 rounded-md  shadow-lg  ">
-              MAIN DIV
+            <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
+            <div className="grid grid-cols-4 gap-4 p-7 w-2/3 h-66 bg-white mr-4 rounded-md  shadow-lg text-purple-400">
+              <div className="col-span-4 text-6xl">
+                Company : FedX
+                </div>
+              <div className="text-2xl pt-5 pl-2 text-left">
+                From :
+                <div className="text-4xl pl-4">
+                  Chennai
+                </div>
+              </div>
+              <div className="pt-10">
+              <IconContext.Provider value={{ size: "35px" }}>
+              <BsFillArrowRightCircleFill />
+            </IconContext.Provider>
+              </div>
+              <div className="text-2xl pt-5 text-left">
+                To : 
+                <div className="text-4xl pl-4">
+                  Bangalore
+                </div>
+              </div>
+               <div></div>
+              <div className="text-2xl pl-2 pt-5">Price/kg :</div>
+              <div className="text-2xl col-span-3 pt-5">Vehicles Available :</div>
+              <div className="text-3xl pl-10 span">50/-</div>
+              <div className="text-3xl pl-5 col-span-2">8, 6 wheelers available</div>
+              <div><button className="btn btn-outline btn-primary w-48 h-14 float-right">Know More</button></div>
             </div>
           </div>
         ) : (
