@@ -1,18 +1,11 @@
-import {
-  Company, Admin
-} from "./admin.schema";
+import { Company, Admin } from "./admin.schema";
 import HttpError from "http-errors";
 import * as jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { adminDB } from "../../types/types";
-
-
 export const registerAdmin = async (adminData: adminDB) => {
-
-
   try {
-
-    if (await Company.findOne({ companyName: adminData.companyName })) {
+    if (await Admin.findOne({ companyName: adminData.companyName })) {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
@@ -26,13 +19,11 @@ export const registerAdmin = async (adminData: adminDB) => {
       phone: adminData.phone,
       address: adminData.address,
     };
-
-
-
-    return {
-      newAdminData,
-      success: true
-    };
+    const admin = new Admin(newAdminData);
+    console.log(admin);
+    const response = await admin.save();
+    console.log(response);
+    return admin;
   } catch (err) {
     throw err;
   }
@@ -129,7 +120,6 @@ export const registerAdmin = async (adminData: adminDB) => {
 //     throw err;
 //   }
 // };
-
 
 // export const getOrderDetails = async (id: mongodb.ObjectID) => {
 //   try {

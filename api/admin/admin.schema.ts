@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 export const adminSchema = new mongoose.Schema({
   companyName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
@@ -16,34 +16,32 @@ export const adminSchema = new mongoose.Schema({
   address: {
     type: String,
     trim: true,
-    required: true
+    required: true,
   },
   password: {
     type: String,
     required: true,
     trim: true,
-    minlength: 7
-  }
-})
-
+    minlength: 7,
+  },
+});
 
 export const companySchema = new mongoose.Schema({
   companyName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   fromAddress: {
     type: String,
 
     required: true,
     trim: true,
-
   },
   toAddress: {
     type: String,
     trim: true,
-    required: true
+    required: true,
   },
   date: {
     type: Array,
@@ -52,13 +50,13 @@ export const companySchema = new mongoose.Schema({
   },
   weight: {
     type: Number,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 // interface CompanyInterface extends mongoose.Document {
 //   companyName: {
@@ -95,18 +93,10 @@ export const companySchema = new mongoose.Schema({
 //   }
 // }
 
-export const Company = mongoose.model<CompanyInterface>(
-  "company",
-  companySchema
-)
+export const Company = mongoose.model("company", companySchema);
 
 // companySchema.pre<CompanyInterface>{
 //   "save", function
 // }
 
-export const Admin = mongoose.model(
-  "admin",
-  adminSchema
-)
-
-
+export const Admin = mongoose.model("admin", adminSchema);

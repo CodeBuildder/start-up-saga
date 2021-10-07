@@ -19,12 +19,10 @@ router.post(
     try {
       const result = await registerAdmin(adminData);
 
-      await result.newAdminData.save()
-
       const token = jwt.sign(
         {
-          _id: result.newAdminData._id,
-          email: result.newAdminData.email,
+          _id: result._id,
+          email: adminData.email,
 
           category: "admin",
         },
@@ -38,7 +36,7 @@ router.post(
     }
   }
 );
-
+export default router;
 // router.post(
 //   "/api/admin/login",
 //   async (req: Request, res: Response, next: NextFunction) => {
