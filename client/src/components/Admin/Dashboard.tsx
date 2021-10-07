@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import DatePicker from "react-multi-date-picker";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import constants from "../../constants/constants";
 import axios, { AxiosResponse } from "axios";
@@ -9,33 +9,23 @@ type FormData = {
   toAddress: string;
   fromAddress: string;
   date: any;
-  weight: number;
   price: number;
 };
 const Dashboard = () => {
   const [value, setValue] = useState<string | null>("");
+  const [calendarView, setCalendarView] = useState(false);
+  const { register, handleSubmit } = useForm();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  let date: any;
-  const dateData: any = () => {
-    date = value?.split(" ");
-  };
-  console.log(dateData);
   const onSubmit = (data: FormData) => {
     const userOrder: FormData = {
       companyName: data.companyName,
       fromAddress: data.fromAddress,
       toAddress: data.toAddress,
       price: data.price,
-      weight: data.weight,
-      date: date,
+      date: value?.split(" "),
     };
     console.log(userOrder);
-    // axios.post(`${constants.BASE_URL}/admin/register`, userOrder);
+    axios.post(`${constants.BASE_URL}/admin/register`, userOrder);
   };
   return (
     <div>
@@ -57,9 +47,13 @@ const Dashboard = () => {
           {...register("fromAddress", { required: true })}
         />
         <label className="label">
-          <span className="label-text">To </span>
+          <span className="label-text">To Address</span>
         </label>
-
+        <input
+          type="text"
+          className="input rounded-sm"
+          {...register("toAddress", { required: true })}
+        />
         <label className="label">
           <span className="label-text">Price</span>
         </label>
@@ -68,15 +62,18 @@ const Dashboard = () => {
           className="input rounded-sm"
           {...register("price", { required: true })}
         />
-
-        <DatePicker
-          value={value}
-          multiple={true}
-          placeholder="SELECT DATE"
-          id="date-picker"
-          format="DD/MM/YYYY"
-        />
-
+        {calendarView === false ? (
+          <h1 onClick={() => setCalendarView(true)}>SELECT DATE</h1>
+        ) : (
+          <DatePicker
+            value={value}
+            multiple={true}
+            placeholder="SELECT DATE"
+            id="date-picker"
+            format="DD/MM/YYYY"
+            className="rmdp-input"
+          />
+        )}
         <button
           onClick={() =>
             setValue(
@@ -88,13 +85,9 @@ const Dashboard = () => {
         >
           SAVE DATES
         </button>
-        <button onClick={dateData()}>CALC</button>
+        <button type="submit">Post</button>
       </form>
     </div>
-    //   ) : (
-    //     <Redirect to="/" />
-    //   )}
-    // </>
   );
 };
 export default Dashboard;
