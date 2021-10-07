@@ -91,10 +91,7 @@ export const loginAdmin = async (email: string, password: string) => {
       process.env.JWT_SECRET || "",
       { expiresIn: "10d" }
     );
-    return {
-      success: true,
-      token,
-    };
+    return token;
   } catch (err) {
     throw err;
   }

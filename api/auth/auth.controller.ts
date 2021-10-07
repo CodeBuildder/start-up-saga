@@ -9,7 +9,7 @@ export const registerUser = async (userData: userType) => {
     const client: mongodb.MongoClient = await getClient();
     const DB = await client.db().collection("users");
 
-    if (await DB.findOne({ name: userData.name })) {
+    if (await DB.findOne({ email: userData.email })) {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
@@ -17,7 +17,7 @@ export const registerUser = async (userData: userType) => {
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
     const newUserData = {
-      name: userData.name,
+      username: userData.username,
       password: hashedPassword,
       email: userData.email,
       phone: userData.phone,

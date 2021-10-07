@@ -33,9 +33,7 @@ router.post(
     try {
       const result = await loginAdmin(email, password);
 
-      res.json({
-        result,
-      });
+      res.json({ token: result, success: true });
     } catch (err) {
       next(err);
     }
