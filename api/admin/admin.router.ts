@@ -8,8 +8,6 @@ import {
   getFilterCompanyDetails,
 } from "./admin.controller";
 
-import jwt from "jsonwebtoken";
-
 const router: Router = Router();
 
 router.post(
