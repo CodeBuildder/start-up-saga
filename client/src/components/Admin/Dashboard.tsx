@@ -21,7 +21,10 @@ const Dashboard = () => {
     formState: { errors },
   } = useForm();
   let date: any;
-  const dateData: any = () => {
+  const dateData: any = (value: any) => {
+    setValue(
+      document.getElementsByClassName("rmdp-input")[0].getAttribute("value")
+    );
     date = value?.split(" ");
   };
   console.log(dateData);
@@ -65,14 +68,6 @@ const Dashboard = () => {
           {...register("toAddress", { required: true })}
         />
         <label className="label">
-          <span className="label-text">Weight</span>
-        </label>
-        <input
-          type="text"
-          className="input rounded-sm"
-          {...register("weight", { required: true })}
-        />
-        <label className="label">
           <span className="label-text">Price</span>
         </label>
         <input
@@ -89,21 +84,12 @@ const Dashboard = () => {
             placeholder="SELECT DATE"
             id="date-picker"
             format="DD/MM/YYYY"
+            className="rmdp-input"
           />
         )}
 
-        <button
-          onClick={() =>
-            setValue(
-              document
-                .getElementsByClassName("rmdp-input")[0]
-                .getAttribute("value")
-            )
-          }
-        >
-          SAVE DATES
-        </button>
-        <button onClick={dateData()}>CALC</button>
+        <button onClick={dateData(value)}>SAVE DATES</button>
+        <button type="submit">Post</button>
       </form>
     </div>
     //   ) : (
