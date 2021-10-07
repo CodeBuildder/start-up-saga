@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -6,12 +7,17 @@ import { IconContext } from "react-icons";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
+import Select from "react-select";
+import { cityData } from "../../constants/cities";
 const Dashboard = () => {
+  const myOptions = cityData;
   const [value, onChange] = useState(new Date());
-  const [fromLocation, setFromLocation] = useState<string>("");
-  const [toLocation, setToLocation] = useState<string>("");
+  const [fromLocation, setFromLocation] = useState<any>({
+    label: "",
+    value: "",
+  });
+  const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
   const [search, setSearch] = useState<boolean>(false);
-  // const sample={'from':"chennai",to:"banglore",}
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
   const ref = useRef<HTMLDivElement>(null);
@@ -30,6 +36,16 @@ const Dashboard = () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [displayCalendar]);
+
+  const searchCompany = () => {
+    const data = {
+      fromLocation: fromLocation.value,
+      toLocation: toLocation.value,
+      date: value,
+    };
+    console.log(data);
+  };
+
   return (
     <div className="w-100 min-h-screen bg-gray-100 ">
       {/* Navigation Bar */}
@@ -51,23 +67,42 @@ const Dashboard = () => {
       {/* Main page*/}
       <div className="w-100 flex  h-full min-h-screen flex-col items-center  m-2 p-2  ">
         <div className=" flex items-center  justify-around w-2/3 bg-white h-40 mt-2 rounded-xl pb-6">
-          <div className="flex  flex-col justify-start">
+          <Select
+            value={fromLocation}
+            options={myOptions}
+            onChange={(fromLocation) => {
+              setFromLocation(fromLocation);
+            }}
+            openMenuOnClick={false}
+            placeholder="From"
+            className="w-56 py-2 h-12"
+          />
+          {/* <div className="flex  flex-col justify-start">
             <label className="label">
               <span className="label-text">FROM</span>
             </label>
             <input
-              type={fromLocation}
+              value={fromLocation}
               className="input rounded-sm input-bordered"
-              onChange={(e) => setFromLocation(e.target.value)}
+              onChange={fetchFromLocation}
             />
-          </div>
+          </div> */}
 
           <div className="pt-10">
             <IconContext.Provider value={{ size: "40px" }}>
               <BsFillArrowRightCircleFill />
             </IconContext.Provider>
           </div>
-          <div>
+          <Select
+            value={toLocation}
+            options={myOptions}
+            onChange={(toLocation) => {
+              setToLocation(toLocation);
+            }}
+            openMenuOnClick={false}
+            className="w-56 py-2 h-12"
+          />
+          {/* <div>
             <label className="label">
               <span className="label-text">TO</span>
             </label>
@@ -77,7 +112,7 @@ const Dashboard = () => {
               className="input rounded-sm input-bordered"
               onChange={(e) => setToLocation(e.target.value)}
             />
-          </div>
+          </div> */}
           <div ref={ref}>
             <div
               className="flex content-center"
@@ -95,7 +130,7 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-          <div className="pt-6" onClick={() => setSearch(true)}>
+          <div className="pt-6" onClick={searchCompany}>
             <button className="btn btn-outline btn-accent w-28 h-8">
               SEARCH
             </button>

@@ -19,7 +19,7 @@ router.post(
   }
 );
 
-router.get(
+router.post(
   "/api/user/location",
   async (req: Request, res: Response, next: NextFunction) => {
     const location = req.body.location;
