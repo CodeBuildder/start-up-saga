@@ -69,7 +69,7 @@ export const postCompanyDetails = async (
 ) => {
   try {
     const postData = {
-      companyId: id,
+      adminId: id,
       fromAddress: companyData.fromAddress,
       toAddress: companyData.toAddress,
       date: companyData.date,
@@ -90,21 +90,21 @@ interface filterData {
   fromAddress: string;
   toAddress: string;
   date: Date;
+  sortBy: string;
 }
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
-    // const test = await DB.aggregate([{ $unwind: "$date" }]).toArray();
     const filteredData = await Company.find({
       fromAddress: { $regex: `^${data.fromAddress}`, $options: "i" },
       toAddress: { $regex: `^${data.toAddress}`, $options: "i" },
     })
       .elemMatch("date", { $gte: data.date })
-      .populate("adminId");
-    // const findIt = await DB.find({
-    //   city: { $regex: `^${data}`, $options: "i" },
-    // }).toArray();
+      .populate("adminId")
+      .sort(data.sortBy);
+
     return filteredData;
   } catch (err) {
+    console.log(err);
     throw err;
   }
 };

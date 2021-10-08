@@ -30,6 +30,7 @@ const userOrderSchema = new mongoose.Schema({
   orderedOn: { type: Date },
   paymentMode: { type: String },
   transactionOver: { type: Boolean, default: false },
+  gaveRating: { type: Boolean, default: false },
 });
 
 export const UserOrder = mongoose.model("userOrder", userOrderSchema);
