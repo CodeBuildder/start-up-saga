@@ -40,7 +40,7 @@ const Orders = () => {
       </div>
 
       {/*Maiin page */}
-      <div className="w-100 min-h-screen text-black  bg-gray-400 ">
+      <div className="w-100 min-h-screen text-black  bg-gray-100 ">
         <div className="w-100 flex h-full min-h-screen flex-col items-center m-2 p-10 ">
           {loaded === true ? (
             <div className="w-full min-h-screen m-5 bg-gray-400">
