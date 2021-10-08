@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import BasicModal from "./modal";
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -13,14 +14,15 @@ import { cityData } from "../../constants/cities";
 import { useAuth } from "../../userContext/context";
 import { BiLogOut } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
-const Dashboard = () => {
+
+export default function Dashboard() {
   const myOptions = cityData;
   const [value, onChange] = useState(new Date());
   const [fromLocation, setFromLocation] = useState<any>({
     label: "",
     value: "",
   });
-  var dummy;
+
   var today = new Date();
   const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
   const logoutHandler = () => {
@@ -283,12 +285,13 @@ const Dashboard = () => {
                     </span>
 
                     <span>
-                      <button
+                      {/* <button
                         className=" btn btn-outline btn-accent w-48 h-1 float-right"
-                        onClick={() => bookSlot(item)}
-                      >
-                        Book a slot
-                      </button>
+                        // onClick={() => bookSlot(item)}
+                      > */}
+
+                      {/* </button> */}
+                      <BasicModal />
                     </span>
                   </div>
                 </div>
@@ -301,6 +304,4 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
-
-export default Dashboard;
+}

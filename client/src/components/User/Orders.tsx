@@ -45,39 +45,62 @@ const Orders = () => {
           {loaded === true ? (
             <div className="w-full min-h-screen m-5 bg-gray-400">
               {Order.length > 0 ? (
-                Order?.map((item: Order) => (
+                Order?.map((item: any) => (
                   <>
-                    <div className="jusitfy-between p-7 w-3/5 h-full">
-                      <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-purple-800">
-                        <div className="flex flex-row text-xl">
-                          <span className="mt-5 font-main">
-                            {item.adminId.companyName}
-                          </span>
+                    <div className="jusitfy-between p-7 w-3/6 h-full">
+                      <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
+                        <div className="flex flex-row space-x-4 text-lg font-bold">
+                        <div className="text-xl">
+                          {item.fromAddress}
+                        </div> 
+                        <div className="pt-1">
+                          <IconContext.Provider value={{ size: "24px" }}>
+                          <BsFillArrowRightCircleFill />
+                          </IconContext.Provider>
                         </div>
-                        <span className="mt-5 font-main">
-                          <b>Contact:</b> {item.adminId.email}
-                        </span>
-
-                        <div className="flex flex-row ">
-                          <p className="text-2xl font-bold font-main">
-                            {item.fromAddress}
-                          </p>
-                          <div className="px-8">
-                            <IconContext.Provider value={{ size: "35px" }}>
-                              <BsFillArrowRightCircleFill />
-                            </IconContext.Provider>
+                        <div>
+                          {item.toAddress}
+                        </div>
+                        <div className="flex flex-col pl-10 ">
+                          <div className="">
+                            {item.weight} Kg(s)
                           </div>
-                          <p className="text-2xl font-bold font-main">
-                            {item.toAddress}
-                          </p>
+ 
+                        </div> 
                         </div>
-                        <div className="contents flex-row space-between w-16 pt-5">
-                          <p className="text-2xl font-bold font-main">
-                            ₹{item.price}/Kg
-                          </p>
+                        <div className="flex flex-row text-lg pb-1 pt-1">
+                        <div>
+                              Date Ordered: <b>{}</b> 
                         </div>
+                          <div className="pl-80 ml-2">
+                           <b>₹{item.price}/-</b>
+                          </div>                          
+                        </div>
+
+                        <div className="flex flex-row text-lg space-x-28">
+                          <div className="flex flex-col">
+                            <div>
+                              Expected Delivery: <b>21/11</b> 
+                            </div>
+                            <div>
+                              Rate your experience!
+                            </div>
+                          </div>
+                          <div className="flex flex-col">
+                            <div>
+                              Payment Method: <b>Net Banking</b> 
+                            </div>
+                            <div className="pb-2">
+                              Provider : <b>{item.adminId.companyName}</b> 
+                            </div>
+                            <div className="btn btn-outline btn-accent -m-1">
+                              View Updates
+                            </div>
+                          </div>
                       </div>
+
                     </div>
+                  </div>
                   </>
                 ))
               ) : (
