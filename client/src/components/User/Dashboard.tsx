@@ -20,6 +20,8 @@ const Dashboard = () => {
     label: "",
     value: "",
   });
+  var dummy;
+  var today = new Date();
   const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -59,7 +61,7 @@ const Dashboard = () => {
     };
 
     console.log(data);
-    let searchCompanies: AxiosResponse = await axios.post(
+    let searchCompanies: any = await axios.post(
       `${constants.BASE_URL}/admin/company/filter`,
       data,
       {
@@ -68,7 +70,7 @@ const Dashboard = () => {
     );
     console.log(searchCompanies.data);
 
-    searchCompanies = searchCompanies.data;
+    searchCompanies = searchCompanies?.data;
 
     setPost(searchCompanies);
   };
@@ -172,6 +174,7 @@ const Dashboard = () => {
             <button className="btn btn-outline btn-accent w-28 h-8 ">
               SEARCH
             </button>
+            <button onClick={() => console.log(post)}>YES</button>
           </div>
         </div>
         {post.length > 0 ? (
@@ -191,6 +194,29 @@ const Dashboard = () => {
                     </div>
                     <div className="flex flex-row"></div>
                     <div className="mt-5">FedEx</div>
+                    <div className="w-4 h-4 bg-blue-300 rounded">
+                      <div className="w-20 h-8 bg-blue-200">
+                        {item.date.map(
+                          (i: any) =>
+                            i.toString().slice(-2) >= today.getDate() ? (
+                              <p>{i.toString().slice(-2)}</p>
+                            ) : (
+                              <div>NO</div>
+                            )
+                          // return i.toString().slice(-2) >= today.getDate() ? (
+
+                          // ) : (
+
+                          // );
+
+                          //  ? (
+
+                          // ) : (
+                          //   <p></p>
+                          // )
+                        )}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="flex flex-row ">
