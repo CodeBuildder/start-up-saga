@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Modal from "./modal";
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -18,12 +17,12 @@ import { ToastContainer, toast } from "react-toastify";
 export default function Dashboard() {
   const myOptions = cityData;
   const [value, onChange] = useState(new Date());
+  var today = new Date();
   const [fromLocation, setFromLocation] = useState<any>({
     label: "",
     value: "",
   });
 
-  var today = new Date();
   const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
   const logoutHandler = () => {
     localStorage.removeItem("token");
@@ -34,9 +33,11 @@ export default function Dashboard() {
   };
   const { setLoggedIn } = useAuth();
   const [post, setPost] = useState<any>([]);
+  const [day, setDay] = useState<any>();
+  const [payment, setPayment] = useState<String>();
+  var today = new Date();
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
-  const [day, setDay] = useState<any>();
   const [weight, setWeight] = useState<any>({ label: "", weight: "" });
   const ref = useRef<HTMLDivElement>(null);
   const weightList = [
@@ -46,10 +47,32 @@ export default function Dashboard() {
     { label: "Below 50 ", value: "50" },
     { label: "Below 100", value: "100" },
   ];
+
+  const bookSlot = async (data: any) => {
+    const postData = {
+      weight: weight.value,
+      price: parseInt(weight.value) * data.price,
+      fromAddress: data.fromAddress,
+      toAddress: data.toAddress,
+      adminId: data.adminId._id,
+      date: `${today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + day}`,
+      paymentMode: payment,
+    };
+
+    let response = await axios.post(
+      `${constants.BASE_URL}/user/order`,
+      postData,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    if (response.status === 200)
+      toast.success("Your order has been successfully booked !");
+    //console.log(postData);
+  };
+
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
-      // If the menu is open and the clicked target is not within the menu,
-      // then close the menu
       if (displayCalendar && ref.current && !ref.current.contains(e.target)) {
         setDisplayCalender(false);
       }
@@ -123,7 +146,7 @@ export default function Dashboard() {
       </div>
       {/* Main page*/}
       <div className="w-100 flex  h-full min-h-screen flex-col items-center  m-2 p-2  ">
-        <div className=" flex items-center  justify-around w-2/3 bg-white h-40 mt-2 rounded-xl pb-6">
+        <div className=" flex items-center  text-black justify-around w-2/3 bg-white h-40 mt-2 rounded-xl pb-6">
           <Select
             value={fromLocation}
             options={myOptions}
@@ -197,7 +220,7 @@ export default function Dashboard() {
           <div className="w-full mt-3 h-full flex justify-items-start mx-10 ">
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
 
-            <div className="jusitfy-between p-7 w-3/5 h-full">
+            <div className="jusitfy-between p-7 w-3/4 h-full">
               {post.map((item: any) => (
                 <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-purple-800">
                   <div className="flex flex-row text-xl">
@@ -251,7 +274,7 @@ export default function Dashboard() {
                         className="w-32 h-5 pl-10"
                       />
                     </span>
-                    <span className="flex flex-row ml-10 w-full btn-group">
+                    <span className="flex flex-row ml-10 w-1/4 btn-group">
                       {item.date.map((day: any) => (
                         <input
                           type="radio"
@@ -263,15 +286,41 @@ export default function Dashboard() {
                         />
                       ))}
                     </span>
+                    <div className="flex flex-row mr-10 ">
+                      <span className="label-text text-black mr-3">UPI</span>
+                      <input
+                        type="radio"
+                        name="upi"
+                        onChange={() => setPayment("UPI")}
+                        className="radio radio-primary "
+                      />
+                      <span className="label-text pl-10 text-black mr-3">
+                        Net Banking
+                      </span>
+                      <input
+                        type="radio"
+                        name="netbanking"
+                        onChange={() => setPayment("netBanking")}
+                        className="radio radio-primary "
+                      />
+                      <span className="label-text pl-10 text-black mr-3">
+                        COD
+                      </span>
+                      <input
+                        type="radio"
+                        name="cod"
+                        onChange={() => setPayment("COD")}
+                        className="radio radio-primary "
+                      />
+                    </div>
 
                     <span>
-                      {/* <button
+                      <button
                         className=" btn btn-outline btn-accent w-48 h-1 float-right"
-                        // onClick={() => bookSlot(item)}
-                      > */}
-
-                      {/* </button> */}
-                      <Modal props={item} />
+                        onClick={() => bookSlot(item)}
+                      >
+                        Book Slot
+                      </button>
                     </span>
                   </div>
                 </div>
