@@ -54,11 +54,11 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    console.log(searchCompanies.data["result"]);
-    searchCompanies = searchCompanies.data["result"];
-    // console.log(searchCompanies.data);
+    console.log(searchCompanies.data);
+
+    searchCompanies = searchCompanies.data;
+
     setPost(searchCompanies);
-    // console.log(post.length);
   };
 
   return (
@@ -145,7 +145,7 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-          <div className="pt-6" onClick={() => setPost(["hellp", "hi"])}>
+          <div className="pt-6" onClick={searchCompany}>
             <button className="btn btn-outline btn-accent w-28 h-8 ">
               SEARCH
             </button>
