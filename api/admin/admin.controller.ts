@@ -90,16 +90,19 @@ interface filterData {
   fromAddress: string;
   toAddress: string;
   date: Date;
+  sortBy: string;
 }
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
     // const test = await DB.aggregate([{ $unwind: "$date" }]).toArray();
+    console.log(data.sortBy);
     const filteredData = await Company.find({
       fromAddress: { $regex: `^${data.fromAddress}`, $options: "i" },
       toAddress: { $regex: `^${data.toAddress}`, $options: "i" },
     })
       .elemMatch("date", { $gte: data.date })
-      .populate("adminId");
+      .populate("adminId")
+      .sort(data.sortBy);
     // const findIt = await DB.find({
     //   city: { $regex: `^${data}`, $options: "i" },
     // }).toArray();

@@ -49,3 +49,32 @@ export const getOrderDetails = async (id: mongoose.Schema.Types.ObjectId) => {
     console.log(error);
   }
 };
+export const postRating = async (
+  id: mongoose.Schema.Types.ObjectId,
+  rating: Number
+) => {
+  try {
+    const checkOrderStatus = await UserOrder.findOne({
+      _id: id,
+      transactionOver: true,
+    });
+    const findOrder = await UserOrder.findOne({ gaveRating: true });
+    if (findOrder) {
+      throw HttpError(400, "You cannot give rating");
+    }
+    console.log(checkOrderStatus);
+    if (!checkOrderStatus) {
+      throw HttpError(400, "Order has not been processed fully");
+    }
+    const updateRating = await UserOrder.findByIdAndUpdate(
+      { _id: id },
+      { rating: rating, gaveRating: true },
+      { new: true }
+    );
+    console.log(updateRating);
+    return updateRating;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

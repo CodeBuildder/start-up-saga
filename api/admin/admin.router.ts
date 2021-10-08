@@ -71,6 +71,7 @@ interface filterData {
   fromAddress: string;
   toAddress: string;
   date: Date;
+  sortBy: string;
 }
 router.post(
   "/api/admin/company/filter",
