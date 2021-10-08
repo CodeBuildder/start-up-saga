@@ -5,7 +5,12 @@ import CONSTANTS from "../../constants/constants";
 import Loading from "react-fullscreen-loading";
 import { useHistory } from "react-router-dom";
 interface companyOrder {
-  userId: { username: String };
+  userId: { username: String; email: string; phone: Number };
+  toAddress: string;
+  fromAddress: string;
+  date: Date;
+  weight: Number;
+  price: Number;
 }
 const Orders = () => {
   const history = useHistory();
@@ -41,16 +46,24 @@ const Orders = () => {
       </div>
 
       {/*Maiin page */}
-      <div className="w-100 min-h-screen bg-gray-100 ">
+      <div className="w-100 min-h-screen text-black bg-gray-100 ">
         <div className="w-100 flex  h-full min-h-screen flex-col   items-center  m-2 p-10 ">
           {loaded === true ? (
             <div>
               {Order.length > 0 ? (
                 Order?.map((item: companyOrder) => (
-                  <div>{item.userId.username}</div>
+                  <>
+                    <span>{item.userId.username}</span>
+                    <span>{item.userId.email}</span>
+                    <span>{item.userId.phone}</span>
+                    <span>{item.toAddress}</span>
+                    <span>{item.fromAddress}</span>
+                    <span>{item.weight}</span>
+                    <span>{item.price}</span>
+                  </>
                 ))
               ) : (
-                <div className="flex items-center items-center justify-self-center">
+                <div className="flex items-center text-red-900 justify-self-center">
                   NO ORDERS PLACED
                 </div>
               )}
