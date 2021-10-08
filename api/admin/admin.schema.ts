@@ -25,12 +25,11 @@ export const adminSchema = new mongoose.Schema({
     minlength: 7,
   },
 });
-
+export const Admin = mongoose.model("admin", adminSchema);
 export const companySchema = new mongoose.Schema({
-  companyName: {
-    type: String,
-    required: true,
-    trim: true,
+  companyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "admin",
   },
   fromAddress: {
     type: String,
@@ -48,10 +47,7 @@ export const companySchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  weight: {
-    type: Number,
-    required: true,
-  },
+
   price: {
     type: Number,
     required: true,
@@ -59,6 +55,3 @@ export const companySchema = new mongoose.Schema({
 });
 
 export const Company = mongoose.model("company", companySchema);
-
-
-export const Admin = mongoose.model("admin", adminSchema);

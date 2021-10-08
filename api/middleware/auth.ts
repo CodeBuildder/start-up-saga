@@ -2,8 +2,11 @@ import * as jwt from "jsonwebtoken";
 import * as mongodb from "mongodb";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import HttpError from "http-errors";
 dotenv.config({ path: "./.env" });
+import { Company, Admin } from "../admin/admin.schema";
+import { User } from "../auth/auth.schema";
 import { adminSchema } from "../admin/admin.schema";
 import { userSchema } from "../auth/auth.schema";
 //import { connectDB } from "./db/db.connect";
@@ -38,18 +41,15 @@ export const verifiedAdmin = async (
     }
     let user;
 
-
-    // if (payload) {
-    //   if (payload.category == "client") {
-    //     const DB = client.db().collection("users");
-    //     user = await DB.findOne({ email: payload.email });
-    //   } else {
-    //     const DB = client.db().collection("admin");
-    //     user = await DB.findOne({ email: payload.email });
-    //   }
-    // }
-    // console.log(user);
-    // res.locals.user = { user };
+    if (payload) {
+      if (payload.category == "client") {
+        user = await User.findOne({ email: payload.email });
+      } else {
+        user = await Admin.findOne({ email: payload.email });
+      }
+    }
+    console.log(user);
+    res.locals.user = { user };
     next();
   } catch (err) {
     next(err);

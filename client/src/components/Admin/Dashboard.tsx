@@ -28,7 +28,7 @@ const Dashboard = () => {
       fromAddress: fromLocation.value,
       toAddress: toLocation.value,
       price: data.price,
-      date: value?.split(" "),
+      date: value?.split(",").map((item) => item.replace(" ", "")),
     };
     console.log(userOrder);
     const postData: AxiosResponse = await axios.post(
@@ -38,7 +38,7 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    if (postData.status === 201) {
+    if (postData.status === 200) {
       toast.success("Data added successfully");
     }
   };

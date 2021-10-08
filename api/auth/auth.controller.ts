@@ -1,15 +1,12 @@
-
 import { User } from "./auth.schema";
 import HttpError from "http-errors";
 import bcrypt from "bcryptjs";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import * as jwt from "jsonwebtoken";
 import { userDB } from "../../types/types";
 
 export const registerUser = async (userData: userDB) => {
   try {
-
-
     if (await User.findOne({ email: userData.email })) {
       throw HttpError(409, "User already exists!");
     }
@@ -26,7 +23,7 @@ export const registerUser = async (userData: userDB) => {
 
     const user = new User(newUserData);
 
-    const response = await user.save()
+    const response = await user.save();
 
     const token = jwt.sign(
       {
@@ -52,10 +49,9 @@ export const registerUser = async (userData: userDB) => {
 
 export const loginUser = async (email: string, password: string) => {
   try {
-
     const findUser = await User.findOne({
-      email: email
-    })
+      email: email,
+    });
 
     if (!findUser) {
       throw HttpError(
@@ -80,7 +76,7 @@ export const loginUser = async (email: string, password: string) => {
       { expiresIn: "10d" }
     );
     return {
-      success: true,
+      result: findUser,
       token,
     };
   } catch (err) {

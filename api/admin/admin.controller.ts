@@ -1,11 +1,10 @@
 import { Company, Admin } from "./admin.schema";
 import HttpError from "http-errors";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 import * as jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { adminDB, companyData } from "../../types/types";
-
-
+import { UserOrder } from "../client/client.schema";
 export const registerAdmin = async (adminData: adminDB) => {
   try {
     if (await Admin.findOne({ companyName: adminData.companyName })) {
@@ -32,12 +31,11 @@ export const registerAdmin = async (adminData: adminDB) => {
   }
 };
 
-
 export const loginAdmin = async (email: string, password: string) => {
   try {
     const findAdmin = await Admin.findOne({
       email: email,
-    })
+    });
     if (!findAdmin) {
       throw HttpError(
         401,
@@ -45,10 +43,7 @@ export const loginAdmin = async (email: string, password: string) => {
       );
     }
 
-    const correctPassword = await bcrypt.compare(
-      password,
-      findAdmin.password
-    );
+    const correctPassword = await bcrypt.compare(password, findAdmin.password);
 
     if (!correctPassword) {
       throw HttpError(401, "Password Incorrect, please try again.");
@@ -70,10 +65,9 @@ export const loginAdmin = async (email: string, password: string) => {
 
 export const postCompanyDetails = async (
   companyData: companyData,
-  id: mongoose.ObjectId
+  id: mongoose.Schema.Types.ObjectId
 ) => {
   try {
-
     const postData = {
       companyId: id,
       fromAddress: companyData.fromAddress,
@@ -81,15 +75,12 @@ export const postCompanyDetails = async (
       date: companyData.date,
       price: companyData.price,
     };
-
+    console.log(postData);
     const companyOrderData = new Company(postData);
-
-
-    if (!companyOrderData) {
-      throw HttpError(500, "Internal Server Error!");
-    }
-    const response = await companyOrderData.save()
-    return companyOrderData
+    console.log(companyOrderData);
+    const response = await companyOrderData.save();
+    console.log(response);
+    return response;
   } catch (err) {
     throw err;
   }
@@ -102,14 +93,11 @@ interface filterData {
 }
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
-
-
     // const test = await DB.aggregate([{ $unwind: "$date" }]).toArray();
     const filteredData = await Company.find({
       fromAddress: { $regex: `^${data.fromAddress}`, $options: "i" },
       toAddress: { $regex: `^${data.toAddress}`, $options: "i" },
-      date: { $elemMatch: { $gte: data.date } },
-    }).toArray();
+    }).elemMatch("date", { $gte: data.date });
     // const findIt = await DB.find({
     //   city: { $regex: `^${data}`, $options: "i" },
     // }).toArray();
@@ -119,15 +107,14 @@ export const getFilterCompanyDetails = async (data: filterData) => {
   }
 };
 
-
 export const getOrderDetails = async (id: mongoose.ObjectId) => {
   try {
+    const companyOrders = await UserOrder.find({ adminId: id }).populate(
+      "userId"
+    );
 
-    const companyOrders = await Company.find({ id }).toArray()
-
-    return companyOrders
-
+    return companyOrders;
   } catch (error) {
-    throw error
+    throw error;
   }
-}
+};

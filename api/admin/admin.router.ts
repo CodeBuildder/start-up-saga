@@ -6,7 +6,7 @@ import {
   registerAdmin,
   postCompanyDetails,
   getFilterCompanyDetails,
-  getOrderDetails
+  getOrderDetails,
 } from "./admin.controller";
 import { companyData } from "../../types/types";
 
@@ -30,7 +30,7 @@ router.post(
         process.env.JWT_SECRET || "",
         { expiresIn: "10d" }
       );
-      res.json({ token, result }).status(201);
+      res.json({ token, result });
     } catch (err) {
       next(err);
     }
@@ -51,21 +51,22 @@ router.post(
   }
 );
 
-// router.post(
-//   "/api/admin/company",
-//   async (req: Request, res: Response, next: NextFunction) => {
-//     const companyData = req.body as companyData;
+router.post(
+  "/api/admin/company",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const companyData = req.body as companyData;
+    const { user } = res.locals.user;
+    try {
+      //const { user } = res.locals.user;
+      const result = await postCompanyDetails(companyData, user._id);
 
-//     try {
-//       //const { user } = res.locals.user;
-//       const result = await postCompanyDetails(companyData, user._id);
-
-//       res.status(201).json(result);
-//     } catch (err) {
-//       next(err);
-//     }
-//   }
-// );
+      res.json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 interface filterData {
   fromAddress: string;
   toAddress: string;
@@ -79,7 +80,7 @@ router.post(
 
     try {
       const result = await getFilterCompanyDetails(filterData);
-      res.json({ result });
+      res.json(result);
     } catch (err) {
       next(err);
     }
@@ -92,12 +93,12 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { user } = res.locals.user;
-      const result = getOrderDetails(user._id)
-      res.status(201).json({ result })
+      const result = await getOrderDetails(user._id);
+      res.json(result);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
-)
+);
 
 export default router;

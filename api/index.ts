@@ -19,9 +19,9 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 // app.use("/", (req, res) => {
 //   res.json({ success: true, message: "Namma lost maara !" });
 // });
-// app.use(authRoute);
+app.use(authRoute);
 app.use(adminRoute);
-// app.use(clientRoute)
+app.use(clientRoute);
 
 app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
   if (error) {
