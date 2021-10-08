@@ -68,13 +68,21 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    console.log(searchCompanies.data);
 
     searchCompanies = searchCompanies?.data;
-
-    setPost(searchCompanies);
+    const searchDate = -1 * parseInt(JSON.stringify(value).slice(8, 11)) + 1;
+    const newData = searchCompanies.map((company: any) => ({
+      ...company,
+      date: company.date
+        .map((date: any) => date.toString().slice(-2))
+        .filter((i: any) => i > searchDate),
+    }));
+    console.log(newData);
+    setPost(newData);
   };
-
+  {
+    /* return i.toString().slice(-2) >= today.getDate() ? ( */
+  }
   return (
     <div className="w-100 min-h-screen bg-gray-100 ">
       {/* Navigation Bar */}
@@ -195,27 +203,9 @@ const Dashboard = () => {
                     <div className="flex flex-row"></div>
                     <div className="mt-5">FedEx</div>
                     <div className="w-4 h-4 bg-blue-300 rounded">
-                      <div className="w-20 h-8 bg-blue-200">
-                        {item.date.map(
-                          (i: any) =>
-                            i.toString().slice(-2) >= today.getDate() ? (
-                              <p>{i.toString().slice(-2)}</p>
-                            ) : (
-                              <div>NO</div>
-                            )
-                          // return i.toString().slice(-2) >= today.getDate() ? (
-
-                          // ) : (
-
-                          // );
-
-                          //  ? (
-
-                          // ) : (
-                          //   <p></p>
-                          // )
-                        )}
-                      </div>
+                      {item.date.map((date: any) => (
+                        <div className="w-20 h-8 bg-blue-200">{date}</div>
+                      ))}
                     </div>
                   </div>
 
