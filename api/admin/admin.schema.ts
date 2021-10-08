@@ -24,6 +24,7 @@ export const adminSchema = new mongoose.Schema({
     trim: true,
     minlength: 7,
   },
+  rating: { type: Number, default: 0 },
 });
 export const Admin = mongoose.model("admin", adminSchema);
 export const companySchema = new mongoose.Schema({

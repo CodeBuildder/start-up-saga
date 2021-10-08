@@ -46,7 +46,11 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log(req.body.orderId);
-      const result = await postRating(req.body.orderId, req.body.rating);
+      const result = await postRating(
+        req.body.orderId,
+        req.body.rating,
+        req.body.adminId
+      );
 
       res.json(result);
     } catch (error) {

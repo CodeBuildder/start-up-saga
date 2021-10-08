@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import BasicModal from "./modal";
+
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -291,7 +291,6 @@ export default function Dashboard() {
                       > */}
 
                       {/* </button> */}
-                      <BasicModal />
                     </span>
                   </div>
                 </div>
