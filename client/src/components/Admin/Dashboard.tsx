@@ -8,6 +8,9 @@ import axios, { AxiosResponse } from "axios";
 import Select from "react-select";
 import { cityData } from "../../constants/cities";
 import { setTimeout } from "timers";
+import { IconContext } from "react-icons";
+import { GoPackage } from "react-icons/go";
+import { BiLogOut } from "react-icons/bi";
 type FormData = {
   toAddress: string;
   fromAddress: string;
@@ -46,6 +49,13 @@ const Dashboard = () => {
         history.push("/admin/myorders");
       }, 2000);
     }
+  }
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    toast.warn("Logging out !");
+    setTimeout(() => {
+      history.push("login");
+    }, 2000);
   };
   return (
     <div className="w-100 min-h-screen bg-gray-100 ">
@@ -55,6 +65,26 @@ const Dashboard = () => {
         <div className="flex-1 px-2 mx-2">
           <span className="text-lg font-bold">Start.exe</span>
         </div>
+        <div
+          className="btn btn-ghost btn-md rounded-btn flex  content-center "
+          onClick={() => history.push("myorders")}
+        >
+          <IconContext.Provider value={{ size: "32px" }}>
+            <GoPackage />
+          </IconContext.Provider>
+          <pre> </pre>
+          MY ORDERS
+        </div>
+        <a
+          className="btn btn-ghost btn-md rounded-btn flex  content-center"
+          onClick={logoutHandler}
+        >
+          <IconContext.Provider value={{ size: "26px" }}>
+            <BiLogOut />
+          </IconContext.Provider>
+          <pre> </pre>
+          SIGN OUT
+        </a>
       </div>
 
       {/* Main Page */}
