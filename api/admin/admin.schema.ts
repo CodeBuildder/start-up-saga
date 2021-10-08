@@ -27,7 +27,7 @@ export const adminSchema = new mongoose.Schema({
 });
 export const Admin = mongoose.model("admin", adminSchema);
 export const companySchema = new mongoose.Schema({
-  companyId: {
+  adminId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "admin",
   },
