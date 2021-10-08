@@ -13,7 +13,10 @@
   "author": "Codebuilder2022 <kumarankaushik@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@emotion/react": "^11.4.1",
+    "@emotion/styled": "^11.3.0",
     "@hookform/error-message": "^0.0.5",
+    "@mui/material": "^5.0.3",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
