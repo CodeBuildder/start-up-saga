@@ -80,14 +80,15 @@ export default function Dashboard() {
     );
 
     searchCompanies = searchCompanies?.data;
-    const searchDate = -1 * parseInt(JSON.stringify(value).slice(8, 11)) + 1;
+    // console.log(newData);
+    const searchDate = -1 * parseInt(JSON.stringify(value).slice(8, 11));
     const newData = searchCompanies.map((company: any) => ({
       ...company,
       date: company.date
         .map((date: any) => date.toString().slice(-2))
         .filter((i: any) => i > searchDate),
     }));
-    console.log(newData);
+
     setPost(newData);
   };
 
