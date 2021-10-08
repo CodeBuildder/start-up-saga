@@ -11,7 +11,7 @@ export const registerUser = async (userData: userDB) => {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
-  
+
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
     const newUserData = {

@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 
 import {
   userOrderDetails,
-  postRating,closeOrder
+  postRating, closeOrder,
   getOrderDetails,
 } from "./client.controller";
 
@@ -66,10 +66,10 @@ router.post(
       console.log(req.body.orderId);
       const result = await closeOrder(
         req.body.orderId,
-      
+
       );
 
-      res.json({success:true});
+      res.json({ success: true });
     } catch (error) {
       next(error);
     }
