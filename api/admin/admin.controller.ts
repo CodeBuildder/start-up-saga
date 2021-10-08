@@ -33,12 +33,10 @@ export const registerAdmin = async (adminData: adminDB) => {
 
 export const loginAdmin = async (email: string, password: string) => {
   try {
-
     const findAdmin = await Admin.findOne({
       email: email,
     });
     if (!findAdmin) {
-
       throw HttpError(
         401,
         "Email does not exist, please create a new account!"
@@ -99,7 +97,9 @@ export const getFilterCompanyDetails = async (data: filterData) => {
     const filteredData = await Company.find({
       fromAddress: { $regex: `^${data.fromAddress}`, $options: "i" },
       toAddress: { $regex: `^${data.toAddress}`, $options: "i" },
-    }).elemMatch("date", { $gte: data.date });
+    })
+      .elemMatch("date", { $gte: data.date })
+      .populate("adminId");
     // const findIt = await DB.find({
     //   city: { $regex: `^${data}`, $options: "i" },
     // }).toArray();
@@ -109,13 +109,11 @@ export const getFilterCompanyDetails = async (data: filterData) => {
   }
 };
 
-
 export const getOrderDetails = async (id: mongoose.ObjectId) => {
   try {
     const companyOrders = await UserOrder.find({ adminId: id }).populate(
       "userId"
     );
-
 
     return companyOrders;
   } catch (error) {
