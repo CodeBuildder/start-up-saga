@@ -12,7 +12,7 @@ import Select from "react-select";
 import { cityData } from "../../constants/cities";
 import { useAuth } from "../../userContext/context";
 import { BiLogOut } from "react-icons/bi";
-
+import { ToastContainer, toast } from "react-toastify";
 const Dashboard = () => {
   const myOptions = cityData;
   const [value, onChange] = useState(new Date());
@@ -20,8 +20,16 @@ const Dashboard = () => {
     label: "",
     value: "",
   });
+  var dummy;
+  var today = new Date();
   const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
-
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    toast.warn("Logging out !");
+    setTimeout(() => {
+      history.push("/login");
+    }, 2000);
+  };
   const { setLoggedIn } = useAuth();
   const [post, setPost] = useState<any>([]);
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
@@ -53,23 +61,32 @@ const Dashboard = () => {
     };
 
     console.log(data);
-    let searchCompanies: AxiosResponse = await axios.post(
+    let searchCompanies: any = await axios.post(
       `${constants.BASE_URL}/admin/company/filter`,
       data,
       {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    console.log(searchCompanies.data);
 
-    searchCompanies = searchCompanies.data;
-
-    setPost(searchCompanies);
+    searchCompanies = searchCompanies?.data;
+    const searchDate = -1 * parseInt(JSON.stringify(value).slice(8, 11)) + 1;
+    const newData = searchCompanies.map((company: any) => ({
+      ...company,
+      date: company.date
+        .map((date: any) => date.toString().slice(-2))
+        .filter((i: any) => i > searchDate),
+    }));
+    console.log(newData);
+    setPost(newData);
   };
-
+  {
+    /* return i.toString().slice(-2) >= today.getDate() ? ( */
+  }
   return (
     <div className="w-100 min-h-screen bg-gray-100 ">
       {/* Navigation Bar */}
+      <ToastContainer />
       <div className="navbar  shadow-lg bg-purple-700 text-neutral-content h-18">
         <div className="flex-1 px-2 mx-2">
           <span className="text-lg font-bold">Start.exe</span>
@@ -86,9 +103,7 @@ const Dashboard = () => {
         </div>
         <a
           className="btn btn-ghost btn-md rounded-btn flex  content-center"
-          onClick={() => {
-            history.push("/");
-          }}
+          onClick={logoutHandler}
         >
           <IconContext.Provider value={{ size: "26px" }}>
             <BiLogOut />
