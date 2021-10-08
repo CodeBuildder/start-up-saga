@@ -83,7 +83,7 @@ const Orders = () => {
                           </div>
                           <div className="flex flex-col">
                             <div>
-                              Payment Method: <b>Net Banking</b>
+                              Payment Method: <b>{item.paymentMode}</b>
                             </div>
                             <div className="pb-2">
                               Provider : <b>{item.adminId.companyName}</b>
