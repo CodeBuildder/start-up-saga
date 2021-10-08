@@ -83,6 +83,7 @@ router.post(
       const result = await getFilterCompanyDetails(filterData);
       res.json(result);
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }

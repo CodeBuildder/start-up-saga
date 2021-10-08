@@ -91,6 +91,7 @@ interface filterData {
   toAddress: string;
   date: Date;
   sortBy: string;
+ 
 }
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
