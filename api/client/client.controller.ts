@@ -19,12 +19,13 @@ export const userOrderDetails = async (
       date: userOrderData.date,
       weight: userOrderData.weight,
       price: userOrderData.price,
+      orderedOn: new Date(),
+      paymentMode: userOrderData.paymentMode,
     };
 
     console.log(newUserOrderData);
     const data = new UserOrder(newUserOrderData);
     const response = await data.save();
-
 
     if (!response) {
       throw HttpError(500, "Internal Server Error!");
@@ -36,7 +37,6 @@ export const userOrderDetails = async (
   }
 };
 
-
 export const getOrderDetails = async (id: mongoose.Schema.Types.ObjectId) => {
   try {
     const userOrders = await UserOrder.find({
@@ -47,8 +47,5 @@ export const getOrderDetails = async (id: mongoose.Schema.Types.ObjectId) => {
     return userOrders;
   } catch (error) {
     console.log(error);
-
   }
-}
-
-
+};

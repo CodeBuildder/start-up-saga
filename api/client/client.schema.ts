@@ -27,6 +27,9 @@ const userOrderSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  orderedOn: { type: Date },
+  paymentMode: { type: String },
+  transactionOver: { type: Boolean, default: false },
 });
 
 export const UserOrder = mongoose.model("userOrder", userOrderSchema);
