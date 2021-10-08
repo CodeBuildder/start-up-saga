@@ -34,7 +34,15 @@ const Dashboard = () => {
   const [post, setPost] = useState<any>([]);
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
+  const [weight, setWeight] = useState<any>({ label: "", weight: "" });
   const ref = useRef<HTMLDivElement>(null);
+  const weightList = [
+    { label: "Below 1", value: "1" },
+    { label: "Below 10", value: "10" },
+    { label: "Below 25", value: "25" },
+    { label: "Below 50 ", value: "50" },
+    { label: "Below 100", value: "100" },
+  ];
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
       // If the menu is open and the clicked target is not within the menu,
@@ -50,7 +58,17 @@ const Dashboard = () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [displayCalendar]);
-
+  const bookSlot = (data: any) => {
+    const postData = {
+      weight: weight.value,
+      price: parseInt(weight.value) * data.price,
+      fromAddress: data.fromAddress,
+      toAddress: data.toAddress,
+      adminId: data.adminId._id,
+      // date:
+    };
+    console.log(postData);
+  };
   const searchCompany = async () => {
     let date = JSON.stringify(value);
     date = date.slice(1, 11);
@@ -230,8 +248,21 @@ const Dashboard = () => {
                     <span className="pt-10 pl-10 text-2xl font-bold">
                       ₹{item.price}/Kg
                     </span>
+                    <Select
+                      value={weight}
+                      options={weightList}
+                      onChange={(weight) => {
+                        setWeight(weight);
+                      }}
+                      openMenuOnClick={false}
+                      placeholder="Select Weight"
+                      className="w-28"
+                    />
 
-                    <button className="btn btn-outline btn-accent w-48 h-1  mb-9 float-right">
+                    <button
+                      className="btn btn-outline btn-accent w-48 h-1  mb-9 float-right"
+                      onClick={() => bookSlot(item)}
+                    >
                       Book a slot
                     </button>
                   </div>
