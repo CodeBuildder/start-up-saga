@@ -37,6 +37,8 @@ export const verifiedAdmin = async (
         jwt.verify(authToken, process.env.JWT_SECRET || "")
       );
     } catch (err) {
+      console.log("err in middleware");
+      console.log(err);
       next(err);
     }
     let user;
