@@ -1,17 +1,37 @@
-import * as mongoDB from "mongodb";
-import * as yup from "yup";
+import mongoose from "mongoose";
 
-const userSchema = yup.object({
-  username: yup.string().trim().required().lowercase(),
-  email: yup.string().email().required(),
-  password: yup.string().trim().required(),
-  phone: yup.number().required(),
+// const userSchema = yup.object({
+//   username: yup.string().trim().required().lowercase(),
+//   email: yup.string().email().required(),
+//   password: yup.string().trim().required(),
+//   phone: yup.number().required(),
+// });
+
+export const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  phone: {
+    type: Number,
+    trim: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 7,
+  },
 });
 
-type userType = yup.InferType<typeof userSchema>;
 
-interface userInterface extends userType {
-  _id: mongoDB.ObjectID;
-}
-
-export { userSchema, userType, userInterface };
+export const User = mongoose.model("users", userSchema);

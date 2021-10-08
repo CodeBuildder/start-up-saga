@@ -1,25 +1,13 @@
-import * as mongodb from "mongodb";
-import {
-  adminType,
-  adminSchema,
-  companySchema,
-  companyType,
-} from "./admin.schema";
+import { Company, Admin } from "./admin.schema";
 import HttpError from "http-errors";
+import mongoose from "mongoose";
 import * as jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { getClient } from "../db/db.connect";
-
-export const registerAdmin = async (adminData: adminType) => {
-  await adminSchema.validate(adminData).catch((err: any) => {
-    throw HttpError(400, "Validation Error!");
-  });
-
+import { adminDB, companyData } from "../../types/types";
+import { UserOrder } from "../client/client.schema";
+export const registerAdmin = async (adminData: adminDB) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
-    const DB = await client.db().collection("admin");
-
-    if (await DB.findOne({ companyName: adminData.companyName })) {
+    if (await Admin.findOne({ companyName: adminData.companyName })) {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
@@ -33,26 +21,11 @@ export const registerAdmin = async (adminData: adminType) => {
       phone: adminData.phone,
       address: adminData.address,
     };
-
-    const response = await DB.insertOne(newAdminData);
-
-    if (!response) {
-      throw HttpError(500, "Internal Server Error!");
-    }
-    const token = jwt.sign(
-      {
-        _id: response.insertedId,
-        email: newAdminData.email,
-
-        category: "admin",
-      },
-      process.env.JWT_SECRET || "",
-      { expiresIn: "10d" }
-    );
-    return {
-      success: true,
-      token,
-    };
+    const admin = new Admin(newAdminData);
+    console.log(admin);
+    const response = await admin.save();
+    console.log(response);
+    return admin;
   } catch (err) {
     throw err;
   }
@@ -60,32 +33,27 @@ export const registerAdmin = async (adminData: adminType) => {
 
 export const loginAdmin = async (email: string, password: string) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
 
-    const verifyAdmin = await client
-      .db()
-      .collection("admin")
-      .findOne({ email: email });
+    const findAdmin = await Admin.findOne({
+      email: email,
+    });
+    if (!findAdmin) {
 
-    if (!verifyAdmin) {
       throw HttpError(
         401,
         "Email does not exist, please create a new account!"
       );
     }
 
-    const correctPassword = await bcrypt.compare(
-      password,
-      verifyAdmin.password
-    );
+    const correctPassword = await bcrypt.compare(password, findAdmin.password);
 
     if (!correctPassword) {
       throw HttpError(401, "Password Incorrect, please try again.");
     }
     const token = jwt.sign(
       {
-        email: verifyAdmin.email,
-        _id: verifyAdmin._id,
+        email: findAdmin.email,
+        _id: findAdmin._id,
         category: "admin",
       },
       process.env.JWT_SECRET || "",
@@ -98,27 +66,23 @@ export const loginAdmin = async (email: string, password: string) => {
 };
 
 export const postCompanyDetails = async (
-  companyData: companyType,
-  id: mongodb.ObjectID
+  companyData: companyData,
+  id: mongoose.Schema.Types.ObjectId
 ) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
-    const DB = client.db().collection("companyDetails");
-    const newAdminData = {
+    const postData = {
       companyId: id,
       fromAddress: companyData.fromAddress,
       toAddress: companyData.toAddress,
       date: companyData.date,
       price: companyData.price,
     };
-
-    const response = await DB.insertOne(newAdminData);
-
-    if (!response) {
-      throw HttpError(500, "Internal Server Error!");
-    }
-
-    return response.ops[0];
+    console.log(postData);
+    const companyOrderData = new Company(postData);
+    console.log(companyOrderData);
+    const response = await companyOrderData.save();
+    console.log(response);
+    return response;
   } catch (err) {
     throw err;
   }
@@ -131,15 +95,11 @@ interface filterData {
 }
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
-    const DB = await client.db().collection("companyDetails");
-
     // const test = await DB.aggregate([{ $unwind: "$date" }]).toArray();
-    const filteredData = await DB.find({
+    const filteredData = await Company.find({
       fromAddress: { $regex: `^${data.fromAddress}`, $options: "i" },
       toAddress: { $regex: `^${data.toAddress}`, $options: "i" },
-      date: { $elemMatch: { $gte: data.date } },
-    }).toArray();
+    }).elemMatch("date", { $gte: data.date });
     // const findIt = await DB.find({
     //   city: { $regex: `^${data}`, $options: "i" },
     // }).toArray();
@@ -149,14 +109,14 @@ export const getFilterCompanyDetails = async (data: filterData) => {
   }
 };
 
-export const getOrderDetails = async (id: mongodb.ObjectID) => {
-  try {
-    const client: mongodb.MongoClient = await getClient();
-    const DB = client.db().collection("userOrder");
 
-    const companyOrders = await DB.find({
-      companyId: id,
-    }).toArray();
+export const getOrderDetails = async (id: mongoose.ObjectId) => {
+  try {
+    const companyOrders = await UserOrder.find({ adminId: id }).populate(
+      "userId"
+    );
+
+
     return companyOrders;
   } catch (error) {
     throw error;

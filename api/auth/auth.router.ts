@@ -12,7 +12,7 @@ router.post(
 
     try {
       const result = await registerUser(userData);
-      res.json(result).status(201);
+      res.json(result);
     } catch (err) {
       next(err);
     }
@@ -27,7 +27,7 @@ router.post(
     try {
       const result = await loginUser(email, password);
 
-      res.status(201).json(result);
+      res.json(result);
     } catch (err) {
       next(err);
     }

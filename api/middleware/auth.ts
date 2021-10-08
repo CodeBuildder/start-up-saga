@@ -2,11 +2,14 @@ import * as jwt from "jsonwebtoken";
 import * as mongodb from "mongodb";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
 import HttpError from "http-errors";
 dotenv.config({ path: "./.env" });
+import { Company, Admin } from "../admin/admin.schema";
+import { User } from "../auth/auth.schema";
 import { adminSchema } from "../admin/admin.schema";
 import { userSchema } from "../auth/auth.schema";
-import { getClient } from "../db/db.connect";
+//import { connectDB } from "./db/db.connect";
 
 declare module "jsonwebtoken" {
   export interface UserIDJwtPayload extends jwt.JwtPayload {
@@ -38,14 +41,11 @@ export const verifiedAdmin = async (
     }
     let user;
 
-    const client: mongodb.MongoClient = await getClient();
     if (payload) {
       if (payload.category == "client") {
-        const DB = client.db().collection("users");
-        user = await DB.findOne({ email: payload.email });
+        user = await User.findOne({ email: payload.email });
       } else {
-        const DB = client.db().collection("admin");
-        user = await DB.findOne({ email: payload.email });
+        user = await Admin.findOne({ email: payload.email });
       }
     }
     console.log(user);

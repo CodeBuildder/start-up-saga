@@ -1,22 +1,18 @@
-import { userPostType } from "./client.schema";
+import { UserOrder } from "./client.schema";
 import HttpError from "http-errors";
-import * as mongodb from "mongodb";
-import { getClient } from "../db/db.connect";
-
+import { Company, Admin } from "../admin/admin.schema";
+import mongoose from "mongoose";
 export const userOrderDetails = async (
-  userOrderData: userPostType,
-  id: mongodb.ObjectID
+  userOrderData: any,
+  id: mongoose.Schema.Types.ObjectId
 ) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
-    const companyDB = client.db().collection("admin");
-    const DB = client.db().collection("userOrder");
-    const findCompany = await companyDB.findOne({
-      companyName: userOrderData.companyName,
+    const findAdmin = await Admin.findOne({
+      _id: userOrderData.adminId,
     });
-    
+
     const newUserOrderData = {
-      companyId: findCompany._id,
+      adminId: findAdmin._id,
       userId: id,
       fromAddress: userOrderData.fromAddress,
       toAddress: userOrderData.toAddress,
@@ -24,41 +20,35 @@ export const userOrderDetails = async (
       weight: userOrderData.weight,
       price: userOrderData.price,
     };
-   
-    const response = await DB.insertOne(newUserOrderData);
+
+    console.log(newUserOrderData);
+    const data = new UserOrder(newUserOrderData);
+    const response = await data.save();
+
+
     if (!response) {
       throw HttpError(500, "Internal Server Error!");
     }
 
-    return response.ops[0];
+    return response;
   } catch (err) {
     throw err;
   }
 };
 
-export const findLocation = async (data: string) => {
-  const client: mongodb.MongoClient = await getClient();
-  const DB = client.db().collection("places");
 
-  const findIt = await DB.find({
-    city: { $regex: `^${data}`, $options: "i" },
-  }).toArray();
-  //    fromAddress: { $regex: regexFromAddress },
-  //   toAddress: { $regex: regexToAddress },
-  //   date: { $elemMatch: { $gte: data.date } },
-
-  return findIt;
-};
-
-export const getOrderDetails = async (id: mongodb.ObjectID) => {
+export const getOrderDetails = async (id: mongoose.Schema.Types.ObjectId) => {
   try {
-    const client: mongodb.MongoClient = await getClient();
-    const DB = client.db().collection("userOrder");
-
-    const userOrders = await DB.find({ userId: id }).toArray();
+    const userOrders = await UserOrder.find({
+      userId: id,
+    }).populate("adminId");
+    // .populate("userId");
 
     return userOrders;
   } catch (error) {
-    throw error;
+    console.log(error);
+
   }
-};
+}
+
+

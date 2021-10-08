@@ -1,13 +1,14 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { companyType } from "./admin.schema";
 import { verifiedAdmin } from "../middleware/auth";
+import * as jwt from "jsonwebtoken";
 import {
-  registerAdmin,
   loginAdmin,
+  registerAdmin,
   postCompanyDetails,
   getFilterCompanyDetails,
   getOrderDetails,
 } from "./admin.controller";
+import { companyData } from "../../types/types";
 
 const router: Router = Router();
 
@@ -18,7 +19,18 @@ router.post(
 
     try {
       const result = await registerAdmin(adminData);
-      res.json(result).status(201);
+
+      const token = jwt.sign(
+        {
+          _id: result._id,
+          email: adminData.email,
+
+          category: "admin",
+        },
+        process.env.JWT_SECRET || "",
+        { expiresIn: "10d" }
+      );
+      res.json({ token, result });
     } catch (err) {
       next(err);
     }
@@ -43,13 +55,13 @@ router.post(
   "/api/admin/company",
   verifiedAdmin,
   async (req: Request, res: Response, next: NextFunction) => {
-    const companyData = req.body as companyType;
-
+    const companyData = req.body as companyData;
+    const { user } = res.locals.user;
     try {
-      const { user } = res.locals.user;
+      //const { user } = res.locals.user;
       const result = await postCompanyDetails(companyData, user._id);
 
-      res.status(201).json(result);
+      res.json(result);
     } catch (err) {
       next(err);
     }
@@ -68,7 +80,7 @@ router.post(
 
     try {
       const result = await getFilterCompanyDetails(filterData);
-      res.json({ result });
+      res.json(result);
     } catch (err) {
       next(err);
     }

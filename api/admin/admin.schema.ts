@@ -1,39 +1,57 @@
-import * as mongoDB from "mongodb";
-import * as yup from "yup";
+import mongoose from "mongoose";
 
-const adminSchema = yup.object({
-  companyName: yup.string().trim().required().lowercase(),
-  email: yup.string().email().required().required(),
-  address: yup.string().trim().required(),
-  password: yup.string().trim().required(),
-  phone: yup.number().required(),
+export const adminSchema = new mongoose.Schema({
+  companyName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  address: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 7,
+  },
+});
+export const Admin = mongoose.model("admin", adminSchema);
+export const companySchema = new mongoose.Schema({
+  companyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "admin",
+  },
+  fromAddress: {
+    type: String,
+
+    required: true,
+    trim: true,
+  },
+  toAddress: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  date: {
+    type: Array,
+    required: true,
+    trim: true,
+  },
+
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
-const companySchema = yup.object({
-  companyName: yup.string().trim().required(),
-  fromAddress: yup.string().trim().required(),
-  toAddress: yup.string().trim().required(),
-  date: yup.array().of(yup.date().required()).required(),
-  weight: yup.number().required(),
-  price: yup.number().required(),
-});
-
-type adminType = yup.InferType<typeof adminSchema>;
-type companyType = yup.InferType<typeof companySchema>;
-
-interface adminInterface extends adminType {
-  _id: mongoDB.ObjectID;
-}
-
-interface companyInterface extends companyType {
-  _id: mongoDB.ObjectID;
-}
-
-export {
-  adminSchema,
-  adminType,
-  adminInterface,
-  companySchema,
-  companyType,
-  companyInterface,
-};
+export const Company = mongoose.model("company", companySchema);

@@ -1,12 +1,12 @@
 export interface userDB {
-    name: string,
+    username: string,
     email: string,
     password: string,
     phone: number
 }
 
 export interface adminDB {
-    name: string,
+    companyName: string,
     email: string,
     password: string,
     address: string,

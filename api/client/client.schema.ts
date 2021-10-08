@@ -1,19 +1,32 @@
-import * as mongoDB from "mongodb";
-import * as yup from "yup";
+import mongoose from "mongoose";
+const userOrderSchema = new mongoose.Schema({
+  adminId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "admin",
+  },
 
-const userPostSchema = yup.object({
-  companyName: yup.string().trim().required(),
-  fromAddress: yup.string().trim().required(),
-  toAddress: yup.string().trim().required(),
-  date: yup.array().of(yup.date().required()).required(),
-  weight: yup.number().required(),
-  price: yup.number().required(),
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+  fromAddress: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  toAddress: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  date: { type: Date, required: true },
+  weight: {
+    type: Number,
+    required: true,
+    trim: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+    trim: true,
+  },
 });
 
-type userPostType = yup.InferType<typeof userPostSchema>;
-
-interface userPostInterface extends userPostType {
-  _id: mongoDB.ObjectID;
-}
-
-export { userPostSchema, userPostType, userPostInterface };
+export const UserOrder = mongoose.model("userOrder", userOrderSchema);

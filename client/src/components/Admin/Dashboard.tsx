@@ -40,7 +40,7 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    if (postData.status === 201) {
+    if (postData.status === 200) {
       toast.success("Data added successfully");
       setTimeout(() => {
         history.push("/admin/myorders");
