@@ -32,10 +32,33 @@ export default function BasicModal() {
       >
         <Box>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Confirm Payment Method
           </Typography>
+          <div className="form-control py-5">
+           {/* <label className="cursor-pointer label"> */}
+           <div className="flex flex-row space-x-5">
+            <span className="label-text">UPI</span> 
+            <input type="radio" name="opt" className="radio radio-primary"/>
+            <span className="label-text pl-10">Net Banking</span> 
+            <input type="radio" name="opt" className="radio radio-primary"/>             
+           </div>
+
+           {/* </label> */}
+          </div>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Terms & Condition
+            <li className="pt-5">
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </li> 
+            <li>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </li>
+            <li>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </li>
+            <li>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            </li>
           </Typography>
         </Box>
       </Modal>
