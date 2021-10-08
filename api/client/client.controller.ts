@@ -49,6 +49,17 @@ export const getOrderDetails = async (id: mongoose.Schema.Types.ObjectId) => {
     console.log(error);
   }
 };
+export const closeOrder = async (orderId: mongoose.Schema.Types.ObjectId) => {
+  try {
+    const closeOrder = await UserOrder.updateOne(
+      { _id: orderId },
+      { transactionOver: true }
+    );
+    return closeOrder;
+  } catch (error) {
+    throw error;
+  }
+};
 export const postRating = async (
   id: mongoose.Schema.Types.ObjectId,
   rating: Number,

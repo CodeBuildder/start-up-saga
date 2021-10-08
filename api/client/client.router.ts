@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 
 import {
   userOrderDetails,
-  postRating,
+  postRating,closeOrder
   getOrderDetails,
 } from "./client.controller";
 
@@ -53,6 +53,23 @@ router.post(
       );
 
       res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.post(
+  "/api/userorder/close",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.body.orderId);
+      const result = await closeOrder(
+        req.body.orderId,
+      
+      );
+
+      res.json({success:true});
     } catch (error) {
       next(error);
     }
