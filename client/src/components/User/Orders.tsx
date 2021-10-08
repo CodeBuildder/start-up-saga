@@ -5,6 +5,7 @@ import Loading from "react-fullscreen-loading";
 import { useHistory } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import moment from "moment";
 import axios from "axios";
 interface Order {
   adminId: { companyName: String; email: string };
@@ -13,6 +14,7 @@ interface Order {
   price: Number;
   date: Date;
 }
+
 const Orders = () => {
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
@@ -25,12 +27,15 @@ const Orders = () => {
       });
       getData = getData.data;
       console.log(getData);
+
+      //var fomatted_date = moment(photo.date_published).format('YYYY-MM-DD');
       setOrder(getData);
     };
     fetchMyOrders();
 
     setLoaded(true);
   }, []);
+
   return (
     <div>
       <div className="navbar  shadow-lg bg-purple-700 text-neutral-content h-18">
@@ -50,57 +55,46 @@ const Orders = () => {
                     <div className="jusitfy-between p-7 w-3/6 h-full">
                       <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                         <div className="flex flex-row space-x-4 text-lg font-bold">
-                        <div className="text-xl">
-                          {item.fromAddress}
-                        </div> 
-                        <div className="pt-1">
-                          <IconContext.Provider value={{ size: "24px" }}>
-                          <BsFillArrowRightCircleFill />
-                          </IconContext.Provider>
-                        </div>
-                        <div>
-                          {item.toAddress}
-                        </div>
-                        <div className="flex flex-col pl-10 ">
-                          <div className="">
-                            {item.weight} Kg(s)
+                          <div className="text-xl">{item.fromAddress}</div>
+                          <div className="pt-1">
+                            <IconContext.Provider value={{ size: "24px" }}>
+                              <BsFillArrowRightCircleFill />
+                            </IconContext.Provider>
                           </div>
- 
-                        </div> 
+                          <div>{item.toAddress}</div>
+                          <div className="flex flex-col pl-10 ">
+                            <div className="">{item.weight} Kg(s)</div>
+                          </div>
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-1">
-                        <div>
-                              Date Ordered: <b>{}</b> 
-                        </div>
-                          <div className="pl-80 ml-2">
-                           <b>₹{item.price}/-</b>
-                          </div>                          
+                          <div>
+                            Date Ordered:{" "}
+                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                          </div>
+                          <div className="pl-80 ml-2"></div>
                         </div>
 
                         <div className="flex flex-row text-lg space-x-28">
                           <div className="flex flex-col">
                             <div>
-                              Expected Delivery: <b>21/11</b> 
+                              Expected Delivery: <b>21/11</b>
                             </div>
-                            <div>
-                              Rate your experience!
-                            </div>
+                            <div>Rate your experience!</div>
                           </div>
                           <div className="flex flex-col">
                             <div>
-                              Payment Method: <b>Net Banking</b> 
+                              Payment Method: <b>Net Banking</b>
                             </div>
                             <div className="pb-2">
-                              Provider : <b>{item.adminId.companyName}</b> 
+                              Provider : <b>{item.adminId.companyName}</b>
                             </div>
                             <div className="btn btn-outline btn-accent -m-1">
                               View Updates
                             </div>
                           </div>
+                        </div>
                       </div>
-
                     </div>
-                  </div>
                   </>
                 ))
               ) : (

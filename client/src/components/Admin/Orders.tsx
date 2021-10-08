@@ -9,6 +9,7 @@ import { BiMessageAdd } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import { isTemplateSpan } from "typescript";
 interface companyOrder {
   _id: any;
   userId: { username: String; email: string; phone: Number };
@@ -107,53 +108,86 @@ const Orders = () => {
       <div className="w-100 min-h-screen text-black bg-gray-100">
         <div className="w-100 flex h-full min-h-screen flex-col items-center p-10 ">
           {loaded === true ? (
-            <div className="">
+            <div className="w-full min-h-screen m-5 bg-gray-400">
               {Order.length > 0 ? (
                 Order?.map((item: companyOrder) => (
-                  <div className="jusitfy-between p-7 w-1/1 h-full">
-                    <div className="bg-gray-100 m-5 p-5 h-full rounded-md shadow-lg text-purple-800 w-1/1">
-                      <div className="flex flex-row text-xl">
-                        <span className="mt-5 font-main text-2xl">
-                          {item.userId.username}
-                        </span>
-                      </div>
-                      <div className="flex flex-row space-x-10">
-                        <span className="mt-5 font-main">
-                          <b>Contact:</b> {item.userId.email}
-                        </span>
-                        <span className="mt-5 font-main">
-                          <b>Phone:</b> {item.userId.phone}
-                        </span>
-                      </div>
-
-                      <div className="flex flex-row py-3">
-                        <p className="text-2xl font-bold font-main">
-                          {item.fromAddress}
-                        </p>
-                        <div className="px-8">
-                          <IconContext.Provider value={{ size: "35px" }}>
-                            <BsFillArrowRightCircleFill />
-                          </IconContext.Provider>
+                  <>
+                    <div className="jusitfy-between p-7 w-1/1 h-full">
+                      <div className="bg-gray-100 m-5 p-5 h-full rounded-md shadow-lg text-purple-800 w-1/1">
+                        <div className="flex flex-row text-xl">
+                          <span className="mt-5 font-main text-2xl">
+                            {item.userId.username}
+                          </span>
                         </div>
-                        <p className="text-2xl font-bold font-main">
-                          {item.toAddress}
-                        </p>
+                        <div className="flex flex-row space-x-10">
+                          <span className="mt-5 font-main">
+                            <b>Contact:</b> {item.userId.email}
+                          </span>
+                          <span className="mt-5 font-main">
+                            <b>Phone:</b> {item.userId.phone}
+                          </span>
+                        </div>
+
+                        <div className="flex flex-row py-3">
+                          <p className="text-2xl font-bold font-main">
+                            {item.fromAddress}
+                          </p>
+                          <div className="px-8">
+                            <IconContext.Provider value={{ size: "35px" }}>
+                              <BsFillArrowRightCircleFill />
+                            </IconContext.Provider>
+                          </div>
+                          <p className="text-2xl font-bold font-main">
+                            {item.toAddress}
+                          </p>
+                        </div>
+                        <div className="contents flex-row space-between w-16 pt-5">
+                          <p className="text-2xl font-bold font-main">
+                            ₹{item.price}/Kg
+                          </p>
+                        </div>
+                        <button
+                          className="p-5 bg-white border-2"
+                          onClick={() => {
+                            closeOrder(item._id);
+                          }}
+                        >
+                          close order
+                        </button>
                       </div>
-                      <div className="contents flex-row space-between w-16 pt-5">
-                        <p className="text-2xl font-bold font-main">
-                          ₹{item.price}/Kg
-                        </p>
+                      <div className="pl-80 ml-11">
+                        <b>₹{item.price}/-</b>
                       </div>
-                      <button
-                        className="p-5 bg-white border-2"
-                        onClick={() => {
-                          closeOrder(item._id);
-                        }}
-                      >
-                        close order
-                      </button>
                     </div>
-                  </div>
+
+                    <div className="flex flex-row text-lg space-x-28 pt-2">
+                      <div className="flex flex-col justify-between">
+                        <div>
+                          Expected Delivery: <b>21/11</b>
+                        </div>
+                        <div>
+                          Order ID: <b>A92Z58T</b>
+                        </div>
+                        <div className="btn btn-outline btn-secondary ">
+                          Complete Transaction
+                        </div>
+                      </div>
+                      <div className="flex flex-col">
+                        <div>
+                          Ordered By : <b>{item.userId.username}</b>
+                        </div>
+                        <div className="">
+                          Email : <b>{item.userId.email}</b>
+                        </div>
+                        <div className="pb-4">
+                          Payment Method : <b>Net Banking</b>
+                        </div>
+                        <div className="btn btn-outline btn-accent">
+                          Add Updates
+                        </div>
+                      </div>
+                    </div>
+                  </>
                 ))
               ) : (
                 <div className="flex items-center text-red-900 justify-self-center">
