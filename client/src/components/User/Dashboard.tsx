@@ -34,6 +34,7 @@ const Dashboard = () => {
   const [post, setPost] = useState<any>([]);
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
+  const [day, setDay] = useState<any>();
   const [weight, setWeight] = useState<any>({ label: "", weight: "" });
   const ref = useRef<HTMLDivElement>(null);
   const weightList = [
@@ -58,16 +59,24 @@ const Dashboard = () => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [displayCalendar]);
-  const bookSlot = (data: any) => {
+  const bookSlot = async (data: any) => {
     const postData = {
       weight: weight.value,
       price: parseInt(weight.value) * data.price,
       fromAddress: data.fromAddress,
       toAddress: data.toAddress,
       adminId: data.adminId._id,
-      // date:
+      date: `${today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + day}`,
     };
-    console.log(postData);
+    let response = await axios.post(
+      `${constants.BASE_URL}/user/order`,
+      postData,
+      {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      }
+    );
+    if (response.status === 200)
+      toast.success("Your order has been successfully booked !");
   };
   const searchCompany = async () => {
     let date = JSON.stringify(value);
@@ -267,6 +276,7 @@ const Dashboard = () => {
                           name="options"
                           id="option1"
                           data-title={day}
+                          onChange={() => setDay(day)}
                           className="btn mx-2 "
                         />
                       ))}
