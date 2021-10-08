@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -61,25 +60,7 @@ export default function Dashboard() {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [displayCalendar]);
-  const bookSlot = async (data: any) => {
-    const postData = {
-      weight: weight.value,
-      price: parseInt(weight.value) * data.price,
-      fromAddress: data.fromAddress,
-      toAddress: data.toAddress,
-      adminId: data.adminId._id,
-      date: `${today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + day}`,
-    };
-    let response = await axios.post(
-      `${constants.BASE_URL}/user/order`,
-      postData,
-      {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      }
-    );
-    if (response.status === 200)
-      toast.success("Your order has been successfully booked !");
-  };
+
   const searchCompany = async () => {
     let date = JSON.stringify(value);
     date = date.slice(1, 11);
@@ -109,9 +90,7 @@ export default function Dashboard() {
     console.log(newData);
     setPost(newData);
   };
-  {
-    /* return i.toString().slice(-2) >= today.getDate() ? ( */
-  }
+
   return (
     <div className="w-100 min-h-screen bg-gray-100 ">
       {/* Navigation Bar */}
