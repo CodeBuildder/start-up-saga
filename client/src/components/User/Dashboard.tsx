@@ -182,7 +182,6 @@ const Dashboard = () => {
             <button className="btn btn-outline btn-accent w-28 h-8 ">
               SEARCH
             </button>
-            <button onClick={() => console.log(post)}>YES</button>
           </div>
         </div>
         {post.length > 0 ? (
