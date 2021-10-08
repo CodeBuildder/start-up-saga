@@ -3,6 +3,8 @@ import CONSTANTS from "../../constants/constants";
 // @ts-ignore
 import Loading from "react-fullscreen-loading";
 import { useHistory } from "react-router-dom";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import { IconContext } from "react-icons";
 import axios from "axios";
 interface Order {
   adminId: { companyName: String; email: string };
@@ -38,19 +40,44 @@ const Orders = () => {
       </div>
 
       {/*Maiin page */}
-      <div className="w-100 min-h-screen text-black bg-gray-100 ">
-        <div className="w-100 flex  h-full min-h-screen flex-col   items-center  m-2 p-10 ">
+      <div className="w-100 min-h-screen text-black  bg-gray-400 ">
+        <div className="w-100 flex h-full min-h-screen flex-col items-center m-2 p-10 ">
           {loaded === true ? (
-            <div>
+            <div className="w-full min-h-screen m-5 bg-gray-400">
               {Order.length > 0 ? (
                 Order?.map((item: Order) => (
                   <>
-                    <div>{item.adminId.companyName}</div>
-                    <div>{item.adminId.email}</div>
-                    <div>{item.fromAddress}</div>
-                    <div>{item.toAddress}</div>
-                    <div>{item.price}</div>
-                    <div>{item.date}</div>
+                    <div className="jusitfy-between p-7 w-3/5 h-full">
+                      <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-purple-800">
+                        <div className="flex flex-row text-xl">
+                          <span className="mt-5 font-main">
+                            {item.adminId.companyName}
+                          </span>
+                        </div>
+                        <span className="mt-5 font-main">
+                          <b>Contact:</b> {item.adminId.email}
+                        </span>
+
+                        <div className="flex flex-row ">
+                          <p className="text-2xl font-bold font-main">
+                            {item.fromAddress}
+                          </p>
+                          <div className="px-8">
+                            <IconContext.Provider value={{ size: "35px" }}>
+                              <BsFillArrowRightCircleFill />
+                            </IconContext.Provider>
+                          </div>
+                          <p className="text-2xl font-bold font-main">
+                            {item.toAddress}
+                          </p>
+                        </div>
+                        <div className="contents flex-row space-between w-16 pt-5">
+                          <p className="text-2xl font-bold font-main">
+                            ₹{item.price}/Kg
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </>
                 ))
               ) : (
