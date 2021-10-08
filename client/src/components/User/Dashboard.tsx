@@ -244,27 +244,42 @@ const Dashboard = () => {
                       {item.toAddress}
                     </div>
                   </div>
-                  <div className="contents flex-row space-between w-16 pt-5">
-                    <span className="pt-10 pl-10 text-2xl font-bold">
+                  <div className="flex flex-row w-full  pt-10 ">
+                    <span className="pl-10 text-2xl font-bold">
                       ₹{item.price}/Kg
                     </span>
-                    <Select
-                      value={weight}
-                      options={weightList}
-                      onChange={(weight) => {
-                        setWeight(weight);
-                      }}
-                      openMenuOnClick={false}
-                      placeholder="Select Weight"
-                      className="w-28"
-                    />
+                    <span>
+                      <Select
+                        value={weight}
+                        options={weightList}
+                        onChange={(weight) => {
+                          setWeight(weight);
+                        }}
+                        openMenuOnClick={false}
+                        placeholder="Select Weight"
+                        className="w-32 h-5 pl-10"
+                      />
+                    </span>
+                    <span className="flex flex-row ml-10 w-full btn-group">
+                      {item.date.map((day: any) => (
+                        <input
+                          type="radio"
+                          name="options"
+                          id="option1"
+                          data-title={day}
+                          className="btn mx-2 "
+                        />
+                      ))}
+                    </span>
 
-                    <button
-                      className="btn btn-outline btn-accent w-48 h-1  mb-9 float-right"
-                      onClick={() => bookSlot(item)}
-                    >
-                      Book a slot
-                    </button>
+                    <span>
+                      <button
+                        className=" btn btn-outline btn-accent w-48 h-1 float-right"
+                        onClick={() => bookSlot(item)}
+                      >
+                        Book a slot
+                      </button>
+                    </span>
                   </div>
                 </div>
               ))}
