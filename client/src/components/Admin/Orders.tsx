@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useHistory } from "react-router-dom";
 import CONSTANTS from "../../constants/constants";
 // @ts-ignore
@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { isTemplateSpan } from "typescript";
 interface companyOrder {
+  _id: any;
   userId: { username: String; email: string; phone: Number };
   toAddress: string;
   fromAddress: string;
@@ -42,6 +43,29 @@ const Orders = () => {
     setTimeout(() => {
       history.push("login");
     }, 2000);
+  };
+  const closeOrder = async (id: any) => {
+    const orderId = {
+      orderId: id,
+    };
+    console.log(orderId);
+    try {
+      const orderClose: AxiosResponse = await axios.post(
+        `http://localhost:5000/api/userorder/close`,
+        orderId,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+
+      console.log(orderClose);
+    } catch (err: any) {
+      if (err.response) {
+        if (err.response.status === 401) {
+          toast.warn("Order Invalid");
+        }
+      }
+    }
   };
   const history = useHistory();
   return (
@@ -114,7 +138,12 @@ const Orders = () => {
                           <div>
                             Order ID: <b>A92Z58T</b>
                           </div>
-                          <div className="btn btn-outline btn-secondary ">
+                          <div
+                            className="btn btn-outline btn-secondary"
+                            onClick={() => {
+                              closeOrder(item._id);
+                            }}
+                          >
                             Close Transaction
                           </div>
                         </div>
