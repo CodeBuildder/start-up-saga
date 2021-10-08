@@ -11,7 +11,7 @@ export const registerUser = async (userData: userDB) => {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
-    console.log(userData.password);
+  
     const hashedPassword = await bcrypt.hash(userData.password, salt);
 
     const newUserData = {
@@ -21,9 +21,11 @@ export const registerUser = async (userData: userDB) => {
       phone: userData.phone,
     };
 
+
     const user = new User(newUserData);
 
     const response = await user.save();
+
 
     const token = jwt.sign(
       {
@@ -49,20 +51,24 @@ export const registerUser = async (userData: userDB) => {
 
 export const loginUser = async (email: string, password: string) => {
   try {
+
     const findUser = await User.findOne({
       email: email,
     });
 
     if (!findUser) {
+
       throw HttpError(
         401,
         "Email does not exist, please create a new account!"
       );
     }
 
+
     console.log(findUser.password);
     const correctPassword = await bcrypt.compare(password, findUser.password);
     console.log(correctPassword);
+
     if (!correctPassword) {
       throw HttpError(401, "Password Incorrect, please try again.");
     }

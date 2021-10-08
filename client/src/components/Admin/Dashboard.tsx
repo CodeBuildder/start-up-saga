@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import axios, { AxiosResponse } from "axios";
 import Select from "react-select";
 import { cityData } from "../../constants/cities";
+import { setTimeout } from "timers";
 type FormData = {
   toAddress: string;
   fromAddress: string;
@@ -14,6 +15,7 @@ type FormData = {
   price: number;
 };
 const Dashboard = () => {
+  const history = useHistory();
   const myOptions = cityData;
   const [value, setValue] = useState<string | null>("");
   const [calendarView, setCalendarView] = useState(false);
@@ -28,7 +30,7 @@ const Dashboard = () => {
       fromAddress: fromLocation.value,
       toAddress: toLocation.value,
       price: data.price,
-      date: value?.split(",").map((item) => item.replace(" ", "")),
+      date: value?.split(",").map((s) => s.trim()),
     };
     console.log(userOrder);
     const postData: AxiosResponse = await axios.post(
@@ -40,6 +42,9 @@ const Dashboard = () => {
     );
     if (postData.status === 200) {
       toast.success("Data added successfully");
+      setTimeout(() => {
+        history.push("/admin/myorders");
+      }, 2000);
     }
   };
   return (
@@ -67,42 +72,44 @@ const Dashboard = () => {
               className="input rounded-sm"
               {...register("companyName", { required: true })}
             /> */}
-            <div className="flex-row py-3">
-              <p className="">From </p>
-              <p className="">To Address</p>
+            <div className="flex flex-row py-3 space-x-10">
+              <div className="w-1/2">
+                <p>From </p>
+                <Select
+                  value={fromLocation}
+                  options={myOptions}
+                  onChange={(fromLocation) => {
+                    setFromLocation(fromLocation);
+                  }}
+                  openMenuOnClick={false}
+                  placeholder="From"
+                  className="w-56 py-2 h-12"
+                />
+              </div>
+              <div className="w-1/2">
+                <p>To</p>
+                <Select
+                  value={toLocation}
+                  options={myOptions}
+                  onChange={(toLocation) => {
+                    setToLocation(toLocation);
+                  }}
+                  openMenuOnClick={false}
+                  className="w-56 py-2 h-12"
+                />
+              </div>
             </div>
-            <div className="flex-row space-x-24" />
-            <Select
-              value={fromLocation}
-              options={myOptions}
-              onChange={(fromLocation) => {
-                setFromLocation(fromLocation);
-              }}
-              openMenuOnClick={false}
-              placeholder="From"
-              className="w-56 py-2 h-12"
-            />
-
-            <Select
-              value={toLocation}
-              options={myOptions}
-              onChange={(toLocation) => {
-                setToLocation(toLocation);
-              }}
-              openMenuOnClick={false}
-              className="w-56 py-2 h-12"
-            />
 
             <label className="label">
               <span className="label-text-black">Price</span>
             </label>
             <input
               type="text"
-              className="input rounded-sm"
+              className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("price", { required: true })}
             />
             <br />
-            <div className="flex-row pl-12 space-x-20">
+            <div className="flex-row pl-2 space-x-28">
               {calendarView === false ? (
                 <button
                   onClick={() => setCalendarView(true)}
@@ -117,7 +124,6 @@ const Dashboard = () => {
                   placeholder="Select Dates"
                   id="date-picker"
                   format="YYYY-MM-DD"
-                  className="rmdp-input"
                 />
               )}
               <button
@@ -134,7 +140,7 @@ const Dashboard = () => {
                 SAVE DATES
               </button>
               <br /> <br />
-              <div className="pl-20">
+              <div className="pl-16">
                 <button
                   className="btn btn-outline btn-primary w-28 h-14"
                   type="submit"

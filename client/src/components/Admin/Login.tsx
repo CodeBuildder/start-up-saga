@@ -30,7 +30,7 @@ const AdminLogin: React.FC = () => {
         setLoggedIn(true);
         toast.success("Login successful!");
 
-        history.push("/admin/dashboard");
+        history.push("/admin/myorders");
       }
     } catch (err: any) {
       if (err.response) {

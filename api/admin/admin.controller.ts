@@ -11,7 +11,7 @@ export const registerAdmin = async (adminData: adminDB) => {
       throw HttpError(409, "User already exists!");
     }
     const salt = await bcrypt.genSalt(12);
-    console.log(adminData.password);
+
     const hashedPassword = await bcrypt.hash(adminData.password, salt);
 
     const newAdminData = {
@@ -33,10 +33,12 @@ export const registerAdmin = async (adminData: adminDB) => {
 
 export const loginAdmin = async (email: string, password: string) => {
   try {
+
     const findAdmin = await Admin.findOne({
       email: email,
     });
     if (!findAdmin) {
+
       throw HttpError(
         401,
         "Email does not exist, please create a new account!"
@@ -107,11 +109,13 @@ export const getFilterCompanyDetails = async (data: filterData) => {
   }
 };
 
+
 export const getOrderDetails = async (id: mongoose.ObjectId) => {
   try {
     const companyOrders = await UserOrder.find({ adminId: id }).populate(
       "userId"
     );
+
 
     return companyOrders;
   } catch (error) {

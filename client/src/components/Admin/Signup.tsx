@@ -20,7 +20,7 @@ const AdminSignup: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+  
     const postData: AxiosResponse = await axios.post(
       `${constants.BASE_URL}/admin/register`,
       data
@@ -31,8 +31,7 @@ const AdminSignup: React.FC = () => {
         history.push("/");
       }, 2000);
     }
-    console.log(postData);
-    console.log(constants.BASE_URL);
+   
   };
   return (
     <div className="hero min-h-screen bg-base-200 ">

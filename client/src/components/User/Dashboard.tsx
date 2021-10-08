@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
@@ -17,7 +17,8 @@ const Dashboard = () => {
     value: "",
   });
   const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
-  const [search, setSearch] = useState<boolean>(false);
+
+  const [post, setPost] = useState<any>([]);
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
   const ref = useRef<HTMLDivElement>(null);
@@ -46,14 +47,18 @@ const Dashboard = () => {
       date,
     };
     console.log(data);
-    const searchCompanies = await axios.post(
+    let searchCompanies: AxiosResponse = await axios.post(
       `${constants.BASE_URL}/admin/company/filter`,
       data,
       {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       }
     );
-    console.log(searchCompanies.data);
+    console.log(searchCompanies.data["result"]);
+    searchCompanies = searchCompanies.data["result"];
+    // console.log(searchCompanies.data);
+    setPost(searchCompanies);
+    // console.log(post.length);
   };
 
   return (
@@ -140,15 +145,18 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-          <div className="pt-6" onClick={searchCompany}>
-            <button className="btn btn-outline btn-accent w-28 h-8">
+          <div className="pt-6" onClick={() => setPost(["hellp", "hi"])}>
+            <button className="btn btn-outline btn-accent w-28 h-8 ">
               SEARCH
             </button>
           </div>
         </div>
-        {search === true ? (
+        {post.length > 0 ? (
           <div className="w-full  mt-8  h-full flex justify-items-start mx-10 ">
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
+            {/* {post.map((item: any) => (
+              <div>{item.price}</div>
+            ))} */}
             <div className="jusitfy-between p-7 w-2/3 h-66 bg-white mr-4 rounded-md  shadow-lg text-purple-400">
               <div className="flex flex-row text-6xl">
                 Service Provider : FedEx
