@@ -3,12 +3,15 @@ import axios, { AxiosResponse } from "axios";
 import { useHistory } from "react-router-dom";
 import { GoPackage } from "react-icons/go";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
+import { AiFillStar } from "react-icons/ai";
 import { IconContext } from "react-icons";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import constants from "../../constants/constants";
 import Select from "react-select";
 import { cityData } from "../../constants/cities";
+import { useAuth } from "../../userContext/context";
+import { BiLogOut } from "react-icons/bi";
 const Dashboard = () => {
   const myOptions = cityData;
   const [value, onChange] = useState(new Date());
@@ -17,8 +20,9 @@ const Dashboard = () => {
     value: "",
   });
   const [toLocation, setToLocation] = useState<any>({ label: "", value: "" });
-
+  const { setLoggedIn } = useAuth();
   const [post, setPost] = useState<any>([]);
+  const [logout, setlogout] = useState<boolean>(false);
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
   const history = useHistory();
   const ref = useRef<HTMLDivElement>(null);
@@ -46,6 +50,10 @@ const Dashboard = () => {
       toAddress: toLocation.value,
       date,
     };
+    const logout = () => {
+      setLoggedIn(false);
+      history.push("/");
+    }
     console.log(data);
     let searchCompanies: AxiosResponse = await axios.post(
       `${constants.BASE_URL}/admin/company/filter`,
@@ -77,6 +85,16 @@ const Dashboard = () => {
           </IconContext.Provider>
           <pre> </pre>
           MY ORDERS
+        </div>
+        <div
+          className="btn btn-ghost btn-md rounded-btn flex  content-center"
+          onClick={logout()}
+        >
+          <IconContext.Provider value={{ size: "26px" }}>
+            <BiLogOut />
+          </IconContext.Provider>
+          <pre> </pre>
+          SIGN OUT
         </div>
       </div>
       {/* Main page*/}
@@ -157,43 +175,47 @@ const Dashboard = () => {
             {/* {post.map((item: any) => (
               <div>{item.price}</div>
             ))} */}
-            <div className="jusitfy-between p-7 w-2/3 h-66 bg-white mr-4 rounded-md  shadow-lg text-purple-400">
+            <div className="jusitfy-between p-7 w-2/3 h-66 bg-white rounded-md shadow-lg text-purple-400">
               <div className="flex flex-row text-6xl">
-                Service Provider : FedEx
                 <div className="w-1/4">
                   <img
-                    className=""
+                    className="rounded-full h-40 w-40 ml-6"
                     src="https://www.pymnts.com/wp-content/uploads/2021/07/FedEx-Express-India-Delhivery-shipping.jpg"
                     alt="FedEx"
                   />
                 </div>
+                <div className="flex flex-row">
+
+                </div>
+                <div className="mt-8">FedEx</div>
               </div>
 
-              <div className="flex flex-row">
-                <div className="text-2xl pt-5 pl-2 text-left">
-                  From :<div className="text-4xl pl-4">Chennai</div>
-                </div>
-                <div className="pt-10 px-10">
+              <div className="flex flex-row ">
+                  <div className="container w-12 h-8 ml-20 mt-4 bg-green-500 text-white rounded">
+                    <div className="flex pt-1 gap-1 justify-items-center">
+                      <div className="pt-1">
+                      <IconContext.Provider value={{ size: "17px" }}>
+                        <AiFillStar />
+                      </IconContext.Provider>
+                      </div>
+                    <div>4.5</div>
+                    </div>
+                  </div><div className="text-4xl pl-28">Chennai</div>
+                <div className="pt-2 px-8">
                   <IconContext.Provider value={{ size: "35px" }}>
                     <BsFillArrowRightCircleFill />
                   </IconContext.Provider>
                 </div>
-                <div className="text-2xl pt-5 text-left">
-                  To :<div className="text-4xl pl-4">Bangalore</div>
-                </div>
+                <div className="text-4xl">Bangalore</div>
               </div>
-              <div className="flex flex-row pt-5">
-                <div className="text-2xl pl-2 pt-5 pr-48">Price/kg :</div>
-                <div className="text-2xl pt-5">Dates Available :</div>
-              </div>
-              <div className="flex flex-row w-1/1 space-x-56">
-                <div className="text-3xl pl-10 span">50/-</div>
-                <div className="text-3xl">1 2 3 4 5</div>
-              </div>
-              <div className="-mt-10">
-                <button className="btn btn-outline btn-primary w-48 h-14 float-right">
+              <div className="flex flex-row w-1/1 pt-5">
+                <div className="text-2xl pl-16 span">₹ 50/kg</div>
+                <div className="">
+                <button className="btn btn-outline btn-accent w-48 h-14 float-right">
                   Book a slot
                 </button>
+              </div>
+
               </div>
             </div>
           </div>
