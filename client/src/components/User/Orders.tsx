@@ -5,7 +5,11 @@ import Loading from "react-fullscreen-loading";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 interface Order {
-  adminId: { companyName: String };
+  adminId: { companyName: String; email: string };
+  fromAddress: string;
+  toAddress: string;
+  price: Number;
+  date: Date;
 }
 const Orders = () => {
   const history = useHistory();
@@ -34,16 +38,23 @@ const Orders = () => {
       </div>
 
       {/*Maiin page */}
-      <div className="w-100 min-h-screen bg-gray-100 ">
+      <div className="w-100 min-h-screen text-black bg-gray-100 ">
         <div className="w-100 flex  h-full min-h-screen flex-col   items-center  m-2 p-10 ">
           {loaded === true ? (
             <div>
               {Order.length > 0 ? (
                 Order?.map((item: Order) => (
-                  <div>{item.adminId.companyName}</div>
+                  <>
+                    <div>{item.adminId.companyName}</div>
+                    <div>{item.adminId.email}</div>
+                    <div>{item.fromAddress}</div>
+                    <div>{item.toAddress}</div>
+                    <div>{item.price}</div>
+                    <div>{item.date}</div>
+                  </>
                 ))
               ) : (
-                <div className="flex items-center items-center justify-self-center">
+                <div className="flex items-center justify-self-center">
                   NO ORDERS PLACED
                 </div>
               )}
