@@ -258,7 +258,7 @@ export default function Dashboard() {
                             <AiFillStar />
                           </IconContext.Provider>
                         </div>
-                        <div>0</div>
+                        <div>{item.adminRating}</div>
                       </div>
                     </div>
                     <div className="mt-3 text-2xl font-bold">

@@ -7,6 +7,7 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import moment from "moment";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 interface Order {
   adminId: { companyName: String; email: string };
   fromAddress: string;
@@ -19,6 +20,7 @@ const Orders = () => {
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
   const [Order, setOrder] = useState<Order[]>([]);
+  const [rating, setRating] = useState<any>(null);
   useEffect(() => {
     let getData;
     const fetchMyOrders = async () => {
@@ -35,9 +37,34 @@ const Orders = () => {
 
     setLoaded(true);
   }, []);
-
+  type updateRatingType = { orderId: string; adminId: string };
+  const updateRating = async (data: updateRatingType) => {
+    try {
+      const postData = {
+        orderId: data.orderId,
+        rating: rating,
+        adminId: data.adminId,
+      };
+      console.log(postData);
+      const postRating = await axios.post(
+        `${CONSTANTS.BASE_URL}/userorder/rating`,
+        postData,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      if (postRating.status === 200) {
+        toast.success("You rating has been recorded !");
+        window.location.reload();
+      }
+    } catch (err) {
+      toast.warn("Oops something went wrong !");
+    }
+  };
   return (
     <div>
+      {" "}
+      <ToastContainer />
       <div className="navbar  shadow-lg bg-purple-700 text-neutral-content h-18">
         <div className="flex-1 px-2 mx-2">
           <span className="text-lg font-bold">Start.exe</span>
@@ -67,6 +94,9 @@ const Orders = () => {
                           </div>
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-1">
+                          <div className="pl-80 ml-2">
+                            <b>₹{item.price}/-</b>
+                          </div>
                           <div>
                             Date Ordered:{" "}
                             <b>{moment(item.date).format("DD-MM-YYYY")}</b>
@@ -79,11 +109,58 @@ const Orders = () => {
                             <div>
                               Expected Delivery: <b>21/11</b>
                             </div>
-                            <div>Rate your experience!</div>
+                            <div>
+                              {
+                                item.transactionOver === false ? (
+                                  <div>IN TRANSIST</div>
+                                ) : (
+                                  <div>
+                                    {item.gaveRating === false ? (
+                                      <div>
+                                        <p>Rate your experience with us</p>
+                                        <input
+                                          type="number"
+                                          onChange={(e: any) =>
+                                            setRating(e.target.value)
+                                          }
+                                        />
+                                        <button
+                                          onClick={() =>
+                                            updateRating({
+                                              adminId: item.adminId._id,
+                                              orderId: item._id,
+                                            })
+                                          }
+                                        >
+                                          RATING: RATE
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <div>{item.rating}</div>
+                                    )}
+                                  </div>
+                                )
+                                // item.gaveRating === false ? (
+                                //   <div>
+                                //     <p> Rate your experience!</p>
+                                //     <input
+                                //       type="number"
+                                //       onChange={(e: any) =>
+                                //         setRating(e.target.value)
+                                //       }
+                                //     />
+                                //     <button>RATE</button>
+                                //   </div>
+                                // ) : (
+                                //   <div></div>
+                                // )
+                              }
+                            </div>
+                            <div></div>
                           </div>
                           <div className="flex flex-col">
                             <div>
-                              Payment Method: <b>{item.paymentMode}</b>
+                              Payment Method: <b>Net Banking</b>
                             </div>
                             <div className="pb-2">
                               Provider : <b>{item.adminId.companyName}</b>

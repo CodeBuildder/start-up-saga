@@ -68,8 +68,10 @@ export const postCompanyDetails = async (
   id: mongoose.Schema.Types.ObjectId
 ) => {
   try {
+    const findAdmin = await Admin.findOne({ _id: id });
     const postData = {
       adminId: id,
+      adminRating: findAdmin.rating,
       fromAddress: companyData.fromAddress,
       toAddress: companyData.toAddress,
       date: companyData.date,
@@ -91,7 +93,6 @@ interface filterData {
   toAddress: string;
   date: Date;
   sortBy: string;
- 
 }
 export const getFilterCompanyDetails = async (data: filterData) => {
   try {
