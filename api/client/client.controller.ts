@@ -95,17 +95,25 @@ export const postRating = async (
       throw HttpError(400, "Order has not been processed fully");
     }
     const getAdmin = await Admin.findOne({ _id: adminId });
+    console.log("getting admin");
+    console.log(getAdmin);
     const previousRating = getAdmin.rating;
+    console.log("rating from frontend" + rating);
+    console.log(previousRating);
+    //3
+    let newRating = (parseInt(previousRating) + parseInt(rating)) / 2;
+    console.log(newRating);
 
-    let newRating = (previousRating + rating) / 2;
     if (previousRating == 0) {
-      newRating = getAdmin.rating;
+      newRating = rating;
     }
+    console.log(newRating);
     const updateNewRating = await Admin.findByIdAndUpdate(
       { _id: adminId },
       { rating: newRating },
       { new: true }
     );
+    console.log(updateNewRating);
     const gaveRatingUpdate = await UserOrder.findByIdAndUpdate(
       { _id: id },
       { gaveRating: true, rating: rating },
