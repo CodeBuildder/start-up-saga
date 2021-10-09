@@ -90,9 +90,6 @@ const Orders = () => {
         toast.success(
           "Invoice Successfully Generated! Please check your inbox!"
         );
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
       }
     } catch (error) {
       toast.warn("Oops something went wrong !");
@@ -221,7 +218,10 @@ const Orders = () => {
                               Provider : <b>{item.adminId.companyName}</b>
                             </div>
                             <div className="flex flex-row">
-                              <button className="btn btn-outline btn-accent m-4">
+                              <button
+                                className="btn btn-outline btn-accent m-4"
+                                onClick={() => history.push("/track")}
+                              >
                                 TRACK ORDER
                               </button>
                               <button
