@@ -220,8 +220,22 @@ export default function Dashboard() {
         {post.length > 0 ? (
           <div className="w-full mt-3 h-full flex justify-items-start mx-10 ">
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
-
-            <div className="jusitfy-between p-7 w-3/4 h-full">
+            <div className="jusitfy-between b-7 w-3/4 h-full">
+              <div className="flex flex-row w-4/5 text-black p-3 ml-12 space-x-16  text-sm border-b-2">
+               <div>Sort By:</div> 
+                <button>
+                  Rating -- High to Low 
+                </button> 
+                <button>
+                  Rating -- Low to High
+                </button>
+                <button>
+                  Price -- High to Low
+                </button>
+                <button>
+                  Price -- Low to High
+                </button>
+              </div>
               {post.map((item: any) => (
                 <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-purple-800">
                   <div className="flex flex-row text-xl">
@@ -291,7 +305,7 @@ export default function Dashboard() {
                       <span className="label-text text-black mr-3">UPI</span>
                       <input
                         type="radio"
-                        name="upi"
+                        name="method"
                         onChange={() => setPayment("UPI")}
                         className="radio radio-primary "
                       />
@@ -300,7 +314,7 @@ export default function Dashboard() {
                       </span>
                       <input
                         type="radio"
-                        name="netbanking"
+                        name="method"
                         onChange={() => setPayment("netBanking")}
                         className="radio radio-primary "
                       />
@@ -309,7 +323,7 @@ export default function Dashboard() {
                       </span>
                       <input
                         type="radio"
-                        name="cod"
+                        name="method"
                         onChange={() => setPayment("COD")}
                         className="radio radio-primary "
                       />
