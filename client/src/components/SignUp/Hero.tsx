@@ -128,22 +128,17 @@ const Hero: React.FC = () => {
             >
               REGISTER
             </button>
-            <a className="pl-5" href="/admin/signup">Want to register as a Company?</a>
+            <a className="pl-5  text-blue-500" href="/admin/signup">
+              Register as a company
+            </a>
           </form>
         </div>
-        <div className="flex-col justify-center hero-content lg:flex-row">
+        <div className="flex-col justify-start hero-content lg:flex-row">
           <div className="text-center lg:text-left">
-            <h1 className="mb-5 text-5xl font-bold">
-              User Signup
-            </h1>
-            <p className="mb-5 text-lg">
-            Enter the required details to create your new account!
+            {/* <h1 className="mb-5 text-2xl font-bold">User Signup</h1> */}
+            <p className="mb-5 text-2xl font-bold w-60">
+              Click here to register as a user to avail our services!
             </p>
-            <a
-                href="/login"
-              > <br /><br />
-                Already have an account?
-              </a>
           </div>
         </div>
       </div>
