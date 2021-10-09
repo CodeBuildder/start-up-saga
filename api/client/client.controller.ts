@@ -4,6 +4,7 @@ import { sendOrderConfirmationEmail } from "../emails/account";
 import { Company, Admin } from "../admin/admin.schema";
 import { User } from "../auth/auth.schema";
 import mongoose from "mongoose";
+import { orderUpdate } from "./client.schema";
 export const userOrderDetails = async (
   userOrderData: any,
   id: mongoose.Schema.Types.ObjectId
@@ -94,17 +95,25 @@ export const postRating = async (
       throw HttpError(400, "Order has not been processed fully");
     }
     const getAdmin = await Admin.findOne({ _id: adminId });
+    console.log("getting admin");
+    console.log(getAdmin);
     const previousRating = getAdmin.rating;
+    console.log("rating from frontend" + rating);
+    console.log(previousRating);
+    //3
+    let newRating = (parseInt(previousRating) + parseInt(rating)) / 2;
+    console.log(newRating);
 
-    let newRating = (previousRating + rating) / 2;
     if (previousRating == 0) {
-      newRating = getAdmin.rating;
+      newRating = rating;
     }
+    console.log(newRating);
     const updateNewRating = await Admin.findByIdAndUpdate(
       { _id: adminId },
       { rating: newRating },
       { new: true }
     );
+    console.log(updateNewRating);
     const gaveRatingUpdate = await UserOrder.findByIdAndUpdate(
       { _id: id },
       { gaveRating: true, rating: rating },
@@ -117,17 +126,39 @@ export const postRating = async (
     throw err;
   }
 };
-// export const addUpdates = async (
-//   id: mongoose.Schema.Types.ObjectId,
-//   message: string
-// ) => {
-//   try {
-//     const updateExist = await Updates.findOne({ orderId: id });
-//     if (updateExist) {
-//     } else {
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     throw err;
-//   }
-// };
+export const addUpdate = async (
+  id: mongoose.Schema.Types.ObjectId,
+  message: string
+) => {
+  try {
+    const updateExist = await orderUpdate.findOne({ orderId: id });
+    if (updateExist) {
+      await orderUpdate.updateOne(
+        { orderId: id },
+        { $push: { update: { message, createdAt: Date.now() } } }
+      );
+    } else {
+      const data = {
+        orderId: id,
+        update: [{ message, createdAt: Date.now() }],
+      };
+      const firstUpdate = new orderUpdate(data);
+      await firstUpdate.save();
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+export const getUpdate = async (id: mongoose.Schema.Types.ObjectId) => {
+  try {
+    const findUpdate = await orderUpdate.findOne({ orderId: id });
+    if (!findUpdate) {
+      throw HttpError(404, "Order not found!");
+    }
+    return findUpdate;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};

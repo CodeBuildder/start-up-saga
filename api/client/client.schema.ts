@@ -36,3 +36,13 @@ const userOrderSchema = new mongoose.Schema({
 });
 
 export const UserOrder = mongoose.model("userOrder", userOrderSchema);
+const updateOrderSchema = new mongoose.Schema({
+  orderId: { type: mongoose.Schema.Types.ObjectId, ref: "userOrder" },
+  update: [
+    {
+      message: { type: String },
+      createdAt: { type: Date },
+    },
+  ],
+});
+export const orderUpdate = mongoose.model("orderUpdate", updateOrderSchema);
