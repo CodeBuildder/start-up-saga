@@ -34,7 +34,6 @@ const Hero: React.FC = () => {
       // let responseData: responseData = postData.data;
 
       if (postData.status === 200) {
-
         localStorage.setItem("token", postData.data["token"]);
         setLoggedIn(true);
         toast.success("Login successful!");
@@ -113,16 +112,10 @@ const Hero: React.FC = () => {
             </button>
           </form>
         </div>
-        <div className="flex-col justify-center hero-content lg:flex-row">
+        <div className="flex-col justify-center hero-content lg:flex-ro w-96">
           <div className="text-center lg:text-left">
-            <h1 className="mb-5 text-5xl font-bold">
-              Lorem Ipsum re quia dolor sit a
-            </h1>
-            <p className="mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dui
-              sem, pellentesque ut fermentum ut, aliquet ac lacus. In hac
-              habitasse platea di
-            </p>
+            <h1 className="mb-5 text-5xl font-bold">User login </h1>
+            <p className="mb-5">Enter your credentials to login ! </p>
           </div>
         </div>
       </div>
