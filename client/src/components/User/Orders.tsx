@@ -40,7 +40,6 @@ const Orders = () => {
       console.log(getData);
 
       setOrder(getData);
-
     };
     fetchMyOrders();
 
@@ -91,9 +90,6 @@ const Orders = () => {
         toast.success(
           "Invoice Successfully Generated! Please check your inbox!"
         );
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
       }
     } catch (error) {
       toast.warn("Oops something went wrong !");
@@ -193,15 +189,20 @@ const Orders = () => {
                                       </button>
                                     </div>
                                   ) : (
-                                    
-                                      <div className="container w-14 mt-14 bg-green-500 text-white rounded">
-                                          <div className="flex pt-1 p-1 justify-items-center">
-                                            <div className="pt-1 flex flex-row space-x-2">
-                                              <IconContext.Provider value={{ size: "18px" }}>
-                                                <AiFillStar />
-                                              </IconContext.Provider>
-                                              <div className="-mt-1">{item.rating}</div> 
-                                              </div> </div> </div>
+                                    <div className="container w-14 mt-14 bg-green-500 text-white rounded">
+                                      <div className="flex pt-1 p-1 justify-items-center">
+                                        <div className="pt-1 flex flex-row space-x-2">
+                                          <IconContext.Provider
+                                            value={{ size: "18px" }}
+                                          >
+                                            <AiFillStar />
+                                          </IconContext.Provider>
+                                          <div className="-mt-1">
+                                            {item.rating}
+                                          </div>
+                                        </div>{" "}
+                                      </div>{" "}
+                                    </div>
                                   )}
                                 </div>
                               )}
@@ -215,7 +216,10 @@ const Orders = () => {
                               Provider : <b>{item.adminId.companyName}</b>
                             </div>
                             <div className="flex flex-row">
-                              <button className="btn btn-outline btn-accent m-4">
+                              <button
+                                className="btn btn-outline btn-accent m-4"
+                                onClick={() => history.push("/track")}
+                              >
                                 TRACK ORDER
                               </button>
                               <button
