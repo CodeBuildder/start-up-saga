@@ -14,7 +14,7 @@ const Hero = () => {
       {/* Navigation Bar */}
       <div className="navbar  shadow-lg bg-purple-700 text-neutral-content h-18">
         <div className="flex-1 px-2 mx-2">
-          <span className="text-lg font-bold">Start.exe</span>
+          <span className="text-lg font-bold">POST.io</span>
         </div>
         <div className="flex-none hidden px-2 mx-2 lg:flex">
           <div className="flex items-stretch">
@@ -74,13 +74,10 @@ const Hero = () => {
             className="max-w-sm rounded-lg shadow-2xl"
           />
           <div>
-            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-            <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+            <h1 className="mb-5 text-5xl font-bold">One Stop Shop For All Your <br /><div className="text-purple-700"> Courier Services</div></h1>
+            <p className="mb-5 text-lg">
+            We make sure you make the best financial decision and help to fill the void of miscommunication between the recipient and the delivery company. Take complete advantage of our platform and stay carefree about your courier services.
             </p>
-            <button className="btn btn-primary">Get Started</button>
           </div>
         </div>
       </div>
@@ -98,9 +95,9 @@ const Hero = () => {
               </div>
             </IconContext.Provider>
             <pre> </pre>
-            <h1 className="mb-5 text-3xl font-bold">Projects Done</h1>
+            <h1 className="mb-5 text-2xl">Projects Completed</h1>
           </div>{" "}
-          <p className="mb-5">320</p>
+          <p className="mb-5 text-4xl font-bold">120+</p>
         </div>
         <div className="flex flex-col justify-center  text-white justify-items-center items-center">
           <div className="flex">
@@ -113,10 +110,10 @@ const Hero = () => {
               </div>
             </IconContext.Provider>
             <pre> </pre>
-            <h1 className="mb-5 text-3xl font-bold">Clients Worldwide</h1>
+            <h1 className="mb-5 text-2xl">Clients Worldwide</h1>
           </div>
 
-          <p className="mb-5">320</p>
+          <p className="mb-5 text-4xl font-bold">100+</p>
         </div>
         <div className="flex flex-col justify-center  text-white justify-items-center items-center">
           <div className="flex">
@@ -129,10 +126,10 @@ const Hero = () => {
               </div>
             </IconContext.Provider>
             <pre> </pre>
-            <h1 className="mb-5 text-3xl font-bold">Owned Vehicles</h1>
+            <h1 className="mb-5 text-2xl">Owned Vehicles</h1>
           </div>
 
-          <p className="mb-5">320</p>
+          <p className="mb-5 text-4xl font-bold">300+</p>
         </div>
         <div className="flex flex-col justify-center  text-white justify-items-center items-center">
           <div className="flex">
@@ -145,10 +142,10 @@ const Hero = () => {
               </div>
             </IconContext.Provider>
             <pre> </pre>
-            <h1 className="mb-5 text-3xl font-bold">People in Team</h1>
+            <h1 className="mb-5 text-2xl">People in Team</h1>
           </div>
 
-          <p className="mb-5 ">320</p>
+          <p className="mb-5 text-4xl font-bold">50+</p>
         </div>
       </div>
 
