@@ -129,8 +129,7 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-
-            <label className="label">
+              <label className="label">
               <span className="label-text-black">Price</span>
             </label>
             <input
@@ -138,6 +137,15 @@ const Dashboard = () => {
               className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("price", { required: true })}
             />
+              <label className="label">
+              <span className="label-text-black">Expected Delivery</span>
+            </label>
+            <input
+              type="text"
+              className="input rounded-sm bg-white border-gray-300 border-1 "
+              {...register("expectedDelivery", { required: true })}
+            />
+
             <br />
             <div className="flex-row pl-2 space-x-28">
               {calendarView === false ? (
