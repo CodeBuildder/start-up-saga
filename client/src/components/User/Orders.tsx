@@ -31,7 +31,6 @@ const Orders = () => {
       getData = getData.data;
       console.log(getData);
 
-      //var fomatted_date = moment(photo.date_published).format('YYYY-MM-DD');
       setOrder(getData);
     };
     fetchMyOrders();
@@ -68,15 +67,6 @@ const Orders = () => {
 
   const getPdf = (item: any) => {
     console.log(item);
-    // let options = { format: "A4" };
-
-    // let file = { content: "<h1>Welcome to html-pdf-node</h1>" };
-    // // or //
-    // let pdf = { url: "https://example.com" };
-    // console.log(file);
-    // html_to_pdf.generatePdf(file, options).then((pdfBuffer: any) => {
-    //   console.log("PDF Buffer:-", pdfBuffer);
-    // });
   };
 
   return (
@@ -186,20 +176,6 @@ const Orders = () => {
                                     )}
                                   </div>
                                 )
-                                // item.gaveRating === false ? (
-                                //   <div>
-                                //     <p> Rate your experience!</p>
-                                //     <input
-                                //       type="number"
-                                //       onChange={(e: any) =>
-                                //         setRating(e.target.value)
-                                //       }
-                                //     />
-                                //     <button>RATE</button>
-                                //   </div>
-                                // ) : (
-                                //   <div></div>
-                                // )
                               }
                             </div>
                             <div></div>
