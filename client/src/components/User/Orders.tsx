@@ -174,7 +174,15 @@ const Orders = () => {
                                       </button>
                                     </div>
                                   ) : (
-                                    <div>{item.rating}</div>
+                                    
+                                      <div className="container w-14 mt-14 bg-green-500 text-white rounded">
+                                          <div className="flex pt-1 p-1 justify-items-center">
+                                            <div className="pt-1 flex flex-row space-x-2">
+                                              <IconContext.Provider value={{ size: "18px" }}>
+                                                <AiFillStar />
+                                              </IconContext.Provider>
+                                              <div className="-mt-1">{item.rating}</div> 
+                                              </div> </div> </div>
                                   )}
                                 </div>
                               )}
