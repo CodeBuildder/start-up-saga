@@ -129,8 +129,6 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-row space-x-16">
-              <div>
               <label className="label">
               <span className="label-text-black">Price</span>
             </label>
@@ -139,8 +137,6 @@ const Dashboard = () => {
               className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("price", { required: true })}
             />
-              </div>
-              <div className="pl-3">
               <label className="label">
               <span className="label-text-black">Expected Delivery</span>
             </label>
@@ -149,8 +145,6 @@ const Dashboard = () => {
               className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("expectedDelivery", { required: true })}
             />
-              </div>
-            </div>
 
             <br />
             <div className="flex-row pl-2 space-x-28">
