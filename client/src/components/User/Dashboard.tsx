@@ -56,9 +56,9 @@ export default function Dashboard() {
       fromAddress: data.fromAddress,
       toAddress: data.toAddress,
       adminId: data.adminId._id,
+      expectedDelivery: data.expectedDelivery,
       date: `${today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + day}`,
       paymentMode: payment,
-      expectedDelivery: data.expectedDelivery,
     };
 
     let response = await axios.post(
@@ -70,7 +70,7 @@ export default function Dashboard() {
     );
     if (response.status === 200)
       toast.success("Your order has been successfully booked !");
-    //console.log(postData);
+    console.log(postData);
   };
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function Dashboard() {
     );
 
     searchCompanies = searchCompanies?.data;
-    // console.log(newData);
+
     const searchDate = -1 * parseInt(JSON.stringify(value).slice(8, 11));
     const newData = searchCompanies.map((company: any) => ({
       ...company,
@@ -246,7 +246,7 @@ export default function Dashboard() {
                 </button>
               </div>
               {post.map((item: any) => (
-                <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-purple-800">
+                <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-black">
                   <div className="flex flex-row text-xl">
                     <div className="w-1/1">
                       <img
@@ -260,7 +260,7 @@ export default function Dashboard() {
                   </div>
 
                   <div className="flex flex-row ">
-                    <div className="container w-12 h-8 mt-4 mx-10 bg-green-500 text-white rounded">
+                    <div className="container w-20 h-8 mt-4 mx-10 bg-green-500 text-white rounded">
                       <div className="flex pt-1  p-2 justify-items-center">
                         <div className="pt-1">
                           <IconContext.Provider value={{ size: "17px" }}>
@@ -280,6 +280,9 @@ export default function Dashboard() {
                     </div>
                     <div className="mt-3 text-2xl font-bold">
                       {item.toAddress}
+                    </div>
+                    <div className="ml-20 mt-3 text-2xl  font-extrabold">
+                      (In {item.expectedDelivery} hours)
                     </div>
                   </div>
                   <div className="flex flex-row w-full  pt-10 ">

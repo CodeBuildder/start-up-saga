@@ -20,6 +20,7 @@ export const userOrderDetails = async (
       userId: id,
       fromAddress: userOrderData.fromAddress,
       toAddress: userOrderData.toAddress,
+      expectedDelivery: userOrderData.expectedDelivery,
       date: userOrderData.date,
       weight: userOrderData.weight,
       price: userOrderData.price,
@@ -33,7 +34,8 @@ export const userOrderDetails = async (
       findUser.username,
       newUserOrderData.userId,
       newUserOrderData.fromAddress,
-      newUserOrderData.toAddress
+      newUserOrderData.toAddress,
+      newUserOrderData.expectedDelivery
     );
 
     console.log(email);

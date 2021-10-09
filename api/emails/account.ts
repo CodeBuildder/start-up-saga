@@ -7,15 +7,15 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 
 
-export const sendOrderConfirmationEmail = (email: string, name: string, id: any, fromAddress: string, toAddress: string) => {
+export const sendOrderConfirmationEmail = (email: string, name: string, id: any, fromAddress: string, toAddress: string, expectedDelivery: number) => {
 
-    const output = `
+  const output = `
     <p style="color: #000000">Hello ${name}, 
     <br>
     <br>
     <b><i>Your order has been successfully placed.</b></i> 
     <br>
-    Your parcel from ${fromAddress} to ${toAddress} has an expected of 72hours
+    Your parcel from ${fromAddress} to ${toAddress} has an estimated of ${expectedDelivery} hours!
     <br>
     <br>
     <br>
@@ -38,12 +38,12 @@ export const sendOrderConfirmationEmail = (email: string, name: string, id: any,
     </p>
   `;
 
-    sgMail.send({
-        to: email,
-        from: 'kums2kaushik@gmail.com',
-        subject: 'Order Placed Successfully!',
-        html: output
-    })
+  sgMail.send({
+    to: email,
+    from: 'kums2kaushik@gmail.com',
+    subject: 'Order Placed Successfully!',
+    html: output
+  })
 }
 
 //expected delivery
