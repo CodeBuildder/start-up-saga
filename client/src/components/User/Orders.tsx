@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { AiFillStar } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
 import moment from "moment";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +23,13 @@ const Orders = () => {
   const [loaded, setLoaded] = useState(false);
   const [Order, setOrder] = useState<Order[]>([]);
   const [rating, setRating] = useState<any>(null);
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    toast.warn("Logging out !");
+    setTimeout(() => {
+      history.push("login");
+    }, 2000);
+  };
   useEffect(() => {
     let getData;
     const fetchMyOrders = async () => {
@@ -32,6 +40,7 @@ const Orders = () => {
       console.log(getData);
 
       setOrder(getData);
+
     };
     fetchMyOrders();
 
@@ -99,6 +108,16 @@ const Orders = () => {
         <div className="flex-1 px-2 mx-2">
           <span className="text-lg font-bold">Start.exe</span>
         </div>
+        <a
+          className="btn btn-ghost btn-md rounded-btn flex  content-center"
+          onClick={logoutHandler}
+        >
+          <IconContext.Provider value={{ size: "26px" }}>
+            <BiLogOut />
+          </IconContext.Provider>
+          <pre> </pre>
+          SIGN OUT
+        </a>
       </div>
       {/*Main page */}
       <div className="w-100 min-h-screen text-black bg-gray-100 ">
