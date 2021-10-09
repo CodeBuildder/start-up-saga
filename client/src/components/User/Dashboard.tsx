@@ -34,6 +34,7 @@ export default function Dashboard() {
   const { setLoggedIn } = useAuth();
   const [post, setPost] = useState<any>([]);
   const [day, setDay] = useState<any>();
+  const [sortBy, setSortBy] = useState<any>("");
   const [payment, setPayment] = useState<String>();
   var today = new Date();
   const [displayCalendar, setDisplayCalender] = useState<boolean>(false);
@@ -57,6 +58,7 @@ export default function Dashboard() {
       adminId: data.adminId._id,
       date: `${today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + day}`,
       paymentMode: payment,
+      expectedDelivery: data.expectedDelivery,
     };
 
     let response = await axios.post(
@@ -85,13 +87,14 @@ export default function Dashboard() {
     };
   }, [displayCalendar]);
 
-  const searchCompany = async () => {
+  const searchCompany = async (temp: any) => {
     let date = JSON.stringify(value);
     date = date.slice(1, 11);
     const data = {
       fromAddress: fromLocation.value,
       toAddress: toLocation.value,
       date,
+      sortBy: temp,
     };
 
     console.log(data);
@@ -112,7 +115,7 @@ export default function Dashboard() {
         .map((date: any) => date.toString().slice(-2))
         .filter((i: any) => i > searchDate),
     }));
-
+    console.log(newData);
     setPost(newData);
   };
 
@@ -211,7 +214,7 @@ export default function Dashboard() {
               )}
             </div>
           </div>
-          <div className="pt-6" onClick={searchCompany}>
+          <div className="pt-6" onClick={() => searchCompany("")}>
             <button className="btn btn-outline btn-accent w-28 h-8 ">
               SEARCH
             </button>
@@ -222,17 +225,23 @@ export default function Dashboard() {
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
             <div className="jusitfy-between b-7 w-3/4 h-full">
               <div className="flex flex-row w-5/6 text-black p-3 ml-5 space-x-12  text-sm border-b-2">
-               <div className="mt-3">Sort By:</div>
+                <div className="mt-3">Sort By:</div>
                 <button className="btn btn-outline text-black border-none text-xs">
-                  Rating -- High to Low 
-                </button> 
+                  Rating -- High to Low
+                </button>
                 <button className="btn btn-outline text-black border-none text-xs">
                   Rating -- Low to High
                 </button>
-                <button className="btn btn-outline text-black border-none text-xs">
+                <button
+                  className="btn btn-outline text-black border-none text-xs"
+                  onClick={() => searchCompany("-price")}
+                >
                   Price -- High to Low
                 </button>
-                <button className="btn btn-outline text-black border-none text-xs">
+                <button
+                  className="btn btn-outline text-black border-none text-xs"
+                  onClick={() => searchCompany("price")}
+                >
                   Price -- Low to High
                 </button>
               </div>

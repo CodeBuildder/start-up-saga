@@ -55,7 +55,9 @@ const Orders = () => {
       );
       if (postRating.status === 200) {
         toast.success("You rating has been recorded !");
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
     } catch (err) {
       toast.warn("Oops something went wrong !");
@@ -70,7 +72,6 @@ const Orders = () => {
           <span className="text-lg font-bold">Start.exe</span>
         </div>
       </div>
-
       {/*Main page */}
       <div className="w-100 min-h-screen text-black bg-gray-100 ">
         <div className="w-100 flex h-full min-h-screen flex-col items-center justify-center">
@@ -99,6 +100,10 @@ const Orders = () => {
                           </div>
                           <div>
                             Date Ordered:{" "}
+                            <b>{moment(item.orderedOn).format("DD-MM-YYYY")}</b>
+                          </div>
+                          <div>
+                            Shipping on :{" "}
                             <b>{moment(item.date).format("DD-MM-YYYY")}</b>
                           </div>
                           <div className="pl-80 ml-2"></div>
@@ -106,8 +111,12 @@ const Orders = () => {
 
                         <div className="flex flex-row text-lg space-x-28">
                           <div className="flex flex-col">
+                            <div>Order ID : {item._id}</div>
                             <div>
-                              Expected Delivery: <b>21/11</b>
+                              Expected Delivery:{" "}
+                              <b>
+                                In {item.expectedDelivery} hours from shipping
+                              </b>
                             </div>
                             <div>
                               {
@@ -166,7 +175,7 @@ const Orders = () => {
                               Provider : <b>{item.adminId.companyName}</b>
                             </div>
                             <div className="btn btn-outline btn-accent -m-1">
-                              View Updates
+                              TRACK ORDER
                             </div>
                           </div>
                         </div>
