@@ -129,8 +129,8 @@ const Orders = () => {
                             <div>
                               {
                                 item.transactionOver === false ? (
-                                  <p>
-                                    <b>IN TRANSIT</b>
+                                  <p className="pt-7 pl-5 text-3xl">
+                                    <b><b>IN TRANSIT</b></b> 
                                   </p>
                                 ) : (
                                   <div>
