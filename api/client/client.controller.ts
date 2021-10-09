@@ -20,6 +20,7 @@ export const userOrderDetails = async (
       userId: id,
       fromAddress: userOrderData.fromAddress,
       toAddress: userOrderData.toAddress,
+      expectedDelivery: userOrderData.expectedDelivery,
       date: userOrderData.date,
       weight: userOrderData.weight,
       price: userOrderData.price,
@@ -27,7 +28,7 @@ export const userOrderDetails = async (
       paymentMode: userOrderData.paymentMode,
     };
 
-    const email = await sendOrderConfirmationEmail(findUser.email, findUser.username, newUserOrderData.userId, newUserOrderData.fromAddress, newUserOrderData.toAddress)
+    const email = await sendOrderConfirmationEmail(findUser.email, findUser.username, newUserOrderData.userId, newUserOrderData.fromAddress, newUserOrderData.toAddress, newUserOrderData.expectedDelivery)
 
     console.log(email)
 
