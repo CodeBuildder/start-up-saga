@@ -149,16 +149,15 @@ const AdminSignup: React.FC = () => {
             </div>
           </form>
         </div>
-        <div className="flex-col justify-center hero-content lg:flex-row">
+        <div className="flex-col justify-center hero-content ">
           <div className="text-center lg:text-left">
-            <h1 className="mb-5 text-5xl font-bold">Admin Login</h1>
-            <p className="">
+            <p className="mb-5 text-5xl font-bold">Admin Signup</p>
+            <p className="text-lg">
               Enter the required details to create your new account! <br />
               <br />
               <br /> <br />
               <br />{" "}
               <a
-                className=""
                 href="https://start-up-saga-api.herokuapp.com/api/admin/signup"
               >
                 Already have an account?

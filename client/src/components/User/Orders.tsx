@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 import { AiFillStar } from "react-icons/ai";
+import { BiLogOut } from "react-icons/bi";
 import moment from "moment";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +23,13 @@ const Orders = () => {
   const [loaded, setLoaded] = useState(false);
   const [Order, setOrder] = useState<Order[]>([]);
   const [rating, setRating] = useState<any>(null);
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    toast.warn("Logging out !");
+    setTimeout(() => {
+      history.push("login");
+    }, 2000);
+  };
   useEffect(() => {
     let getData;
     const fetchMyOrders = async () => {
@@ -32,6 +40,7 @@ const Orders = () => {
       console.log(getData);
 
       setOrder(getData);
+
     };
     fetchMyOrders();
 
@@ -99,6 +108,16 @@ const Orders = () => {
         <div className="flex-1 px-2 mx-2">
           <span className="text-lg font-bold">Start.exe</span>
         </div>
+        <a
+          className="btn btn-ghost btn-md rounded-btn flex  content-center"
+          onClick={logoutHandler}
+        >
+          <IconContext.Provider value={{ size: "26px" }}>
+            <BiLogOut />
+          </IconContext.Provider>
+          <pre> </pre>
+          SIGN OUT
+        </a>
       </div>
       {/*Main page */}
       <div className="w-100 min-h-screen text-black bg-gray-100 ">
@@ -108,21 +127,21 @@ const Orders = () => {
               {Order.length > 0 ? (
                 Order?.map((item: any) => (
                   <>
-                    <div className="jusitfy-between p-7 w-2/4 h-full">
+                    <div className="jusitfy-between p-7 w-4/6  h-full">
                       <div className=" m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                         <div className="flex flex-row text-lg font-bold space-x-5">
-                          <div className="text-xl w-48">{item.fromAddress}</div>
-                          <div className="pt-3 pr-3">
+                          <div className="text-xl w-66">{item.fromAddress}</div>
+                          <div className="pt-1 px-3">
                             <IconContext.Provider value={{ size: "24px" }}>
                               <BsFillArrowRightCircleFill />
                             </IconContext.Provider>
                           </div>
                           <div className="text-xl">{item.toAddress}</div>
-                          <div className="flex flex-col pl-10 ">
+                          <div className="flex flex-col pl-40 ">
                             <div className="">{item.weight} Kg(s)</div>
                           </div>
                         </div>
-                        <div className="flex flex-row text-lg pb-1 pt-5 space-x-40">
+                        <div className="flex flex-row text-lg pb-1 pt-5 space-x-80">
                           <div className="flex flex-col space-y-1">
                             <div className="flex flex-row">
                               Date Ordered:{" "}
@@ -137,12 +156,12 @@ const Orders = () => {
                             <div>Order ID : {item._id}</div>
                           </div>
 
-                          <div className="flex flex-col text-4xl pt-4">
+                          <div className="flex flex-col text-5xl pt-4 pl-5">
                             <b>₹{item.price}/-</b>
                           </div>
                         </div>
 
-                        <div className="flex flex-row text-lg space-x-10">
+                        <div className="flex flex-row text-lg space-x-60">
                           <div className="flex flex-col">
                             <div>
                               Expected Delivery:{" "}
@@ -150,11 +169,7 @@ const Orders = () => {
                             </div>
                             <div>
                               {item.transactionOver === false ? (
-                                <p className="pt-7 pl-5 text-3xl">
-                                  <b>
-                                    <b>IN TRANSIT</b>
-                                  </b>
-                                </p>
+                                <div>IN TRANSIST</div>
                               ) : (
                                 <div>
                                   {item.gaveRating === false ? (
@@ -178,33 +193,19 @@ const Orders = () => {
                                       </button>
                                     </div>
                                   ) : (
-                                    <div>
-                                      <div className="container w-24 mt-4 bg-green-500 text-white rounded">
-                                        <div className="flex pt-1 p-2 justify-items-center">
-                                          <div className="pt-1 flex flex-row">
-                                            <IconContext.Provider
-                                              value={{ size: "18px" }}
-                                            >
-                                              <AiFillStar />
-                                            </IconContext.Provider>
-                                          </div>
-                                          <div>
-                                            {0 == 0 ? (
-                                              <p className="text-sm pt-1">
-                                                Not Rated
-                                              </p>
-                                            ) : (
-                                              <p>{item.adminRating}</p>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                                    
+                                      <div className="container w-14 mt-14 bg-green-500 text-white rounded">
+                                          <div className="flex pt-1 p-1 justify-items-center">
+                                            <div className="pt-1 flex flex-row space-x-2">
+                                              <IconContext.Provider value={{ size: "18px" }}>
+                                                <AiFillStar />
+                                              </IconContext.Provider>
+                                              <div className="-mt-1">{item.rating}</div> 
+                                              </div> </div> </div>
                                   )}
                                 </div>
                               )}
                             </div>
-                            <div></div>
                           </div>
                           <div className="flex flex-col">
                             <div>
