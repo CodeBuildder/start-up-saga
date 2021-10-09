@@ -14,7 +14,7 @@ const Hero = () => {
       {/* Navigation Bar */}
       <div className="navbar  shadow-lg bg-purple-700 text-neutral-content h-18">
         <div className="flex-1 px-2 mx-2">
-          <span className="text-lg font-bold">POST.io</span>
+          <span className="text-lg font-bold">Post.io</span>
         </div>
         <div className="flex-none hidden px-2 mx-2 lg:flex">
           <div className="flex items-stretch">
@@ -74,9 +74,15 @@ const Hero = () => {
             className="max-w-sm rounded-lg shadow-2xl"
           />
           <div>
-            <h1 className="mb-5 text-5xl font-bold">One Stop Shop For All Your <br /><div className="text-purple-700"> Courier Services</div></h1>
-            <p className="mb-5 text-lg">
-            We make sure you make the best financial decision and help to fill the void of miscommunication between the recipient and the delivery company. Take complete advantage of our platform and stay carefree about your courier services.
+            <h1 className="mb-6 text-5xl font-bold">
+              One Stop Shop For All Your <br />
+              <div className="text-purple-700"> Courier Services</div>
+            </h1>
+            <p className="mb-5 text-xl ">
+              We make sure you make the best financial decision and help to fill
+              the void of miscommunication between the recipient and the
+              delivery company. Take complete advantage of our platform and stay
+              carefree about your courier services.
             </p>
           </div>
         </div>
