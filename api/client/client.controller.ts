@@ -1,6 +1,6 @@
 import { UserOrder } from "./client.schema";
 import HttpError from "http-errors";
-import { sendOrderConfirmationEmail } from "../emails/account";
+import { sendOrderConfirmationEmail, sendInvoiceEmail } from "../emails/account";
 import { Company, Admin } from "../admin/admin.schema";
 import { User } from "../auth/auth.schema";
 import mongoose from "mongoose";
@@ -29,16 +29,16 @@ export const userOrderDetails = async (
       paymentMode: userOrderData.paymentMode,
     };
 
-    // const email = await sendOrderConfirmationEmail(
-    //   findUser.email,
-    //   findUser.username,
-    //   newUserOrderData.userId,
-    //   newUserOrderData.fromAddress,
-    //   newUserOrderData.toAddress,
-    //   newUserOrderData.expectedDelivery
-    // );
+    const email = await sendOrderConfirmationEmail(
+      findUser.email,
+      findUser.username,
+      newUserOrderData.userId,
+      newUserOrderData.fromAddress,
+      newUserOrderData.toAddress,
+      newUserOrderData.expectedDelivery
+    );
 
-    //console.log(email);
+    console.log(email);
 
     console.log(newUserOrderData);
     const data = new UserOrder(newUserOrderData);
@@ -150,6 +150,37 @@ export const addUpdate = async (
     throw err;
   }
 };
+
+
+export const sendInvoice = async (id: mongoose.Schema.Types.ObjectId) => {
+  try {
+    const findOrder = await UserOrder.findOne({
+
+      _id: id
+    }).populate("userId")
+
+
+
+    const invoice = await sendInvoiceEmail(
+      findOrder.userId.username,
+      findOrder.userId.email,
+      id,
+      findOrder.fromAddress,
+      findOrder.toAddress,
+      findOrder.date,
+      findOrder.weight,
+      findOrder.price,
+      findOrder.orderedOn,
+      findOrder.paymentMode
+    )
+  } catch (error) {
+    throw error
+  }
+
+}
+
+
+
 export const getUpdate = async (id: mongoose.Schema.Types.ObjectId) => {
   try {
     const findUpdate = await orderUpdate.findOne({ orderId: id });

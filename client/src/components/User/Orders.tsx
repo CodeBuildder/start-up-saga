@@ -66,17 +66,30 @@ const Orders = () => {
     }
   };
 
-  const getPdf = (item: any) => {
-    console.log(item);
-    // let options = { format: "A4" };
-
-    // let file = { content: "<h1>Welcome to html-pdf-node</h1>" };
-    // // or //
-    // let pdf = { url: "https://example.com" };
-    // console.log(file);
-    // html_to_pdf.generatePdf(file, options).then((pdfBuffer: any) => {
-    //   console.log("PDF Buffer:-", pdfBuffer);
-    // });
+  const getPdf = async (item: any) => {
+    try {
+      const id = {
+        orderId: item._id,
+      };
+      console.log(id);
+      const sendInvoice = await axios.post(
+        `http://localhost:5000/api/get/invoice`,
+        id,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      if (sendInvoice.status === 200) {
+        toast.success(
+          "Invoice Successfully Generated! Please check your inbox!"
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      toast.warn("Oops something went wrong !");
+    }
   };
 
   return (
@@ -99,9 +112,7 @@ const Orders = () => {
                     <div className="jusitfy-between p-7 w-2/4 h-full">
                       <div className=" m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                         <div className="flex flex-row text-lg font-bold space-x-5">
-                          <div className="text-xl w-48">
-                            {item.fromAddress}
-                            </div>
+                          <div className="text-xl w-48">{item.fromAddress}</div>
                           <div className="pt-3 pr-3">
                             <IconContext.Provider value={{ size: "24px" }}>
                               <BsFillArrowRightCircleFill />
@@ -114,15 +125,17 @@ const Orders = () => {
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-5 space-x-40">
                           <div className="flex flex-col space-y-1">
-                           <div className="flex flex-row">
-                            Date Ordered:{" "}
-                            <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>                             
-                           </div>
-                          <div>
-                            Shipping on :{" "}
-                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
-                          </div>
-                          <div>Order ID : {item._id}</div>
+                            <div className="flex flex-row">
+                              Date Ordered:{" "}
+                              <p>
+                                {moment(item.orderedOn).format("DD-MM-YYYY")}
+                              </p>
+                            </div>
+                            <div>
+                              Shipping on :{" "}
+                              <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                            </div>
+                            <div>Order ID : {item._id}</div>
                           </div>
 
                           <div className="flex flex-col text-4xl pt-4">
@@ -134,9 +147,7 @@ const Orders = () => {
                           <div className="flex flex-col">
                             <div>
                               Expected Delivery:{" "}
-                              <b>
-                                {item.expectedDelivery} hours from shipping
-                              </b>
+                              <b>{item.expectedDelivery} hours from shipping</b>
                             </div>
                             <div>
                               {
@@ -168,16 +179,20 @@ const Orders = () => {
                                       </div>
                                     ) : (
                                       <div>
-                                          <div className="container w-24 mt-4 bg-green-500 text-white rounded">
+                                        <div className="container w-24 mt-4 bg-green-500 text-white rounded">
                                           <div className="flex pt-1 p-2 justify-items-center">
                                             <div className="pt-1 flex flex-row">
-                                              <IconContext.Provider value={{ size: "18px" }}>
+                                              <IconContext.Provider
+                                                value={{ size: "18px" }}
+                                              >
                                                 <AiFillStar />
                                               </IconContext.Provider>
                                             </div>
                                             <div>
                                               {0 == 0 ? (
-                                                <p className="text-sm pt-1">Not Rated</p>
+                                                <p className="text-sm pt-1">
+                                                  Not Rated
+                                                </p>
                                               ) : (
                                                 <p>{item.adminRating}</p>
                                               )}
