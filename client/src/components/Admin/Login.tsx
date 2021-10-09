@@ -107,15 +107,9 @@ const AdminLogin: React.FC = () => {
         </div>
         <div className="flex-col justify-center hero-content lg:flex-row">
           <div className="text-center lg:text-left">
-            <h1 className="mb-5 text-5xl font-bold">
-              Lorem Ipsum re quia dolor sit a
+            <h1 className="mb-5 text-3xl font-bold">
+              Login to your dashboard to explore your orders
             </h1>
-
-            <p className="mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dui
-              sem, pellentesque ut fermentum ut, aliquet ac lacus. In hac
-              habitasse platea di
-            </p>
           </div>
         </div>
       </div>

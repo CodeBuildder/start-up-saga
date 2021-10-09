@@ -20,7 +20,6 @@ const AdminSignup: React.FC = () => {
     formState: { errors },
   } = useForm<FormData>();
   const onSubmit = async (data: FormData) => {
-  
     const postData: AxiosResponse = await axios.post(
       `${constants.BASE_URL}/admin/register`,
       data
@@ -31,7 +30,6 @@ const AdminSignup: React.FC = () => {
         history.push("/");
       }, 2000);
     }
-   
   };
   return (
     <div className="hero min-h-screen bg-base-200 ">
@@ -146,10 +144,7 @@ const AdminSignup: React.FC = () => {
               >
                 REGISTER
               </button>
-              <a
-                href="/admin/login"
-                className="pl-16 text-blue-500"
-              >
+              <a href="/admin/login" className="pl-16 text-blue-500">
                 Already have an account?
               </a>
             </div>
@@ -157,13 +152,12 @@ const AdminSignup: React.FC = () => {
         </div>
         <div className="flex-col justify-center hero-content ">
           <div className="text-center lg:text-left">
-            <p className="mb-5 text-5xl font-bold">Admin Signup</p>
+            <p className="mb-5 text-5xl font-bold">Register as an company </p>
             <p className="text-lg">
-              Enter the required details to create your new account! <br />
+              Link your company with our platform to expand your reach <br />
               <br />
               <br /> <br />
               <br />{" "}
-
             </p>
           </div>
         </div>
