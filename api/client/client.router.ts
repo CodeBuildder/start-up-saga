@@ -6,6 +6,7 @@ import {
   getOrderDetails,
   getUpdate,
   addUpdate,
+  sendInvoice
 } from "./client.controller";
 
 import { verifiedAdmin } from "../middleware/auth";
@@ -95,6 +96,21 @@ router.post(
     try {
       console.log(req.body.orderId);
       const result = await getUpdate(req.body.orderId);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/api/get/invoice",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { user } = res.locals.user;
+      const result = await sendInvoice(req.body.orderId);
 
       res.json(result);
     } catch (error) {

@@ -65,8 +65,30 @@ const Orders = () => {
     }
   };
 
-  const getPdf = (item: any) => {
-    console.log(item);
+  const getPdf = async (item: any) => {
+    try {
+      const id = {
+        orderId: item._id,
+      };
+      console.log(id);
+      const sendInvoice = await axios.post(
+        `${CONSTANTS.BASE_URL}/get/invoice`,
+        id,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      if (sendInvoice.status === 200) {
+        toast.success(
+          "Invoice Successfully Generated! Please check your inbox!"
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      toast.warn("Oops something went wrong !");
+    }
   };
 
   return (
@@ -127,56 +149,60 @@ const Orders = () => {
                               <b>{item.expectedDelivery} hours from shipping</b>
                             </div>
                             <div>
-                              {
-                                item.transactionOver === false ? (
-                                  <p className="pt-7 pl-5 text-3xl">
-                                    <b><b>IN TRANSIT</b></b> 
-                                  </p>
-                                ) : (
-                                  <div>
-                                    {item.gaveRating === false ? (
-                                      <div>
-                                        <p>Rate your experience with us</p>
-                                        <input
-                                          type="number"
-                                          onChange={(e: any) =>
-                                            setRating(e.target.value)
-                                          }
-                                        />
-                                        <button
-                                          onClick={() =>
-                                            updateRating({
-                                              adminId: item.adminId._id,
-                                              orderId: item._id,
-                                            })
-                                          }
-                                        >
-                                          RATING: RATE
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div>
-                                        {/* <div className="container w-24 mt-4 bg-green-500 text-white rounded">
-                                          <div className="flex pt-1 p-2 justify-items-center">
-                                            <div className="pt-1 flex flex-row">
-                                              <IconContext.Provider value={{ size: "18px" }}>
-                                                <AiFillStar />
-                                              </IconContext.Provider>
-                                            </div>
-                                            <div>
-                                              {0 == 0 ? (
-                                                <p className="text-sm pt-1">Not Rated</p>
-                                              ) : ( */}
-                                        <p>{item.rating}</p>
-                                        {/* )}
-                                            </div>
+                              {item.transactionOver === false ? (
+                                <p className="pt-7 pl-5 text-3xl">
+                                  <b>
+                                    <b>IN TRANSIT</b>
+                                  </b>
+                                </p>
+                              ) : (
+                                <div>
+                                  {item.gaveRating === false ? (
+                                    <div>
+                                      <p>Rate your experience with us</p>
+                                      <input
+                                        type="number"
+                                        onChange={(e: any) =>
+                                          setRating(e.target.value)
+                                        }
+                                      />
+                                      <button
+                                        onClick={() =>
+                                          updateRating({
+                                            adminId: item.adminId._id,
+                                            orderId: item._id,
+                                          })
+                                        }
+                                      >
+                                        RATING: RATE
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <div className="container w-24 mt-4 bg-green-500 text-white rounded">
+                                        <div className="flex pt-1 p-2 justify-items-center">
+                                          <div className="pt-1 flex flex-row">
+                                            <IconContext.Provider
+                                              value={{ size: "18px" }}
+                                            >
+                                              <AiFillStar />
+                                            </IconContext.Provider>
                                           </div>
-                                        </div> */}
+                                          <div>
+                                            {0 == 0 ? (
+                                              <p className="text-sm pt-1">
+                                                Not Rated
+                                              </p>
+                                            ) : (
+                                              <p>{item.adminRating}</p>
+                                            )}
+                                          </div>
+                                        </div>
                                       </div>
-                                    )}
-                                  </div>
-                                )
-                              }
+                                    </div>
+                                  )}
+                                </div>
+                              )}
                             </div>
                             <div></div>
                           </div>
