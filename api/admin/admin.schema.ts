@@ -54,6 +54,7 @@ export const companySchema = new mongoose.Schema({
     required: true,
   },
   adminRating: { type: Number },
+  expectedDelivery: { type: String },
 });
 
 export const Company = mongoose.model("company", companySchema);

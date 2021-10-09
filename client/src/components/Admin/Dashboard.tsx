@@ -49,7 +49,7 @@ const Dashboard = () => {
         history.push("/admin/myorders");
       }, 2000);
     }
-  }
+  };
   const logoutHandler = () => {
     localStorage.removeItem("token");
     toast.warn("Logging out !");
