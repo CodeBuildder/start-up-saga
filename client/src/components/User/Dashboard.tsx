@@ -221,18 +221,18 @@ export default function Dashboard() {
           <div className="w-full mt-3 h-full flex justify-items-start mx-10 ">
             <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
             <div className="jusitfy-between b-7 w-3/4 h-full">
-              <div className="flex flex-row w-4/5 text-black p-3 ml-12 space-x-16  text-sm border-b-2">
-               <div>Sort By:</div> 
-                <button>
+              <div className="flex flex-row w-5/6 text-black p-3 ml-5 space-x-12  text-sm border-b-2">
+               <div className="mt-3">Sort By:</div>
+                <button className="btn btn-outline text-black border-none text-xs">
                   Rating -- High to Low 
                 </button> 
-                <button>
+                <button className="btn btn-outline text-black border-none text-xs">
                   Rating -- Low to High
                 </button>
-                <button>
+                <button className="btn btn-outline text-black border-none text-xs">
                   Price -- High to Low
                 </button>
-                <button>
+                <button className="btn btn-outline text-black border-none text-xs">
                   Price -- Low to High
                 </button>
               </div>
