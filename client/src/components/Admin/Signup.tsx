@@ -146,6 +146,12 @@ const AdminSignup: React.FC = () => {
               >
                 REGISTER
               </button>
+              <a
+                href="/admin/login"
+                className="pl-16 text-blue-500"
+              >
+                Already have an account?
+              </a>
             </div>
           </form>
         </div>
@@ -157,11 +163,7 @@ const AdminSignup: React.FC = () => {
               <br />
               <br /> <br />
               <br />{" "}
-              <a
-                href="https://start-up-saga-api.herokuapp.com/api/admin/signup"
-              >
-                Already have an account?
-              </a>
+
             </p>
           </div>
         </div>
