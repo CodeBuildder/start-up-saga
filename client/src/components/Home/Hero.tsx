@@ -102,42 +102,53 @@ const Hero = () => {
           </div>{" "}
           <p className="mb-5">320</p>
         </div>
-        <div className="flex justify-center text-white">
-          <IconContext.Provider value={{ size: "40px" }}>
-            <div>
-              <h2>
-                <BsGlobe2 />
-              </h2>
-            </div>
-          </IconContext.Provider>
-          <pre> </pre>
-          <h1 className="mb-5 text-3xl font-bold">Clients Worldwide</h1>
-          <p className="mb-5">320</p>
-        </div>
-        <div className="flex justify-center text-white">
-          <IconContext.Provider value={{ size: "40px" }}>
-            <div>
-              <h2>
-                <BsTruck />
-              </h2>
-            </div>
-          </IconContext.Provider>
-          <pre> </pre>
-          <h1 className="mb-5 text-3xl font-bold">Owned Vehicles</h1>
-          <p className="mb-5">320</p>
-        </div>
-        <div className="flex justify-center text-white">
-          <IconContext.Provider value={{ size: "40px" }}>
-            <div>
-              <h2>
-                <FiUsers />
-              </h2>
-            </div>
-          </IconContext.Provider>
-          <pre> </pre>
+        <div className="flex flex-col justify-center  text-white justify-items-center items-center">
+          <div className="flex">
+            {" "}
+            <IconContext.Provider value={{ size: "40px" }}>
+              <div>
+                <h2>
+                  <BsGlobe2 />
+                </h2>
+              </div>
+            </IconContext.Provider>
+            <pre> </pre>
+            <h1 className="mb-5 text-3xl font-bold">Clients Worldwide</h1>
+          </div>
 
-          <h1 className="mb-5 text-3xl font-bold">People in Team</h1>
           <p className="mb-5">320</p>
+        </div>
+        <div className="flex flex-col justify-center  text-white justify-items-center items-center">
+          <div className="flex">
+            {" "}
+            <IconContext.Provider value={{ size: "40px" }}>
+              <div>
+                <h2>
+                  <BsTruck />
+                </h2>
+              </div>
+            </IconContext.Provider>
+            <pre> </pre>
+            <h1 className="mb-5 text-3xl font-bold">Owned Vehicles</h1>
+          </div>
+
+          <p className="mb-5">320</p>
+        </div>
+        <div className="flex flex-col justify-center  text-white justify-items-center items-center">
+          <div className="flex">
+            {" "}
+            <IconContext.Provider value={{ size: "40px" }}>
+              <div>
+                <h2>
+                  <FiUsers />
+                </h2>
+              </div>
+            </IconContext.Provider>
+            <pre> </pre>
+            <h1 className="mb-5 text-3xl font-bold">People in Team</h1>
+          </div>
+
+          <p className="mb-5 ">320</p>
         </div>
       </div>
 
