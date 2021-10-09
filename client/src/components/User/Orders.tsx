@@ -149,62 +149,37 @@ const Orders = () => {
                               <b>{item.expectedDelivery} hours from shipping</b>
                             </div>
                             <div>
-                              {
-                                item.transactionOver === false ? (
-                                  <p className="pt-7 pl-5 text-3xl">
-                                    <b><b>IN TRANSIT</b></b> 
-                                  </p>
-                                ) : (
-                                  <div>
-                                    {item.gaveRating === false ? (
-                                      <div className="flex flex-col pt-2">
-                                        <div className="flex flex-row"> 
-                                          <p>Rate your experience:</p> <pre> </pre>
-                                        <input className="rounded  w-11 border-2"
-                                          type="number"
-                                          onChange={(e: any) =>
-                                            setRating(e.target.value)
-                                          }
-                                        />
-                                        </div>
-                                        <div className="pt-3">
-                                        <button className="btn btn-outline btn-secondary w-52"
-                                          onClick={() =>
-                                            updateRating({
-                                              adminId: item.adminId._id,
-                                              orderId: item._id,
-                                            })
-                                          }
-                                        >
-                                          Rate
-                                        </button>                                          
-                                        </div>
-
-                                      </div>
-                                    ) : (
-                                      <div>
-                                         <div className="container w-24 mt-4 bg-green-500 text-white rounded">
-                                          <div className="flex pt-1 p-2 justify-items-center">
-                                            <div className="pt-1 flex flex-row">
-                                              <IconContext.Provider value={{ size: "18px" }}>
-                                                <AiFillStar />
-                                              </IconContext.Provider>
-                                            </div>
-                                            <div>
-                                              {0 == 0 ? (
-                                                <p className="text-sm pt-1">Not Rated</p>
-                                              ) : (
-                                        <p>{item.rating}</p>
-                                              )}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )}
+                              {item.transactionOver === false ? (
+                                <div>IN TRANSIST</div>
+                              ) : (
+                                <div>
+                                  {item.gaveRating === false ? (
+                                    <div>
+                                      <p>Rate your experience with us</p>
+                                      <input
+                                        type="number"
+                                        onChange={(e: any) =>
+                                          setRating(e.target.value)
+                                        }
+                                      />
+                                      <button
+                                        onClick={() =>
+                                          updateRating({
+                                            adminId: item.adminId._id,
+                                            orderId: item._id,
+                                          })
+                                        }
+                                      >
+                                        RATING: RATE
+                                      </button>
                                     </div>
+                                  ) : (
+                                    <div>{item.rating}</div>
                                   )}
                                 </div>
+                              )}
                             </div>
+                          </div>
                           <div className="flex flex-col">
                             <div>
                               Payment Method: <b>Net Banking</b>
@@ -222,11 +197,11 @@ const Orders = () => {
                               >
                                 Get Invoice
                               </button>
-                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
                   </>
                 ))
               ) : (
