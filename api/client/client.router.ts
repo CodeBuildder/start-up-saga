@@ -4,6 +4,8 @@ import {
   postRating,
   closeOrder,
   getOrderDetails,
+  getUpdate,
+  addUpdate,
 } from "./client.controller";
 
 import { verifiedAdmin } from "../middleware/auth";
@@ -67,6 +69,34 @@ router.post(
       const result = await closeOrder(req.body.orderId);
 
       res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.post(
+  "/api/post/update",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.body.orderId);
+      const result = await addUpdate(req.body.orderId, req.body.message);
+
+      res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+router.post(
+  "/api/get/update",
+  verifiedAdmin,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      console.log(req.body.orderId);
+      const result = await getUpdate(req.body.orderId);
+
+      res.json(result);
     } catch (error) {
       next(error);
     }
