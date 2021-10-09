@@ -53,7 +53,7 @@ export const companySchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  // adminRating: { type: Number },
+  // companyRating: { type: Number },
   expectedDelivery: { type: String },
 });
 

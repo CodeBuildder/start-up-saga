@@ -20,6 +20,7 @@ interface companyOrder {
   price: Number;
   orderedOn: Date;
   expectedDelivery: string;
+  paymentMode: string;
 }
 
 const Orders = () => {
@@ -130,7 +131,7 @@ const Orders = () => {
                           Ordered on:{" "}
                           <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>
                         </div>
-                        <div className="pl-80 ml-11">
+                        <div className="pl-80 ml-11 text-3xl">
                           <b>₹{item.price}/-</b>
                         </div>
                       </div>
@@ -138,14 +139,14 @@ const Orders = () => {
                       <div className="flex flex-row text-lg space-x-28 pt-2">
                         <div className="flex flex-col justify-between">
                           <div>
+                            To Ship package on:{" "}
+                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                          </div>
+                          <div>
                             Delivery :{" "}
                             <b>
                               In {item.expectedDelivery} hours from shipping
                             </b>
-                          </div>
-                          <div>
-                            To Ship package on:{" "}
-                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
                           </div>
                           <div>
                             Order ID: <b>{item._id}</b>
@@ -167,7 +168,7 @@ const Orders = () => {
                             Email : <b>{item.userId.email}</b>
                           </div>
                           <div className="pb-4">
-                            Payment Method : <b>Net Banking</b>
+                            Payment Method : <b>{item.paymentMode}</b>
                           </div>
                           <div className="btn btn-outline btn-accent">
                             Add Updates
