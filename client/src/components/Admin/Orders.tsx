@@ -130,7 +130,7 @@ const Orders = () => {
                           Ordered on:{" "}
                           <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>
                         </div>
-                        <div className="pl-80 ml-11">
+                        <div className="pl-80 ml-11 text-3xl">
                           <b>₹{item.price}/-</b>
                         </div>
                       </div>
