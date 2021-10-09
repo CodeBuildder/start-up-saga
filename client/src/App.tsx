@@ -9,7 +9,7 @@ import AdminDashboard from "./pages/Admin/Dashboard";
 import AdminOrder from "./pages/Admin/Orders";
 import AdminLogin from "./components/Admin/Login";
 import AdminSignup from "./components/Admin/Signup";
-
+import UpdateOrder from "./pages/UpdateOrder";
 // @ts-ignore
 import Loading from "react-fullscreen-loading";
 
@@ -49,6 +49,8 @@ function App() {
           <Route path="/track" exact component={Track} />
           <Route path="/admin/signup" exact component={AdminSignup} />
           <Route path="/signup" exact component={Signup} />
+          <Route exact path="/order/:orderId" component={UpdateOrder} />
+
           <Route path="/login" exact component={Login} />
           <Route path="/" exact component={Home} />
         </Switch>
@@ -67,7 +69,8 @@ function App() {
           <Route path="/admin/signup" exact component={AdminSignup} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/login" exact component={Login} />{" "}
-          <Route path="/track" exact component={Track} />
+          <Route path="/track" exact component={Track} />{" "}
+          <Route exact path="/order/:orderId" component={UpdateOrder} />
           <Route path="/" exact component={Home} />
         </Switch>
       </Router>

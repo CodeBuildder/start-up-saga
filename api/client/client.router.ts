@@ -90,7 +90,7 @@ router.post(
 );
 router.post(
   "/api/get/update",
-  verifiedAdmin,
+
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log(req.body.orderId);
