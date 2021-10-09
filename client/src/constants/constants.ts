@@ -1,3 +1,3 @@
-const constants = { BASE_URL: "https://start-up-saga-api.herokuapp.com/api" };
+const constants = { BASE_URL: "http://localhost:5000/api" };
 
 export default constants;

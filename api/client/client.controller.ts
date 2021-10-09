@@ -1,6 +1,8 @@
 import { UserOrder } from "./client.schema";
 import HttpError from "http-errors";
+import { sendOrderConfirmationEmail } from '../emails/account'
 import { Company, Admin } from "../admin/admin.schema";
+import { User } from '../auth/auth.schema'
 import mongoose from "mongoose";
 export const userOrderDetails = async (
   userOrderData: any,
@@ -10,7 +12,9 @@ export const userOrderDetails = async (
     const findAdmin = await Admin.findOne({
       _id: userOrderData.adminId,
     });
-
+    const findUser = await User.findOne({
+      _id: id
+    })
     const newUserOrderData = {
       adminId: findAdmin._id,
       userId: id,
@@ -22,6 +26,10 @@ export const userOrderDetails = async (
       orderedOn: new Date(),
       paymentMode: userOrderData.paymentMode,
     };
+
+    const email = await sendOrderConfirmationEmail(findUser.email, findUser.username, newUserOrderData.userId, newUserOrderData.fromAddress, newUserOrderData.toAddress)
+
+    console.log(email)
 
     console.log(newUserOrderData);
     const data = new UserOrder(newUserOrderData);
