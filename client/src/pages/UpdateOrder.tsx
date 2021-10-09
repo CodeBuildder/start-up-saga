@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import constants from "../constants/constants";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import moment from "moment";
 import { GoPackage } from "react-icons/go";
 import { BiLogOut } from "react-icons/bi";
@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Loading from "react-fullscreen-loading";
 import { useForm } from "react-hook-form";
 import { IconContext } from "react-icons";
+import { setTimeout } from "timers";
 type FormData = {
   id: any;
   message: string;
@@ -44,10 +45,13 @@ const Hero = (props: any) => {
         }
       );
       console.log(update.status);
-      if (update.status == 200) {
+      if (update.status === 200) {
         console.log("working");
         toast.success("Updated Successfully!");
-        alert("Job posted Successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+        // alert("Job posted Successfully!");
       } else {
         toast.warn("Something went wrong ");
       }
@@ -104,7 +108,7 @@ const Hero = (props: any) => {
               SIGN OUT
             </a>
           </div>
-
+          <ToastContainer />
           <form onSubmit={handleSubmit(updateTrack)}>
             <div className="flex">
               <div className="mt-48 w-full mx-20">
@@ -122,18 +126,22 @@ const Hero = (props: any) => {
                     Add Update
                   </button>
                 </div>
-                <div className="mt-48">
+                <div className="mt-48 mr-8">
                   {data.update.length > 0 ? (
                     data.update.map((item: any) => (
-                      <div className="flex flex-col m-10 p-4 border-2 border-white rounded-lg w-full h-20">
-                        <p>
+                      <div className="flex flex-col m-6 p-4 border-2 border-black rounded-lg w-full h-24">
+                        <div className="flex">
                           {" "}
-                          Date: {moment(item.createdAt).format(
-                            "DD-MM-YYYY"
-                          )}{" "}
-                        </p>
-
-                        <p> Update: {item.message} </p>
+                          <p> Date : </p>{" "}
+                          <p className="font-medium">
+                            {" "}
+                            {moment(item.createdAt).format("DD-MM-YYYY")}{" "}
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <p>Update : </p>
+                          <p className="font-medium">{item.message}</p>
+                        </div>
                       </div>
                     ))
                   ) : (
