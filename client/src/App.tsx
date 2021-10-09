@@ -45,8 +45,9 @@ function App() {
           <Redirect from="/admin/orders" to="/" />
           <Redirect from="/dashboard" to="/" />
           <Redirect from="/orders" to="/" />
-          <Route path="/admin/login" exact component={AdminLogin} />
           <Route path="/track" exact component={Track} />
+          <Route path="/admin/login" exact component={AdminLogin} />
+
           <Route path="/admin/signup" exact component={AdminSignup} />
           <Route path="/signup" exact component={Signup} />
           <Route exact path="/order/:orderId" component={UpdateOrder} />

@@ -216,12 +216,13 @@ const Orders = () => {
                               Provider : <b>{item.adminId.companyName}</b>
                             </div>
                             <div className="flex flex-row">
-                              <button
+                              <a
                                 className="btn btn-outline btn-accent m-4"
-                                onClick={() => history.push("/track")}
+                                href="/track"
+                                target="_blank"
                               >
                                 TRACK ORDER
-                              </button>
+                              </a>
                               <button
                                 className="btn btn-outline btn-secondary m-4"
                                 onClick={() => getPdf(item)}

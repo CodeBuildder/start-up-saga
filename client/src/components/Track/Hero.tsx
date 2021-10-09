@@ -17,8 +17,9 @@ type FormData = {
 };
 
 const Hero: React.FC = () => {
+  const [id, setId] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>(null);
   const { register, handleSubmit } = useForm<FormData>();
   const history = useHistory();
   const logoutHandler = () => {
@@ -29,11 +30,11 @@ const Hero: React.FC = () => {
     }, 2000);
   };
 
-  const getTrack = async (orderId: FormData) => {
+  const getTrack = async () => {
     try {
       const trackPost: AxiosResponse = await axios.post(
         `${constants.BASE_URL}/get/update`,
-        orderId
+        { orderId: id }
       );
       console.log(trackPost.data);
       setData(trackPost.data);
@@ -69,45 +70,47 @@ const Hero: React.FC = () => {
           </a>
         </div>
         <ToastContainer />
-        <form onSubmit={handleSubmit(getTrack)}>
-          <div className="flex">
-            <div className="mt-48 w-full mx-20">
-              <div className="flex flex-row">
-                <input
-                  placeholder="Enter your orderId here"
-                  className="w-full mr-10 input input-neutral input-bordered"
-                  {...register("orderId", { required: true })}
-                  type="text"
-                />
-                <button className="btn btn-outline btn-neutral">
-                  Track your order
-                </button>
-              </div>
-              <div className="mt-48 mr-8">
-                {data.update.length > 0 ? (
-                  data.update.map((item: any) => (
-                    <div className="flex flex-col m-6 p-4 border-2 border-black rounded-lg w-full h-24">
-                      <div className="flex">
+
+        <div className="flex">
+          <div className="mt-48 w-full mx-20">
+            <div className="flex flex-row">
+              <input
+                placeholder="Enter your orderId here"
+                className="w-full mr-10 input input-neutral input-bordered"
+                onChange={(e) => setId(e.target.value)}
+                type="text"
+              />
+              <button
+                className="btn btn-outline btn-neutral"
+                onClick={getTrack}
+              >
+                Track your order
+              </button>
+            </div>
+            <div className="mt-48 mr-8">
+              {data?.update.length > 0 ? (
+                data.update.map((item: any) => (
+                  <div className="flex flex-col m-6 p-4 border-2 border-black rounded-lg w-full h-24">
+                    <div className="flex">
+                      {" "}
+                      <p> Date: </p>{" "}
+                      <p className="ml-3 font-medium">
                         {" "}
-                        <p> Date: </p>{" "}
-                        <p className="ml-3 font-medium">
-                          {" "}
-                          {moment(item.createdAt).format("DD-MM-YYYY")}{" "}
-                        </p>
-                      </div>
-                      <div className="flex">
-                        <p>Update: </p>
-                        <p className="ml-3 font-medium">{item.message}</p>
-                      </div>
+                        {moment(item.createdAt).format("DD-MM-YYYY")}{" "}
+                      </p>
                     </div>
-                  ))
-                ) : (
-                  <div>There are no updates on your package!</div>
-                )}
-              </div>
+                    <div className="flex">
+                      <p>Update: </p>
+                      <p className="ml-3 font-medium">{item.message}</p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div>There are no updates on your package!</div>
+              )}
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
