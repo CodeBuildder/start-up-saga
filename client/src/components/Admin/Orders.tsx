@@ -9,7 +9,7 @@ import { BiMessageAdd } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
-import { isTemplateSpan } from "typescript";
+import moment from "moment";
 interface companyOrder {
   _id: any;
   userId: { username: String; email: string; phone: Number };
@@ -18,6 +18,8 @@ interface companyOrder {
   date: Date;
   weight: Number;
   price: Number;
+  orderedOn: Date;
+  expectedDelivery: string;
 }
 
 const Orders = () => {
@@ -125,7 +127,8 @@ const Orders = () => {
                       </div>
                       <div className="flex flex-row text-lg pt-3">
                         <div>
-                          Date Ordered: <b>{}</b>
+                          Ordered on:{" "}
+                          <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>
                         </div>
                         <div className="pl-80 ml-11">
                           <b>₹{item.price}/-</b>
@@ -135,10 +138,17 @@ const Orders = () => {
                       <div className="flex flex-row text-lg space-x-28 pt-2">
                         <div className="flex flex-col justify-between">
                           <div>
-                            Expected Delivery: <b>21/11</b>
+                            Delivery :{" "}
+                            <b>
+                              In {item.expectedDelivery} hours from shipping
+                            </b>
                           </div>
                           <div>
-                            Order ID: <b>A92Z58T</b>
+                            To Ship package on:{" "}
+                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                          </div>
+                          <div>
+                            Order ID: <b>{item._id}</b>
                           </div>
                           <div
                             className="btn btn-outline btn-secondary"
@@ -146,7 +156,7 @@ const Orders = () => {
                               closeOrder(item._id);
                             }}
                           >
-                            Close Transaction
+                            END ORDER
                           </div>
                         </div>
                         <div className="flex flex-col">

@@ -26,7 +26,6 @@ export const userOrderDetails = async (
       price: userOrderData.price,
       orderedOn: new Date(),
       paymentMode: userOrderData.paymentMode,
-      expectedDelivery: userOrderData.expectedDelivery,
     };
 
     const email = await sendOrderConfirmationEmail(
@@ -118,3 +117,17 @@ export const postRating = async (
     throw err;
   }
 };
+// export const addUpdates = async (
+//   id: mongoose.Schema.Types.ObjectId,
+//   message: string
+// ) => {
+//   try {
+//     const updateExist = await Updates.findOne({ orderId: id });
+//     if (updateExist) {
+//     } else {
+//     }
+//   } catch (err) {
+//     console.log(err);
+//     throw err;
+//   }
+// };

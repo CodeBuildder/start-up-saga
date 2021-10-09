@@ -222,9 +222,9 @@ export default function Dashboard() {
         </div>
         {post.length > 0 ? (
           <div className="w-full mt-3 h-full flex justify-items-start mx-10 ">
-            <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div>
+            {/* <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div> */}
             <div className="jusitfy-between b-7 w-3/4 h-full">
-              <div className="flex flex-row w-5/6 text-black p-3 ml-5 space-x-12  text-sm border-b-2">
+              <div className="flex flex-row  text-black p-3 ml-5 space-x-12  text-sm border-b-2">
                 <div className="mt-3">Sort By:</div>
                 <button className="btn btn-outline text-black border-none text-xs">
                   Rating -- High to Low
@@ -256,7 +256,9 @@ export default function Dashboard() {
                       />
                     </div>
                     <div className="flex flex-row"></div>
-                    <div className="mt-5 ml-8">{item.adminId.companyName}</div>
+                    <p className="mt-5 ml-8 font-semibold text-3xl">
+                      {item.adminId.companyName}
+                    </p>
                   </div>
 
                   <div className="flex flex-row ">
@@ -267,7 +269,13 @@ export default function Dashboard() {
                             <AiFillStar />
                           </IconContext.Provider>
                         </div>
-                        <div>{item.adminRating}</div>
+                        <div>
+                          {item.adminRating == 0 ? (
+                            <p>NOT RATED</p>
+                          ) : (
+                            <p>{item.adminRating}</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                     <div className="mt-3 text-2xl font-bold">

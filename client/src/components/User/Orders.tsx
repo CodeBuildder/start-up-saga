@@ -100,7 +100,7 @@ const Orders = () => {
                           </div>
                           <div>
                             Date Ordered:{" "}
-                            <b>{moment(item.orderedOn).format("DD-MM-YYYY")}</b>
+                            <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>
                           </div>
                           <div>
                             Shipping on :{" "}
