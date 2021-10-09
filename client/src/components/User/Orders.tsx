@@ -5,6 +5,7 @@ import Loading from "react-fullscreen-loading";
 import { useHistory } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import { AiFillStar } from "react-icons/ai";
 import moment from "moment";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -37,6 +38,7 @@ const Orders = () => {
 
     setLoaded(true);
   }, []);
+
   type updateRatingType = { orderId: string; adminId: string };
   const updateRating = async (data: updateRatingType) => {
     try {
@@ -63,6 +65,20 @@ const Orders = () => {
       toast.warn("Oops something went wrong !");
     }
   };
+
+  const getPdf = (item: any) => {
+    console.log(item);
+    // let options = { format: "A4" };
+
+    // let file = { content: "<h1>Welcome to html-pdf-node</h1>" };
+    // // or //
+    // let pdf = { url: "https://example.com" };
+    // console.log(file);
+    // html_to_pdf.generatePdf(file, options).then((pdfBuffer: any) => {
+    //   console.log("PDF Buffer:-", pdfBuffer);
+    // });
+  };
+
   return (
     <div>
       {" "}
@@ -80,48 +96,54 @@ const Orders = () => {
               {Order.length > 0 ? (
                 Order?.map((item: any) => (
                   <>
-                    <div className="jusitfy-between p-7 w-3/6 h-full">
+                    <div className="jusitfy-between p-7 w-2/4 h-full">
                       <div className=" m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
-                        <div className="flex flex-row space-x-4 text-lg font-bold">
-                          <div className="text-xl">{item.fromAddress}</div>
-                          <div className="pt-1">
+                        <div className="flex flex-row text-lg font-bold space-x-5">
+                          <div className="text-xl w-48">
+                            {item.fromAddress}
+                            </div>
+                          <div className="pt-3 pr-3">
                             <IconContext.Provider value={{ size: "24px" }}>
                               <BsFillArrowRightCircleFill />
                             </IconContext.Provider>
                           </div>
-                          <div>{item.toAddress}</div>
+                          <div className="text-xl">{item.toAddress}</div>
                           <div className="flex flex-col pl-10 ">
                             <div className="">{item.weight} Kg(s)</div>
                           </div>
                         </div>
-                        <div className="flex flex-row text-lg pb-1 pt-1">
-                          <div className="pl-80 ml-2">
-                            <b>₹{item.price}/-</b>
-                          </div>
-                          <div>
+                        <div className="flex flex-row text-lg pb-1 pt-5 space-x-40">
+                          <div className="flex flex-col space-y-1">
+                           <div className="flex flex-row">
                             Date Ordered:{" "}
-                            <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>
-                          </div>
+                            <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>                             
+                           </div>
                           <div>
                             Shipping on :{" "}
                             <b>{moment(item.date).format("DD-MM-YYYY")}</b>
                           </div>
-                          <div className="pl-80 ml-2"></div>
+                          <div>Order ID : {item._id}</div>
+                          </div>
+
+                          <div className="flex flex-col text-4xl pt-4">
+                            <b>₹{item.price}/-</b>
+                          </div>
                         </div>
 
-                        <div className="flex flex-row text-lg space-x-28">
+                        <div className="flex flex-row text-lg space-x-10">
                           <div className="flex flex-col">
-                            <div>Order ID : {item._id}</div>
                             <div>
                               Expected Delivery:{" "}
                               <b>
-                                In {item.expectedDelivery} hours from shipping
+                                {item.expectedDelivery} hours from shipping
                               </b>
                             </div>
                             <div>
                               {
                                 item.transactionOver === false ? (
-                                  <div>IN TRANSIST</div>
+                                  <p>
+                                    <b>IN TRANSIT</b>
+                                  </p>
                                 ) : (
                                   <div>
                                     {item.gaveRating === false ? (
@@ -145,7 +167,24 @@ const Orders = () => {
                                         </button>
                                       </div>
                                     ) : (
-                                      <div>{item.rating}</div>
+                                      <div>
+                                          <div className="container w-24 mt-4 bg-green-500 text-white rounded">
+                                          <div className="flex pt-1 p-2 justify-items-center">
+                                            <div className="pt-1 flex flex-row">
+                                              <IconContext.Provider value={{ size: "18px" }}>
+                                                <AiFillStar />
+                                              </IconContext.Provider>
+                                            </div>
+                                            <div>
+                                              {0 == 0 ? (
+                                                <p className="text-sm pt-1">Not Rated</p>
+                                              ) : (
+                                                <p>{item.adminRating}</p>
+                                              )}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
                                     )}
                                   </div>
                                 )
@@ -174,8 +213,16 @@ const Orders = () => {
                             <div className="pb-2">
                               Provider : <b>{item.adminId.companyName}</b>
                             </div>
-                            <div className="btn btn-outline btn-accent -m-1">
-                              TRACK ORDER
+                            <div className="flex flex-row">
+                              <button className="btn btn-outline btn-accent m-4">
+                                TRACK ORDER
+                              </button>
+                              <button
+                                className="btn btn-outline btn-secondary m-4"
+                                onClick={() => getPdf(item)}
+                              >
+                                Get Invoice
+                              </button>
                             </div>
                           </div>
                         </div>
