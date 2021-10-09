@@ -37,6 +37,7 @@ const Orders = () => {
 
     setLoaded(true);
   }, []);
+
   type updateRatingType = { orderId: string; adminId: string };
   const updateRating = async (data: updateRatingType) => {
     try {
@@ -63,6 +64,20 @@ const Orders = () => {
       toast.warn("Oops something went wrong !");
     }
   };
+
+  const getPdf = (item: any) => {
+    console.log(item);
+    // let options = { format: "A4" };
+
+    // let file = { content: "<h1>Welcome to html-pdf-node</h1>" };
+    // // or //
+    // let pdf = { url: "https://example.com" };
+    // console.log(file);
+    // html_to_pdf.generatePdf(file, options).then((pdfBuffer: any) => {
+    //   console.log("PDF Buffer:-", pdfBuffer);
+    // });
+  };
+
   return (
     <div>
       {" "}
@@ -121,7 +136,9 @@ const Orders = () => {
                             <div>
                               {
                                 item.transactionOver === false ? (
-                                  <div>IN TRANSIST</div>
+                                  <p>
+                                    <b>IN TRANSIT</b>
+                                  </p>
                                 ) : (
                                   <div>
                                     {item.gaveRating === false ? (
@@ -174,8 +191,16 @@ const Orders = () => {
                             <div className="pb-2">
                               Provider : <b>{item.adminId.companyName}</b>
                             </div>
-                            <div className="btn btn-outline btn-accent -m-1">
-                              TRACK ORDER
+                            <div className="flex flex-row">
+                              <button className="btn btn-outline btn-accent m-4">
+                                TRACK ORDER
+                              </button>
+                              <button
+                                className="btn btn-outline btn-secondary m-4"
+                                onClick={() => getPdf(item)}
+                              >
+                                Get Invoice
+                              </button>
                             </div>
                           </div>
                         </div>
