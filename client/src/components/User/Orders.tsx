@@ -102,7 +102,7 @@ const Orders = () => {
       <ToastContainer />
       <div className="navbar  shadow-lg bg-purple-700 text-neutral-content h-18">
         <div className="flex-1 px-2 mx-2">
-          <span className="text-lg font-bold">Start.exe</span>
+          <span className="text-lg font-bold">Post.io</span>
         </div>
         <a
           className="btn btn-ghost btn-md rounded-btn flex  content-center"
