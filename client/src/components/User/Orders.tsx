@@ -40,7 +40,6 @@ const Orders = () => {
       console.log(getData);
 
       setOrder(getData);
-
     };
     fetchMyOrders();
 
@@ -127,7 +126,7 @@ const Orders = () => {
               {Order.length > 0 ? (
                 Order?.map((item: any) => (
                   <>
-                    <div className="jusitfy-between p-7 w-4/6  h-full">
+                    <div className="flex justify-center p-7 h-full">
                       <div className=" m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                         <div className="flex flex-row text-lg font-bold space-x-5">
                           <div className="text-xl w-66">{item.fromAddress}</div>
@@ -143,9 +142,9 @@ const Orders = () => {
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-5 space-x-80">
                           <div className="flex flex-col space-y-1">
-                            <div className="flex flex-row">
+                            <div className="flex flex-row font-bold">
                               Date Ordered:{" "}
-                              <p>
+                              <p className="ml-2">
                                 {moment(item.orderedOn).format("DD-MM-YYYY")}
                               </p>
                             </div>
@@ -153,7 +152,9 @@ const Orders = () => {
                               Shipping on :{" "}
                               <b>{moment(item.date).format("DD-MM-YYYY")}</b>
                             </div>
-                            <div>Order ID : {item._id}</div>
+                            <div className="font-bold">
+                              Order ID : {item._id}
+                            </div>
                           </div>
 
                           <div className="flex flex-col text-5xl pt-4 pl-5">
@@ -193,15 +194,20 @@ const Orders = () => {
                                       </button>
                                     </div>
                                   ) : (
-                                    
-                                      <div className="container w-14 mt-14 bg-green-500 text-white rounded">
-                                          <div className="flex pt-1 p-1 justify-items-center">
-                                            <div className="pt-1 flex flex-row space-x-2">
-                                              <IconContext.Provider value={{ size: "18px" }}>
-                                                <AiFillStar />
-                                              </IconContext.Provider>
-                                              <div className="-mt-1">{item.rating}</div> 
-                                              </div> </div> </div>
+                                    <div className="container w-14 mt-14 bg-green-500 text-white rounded">
+                                      <div className="flex pt-1 p-1 justify-items-center">
+                                        <div className="pt-1 flex flex-row space-x-2">
+                                          <IconContext.Provider
+                                            value={{ size: "18px" }}
+                                          >
+                                            <AiFillStar />
+                                          </IconContext.Provider>
+                                          <div className="-mt-1">
+                                            {item.rating}
+                                          </div>
+                                        </div>{" "}
+                                      </div>{" "}
+                                    </div>
                                   )}
                                 </div>
                               )}
