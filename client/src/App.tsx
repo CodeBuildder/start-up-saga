@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Track from "./pages/Track";
 import UserDashboard from "./pages/User/Dashboard";
 import UserOrder from "./pages/User/Orders";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import AdminOrder from "./pages/Admin/Orders";
 import AdminLogin from "./components/Admin/Login";
 import AdminSignup from "./components/Admin/Signup";
+
 // @ts-ignore
 import Loading from "react-fullscreen-loading";
 
@@ -24,9 +26,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const t = localStorage.getItem("token");
-    
+
     if (t != null) {
-    
       setLoggedIn(true);
     } else {
       setLoggedIn(false);
@@ -38,7 +39,6 @@ function App() {
   }, [loggedIn, setLoggedIn]);
   let unProtectedRoutes = (
     <>
-    
       <Router>
         <Switch>
           <Redirect from="/admin/dashboard" to="/" />
@@ -46,6 +46,7 @@ function App() {
           <Redirect from="/dashboard" to="/" />
           <Redirect from="/orders" to="/" />
           <Route path="/admin/login" exact component={AdminLogin} />
+          <Route path="/track" exact component={Track} />
           <Route path="/admin/signup" exact component={AdminSignup} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/login" exact component={Login} />
@@ -56,7 +57,6 @@ function App() {
   );
   let protectedRoutes = (
     <>
-    
       <Router>
         <Switch>
           <Route path="/admin/dashboard" exact component={AdminDashboard} />
@@ -66,7 +66,8 @@ function App() {
           <Route path="/admin/login" exact component={AdminLogin} />
           <Route path="/admin/signup" exact component={AdminSignup} />
           <Route path="/signup" exact component={Signup} />
-          <Route path="/login" exact component={Login} />
+          <Route path="/login" exact component={Login} />{" "}
+          <Route path="/track" exact component={Track} />
           <Route path="/" exact component={Home} />
         </Switch>
       </Router>
@@ -87,6 +88,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;
