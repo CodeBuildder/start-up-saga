@@ -137,15 +137,15 @@ const Orders = () => {
 
                       <div className="flex flex-row text-lg space-x-28 pt-2">
                         <div className="flex flex-col justify-between">
+                        <div>
+                            To Ship package on:{" "}
+                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                          </div>
                           <div>
                             Delivery :{" "}
                             <b>
                               In {item.expectedDelivery} hours from shipping
                             </b>
-                          </div>
-                          <div>
-                            To Ship package on:{" "}
-                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
                           </div>
                           <div>
                             Order ID: <b>{item._id}</b>
