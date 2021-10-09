@@ -5,6 +5,7 @@ import Loading from "react-fullscreen-loading";
 import { useHistory } from "react-router-dom";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import moment from "moment";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 interface Order {
@@ -14,6 +15,7 @@ interface Order {
   price: Number;
   date: Date;
 }
+
 const Orders = () => {
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
@@ -27,6 +29,8 @@ const Orders = () => {
       });
       getData = getData.data;
       console.log(getData);
+
+      //var fomatted_date = moment(photo.date_published).format('YYYY-MM-DD');
       setOrder(getData);
     };
     fetchMyOrders();
@@ -89,12 +93,14 @@ const Orders = () => {
                           </div>
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-1">
-                          <div>
-                            Date Ordered: <b>{}</b>
-                          </div>
                           <div className="pl-80 ml-2">
                             <b>₹{item.price}/-</b>
                           </div>
+                          <div>
+                            Date Ordered:{" "}
+                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                          </div>
+                          <div className="pl-80 ml-2"></div>
                         </div>
 
                         <div className="flex flex-row text-lg space-x-28">
