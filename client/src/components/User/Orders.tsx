@@ -65,8 +65,30 @@ const Orders = () => {
     }
   };
 
-  const getPdf = (item: any) => {
-    console.log(item);
+  const getPdf = async (item: any) => {
+    try {
+      const id = {
+        orderId: item._id,
+      };
+      console.log(id);
+      const sendInvoice = await axios.post(
+        `${CONSTANTS.BASE_URL}/get/invoice`,
+        id,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      if (sendInvoice.status === 200) {
+        toast.success(
+          "Invoice Successfully Generated! Please check your inbox!"
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      toast.warn("Oops something went wrong !");
+    }
   };
 
   return (
@@ -161,7 +183,7 @@ const Orders = () => {
                                       </div>
                                     ) : (
                                       <div>
-                                        {/* <div className="container w-24 mt-4 bg-green-500 text-white rounded">
+                                         <div className="container w-24 mt-4 bg-green-500 text-white rounded">
                                           <div className="flex pt-1 p-2 justify-items-center">
                                             <div className="pt-1 flex flex-row">
                                               <IconContext.Provider value={{ size: "18px" }}>
@@ -171,20 +193,18 @@ const Orders = () => {
                                             <div>
                                               {0 == 0 ? (
                                                 <p className="text-sm pt-1">Not Rated</p>
-                                              ) : ( */}
+                                              ) : (
                                         <p>{item.rating}</p>
-                                        {/* )}
+                                              )}
                                             </div>
                                           </div>
-                                        </div> */}
+                                        </div>
                                       </div>
                                     )}
-                                  </div>
-                                )
-                              }
+                                    </div>
+                                  )}
+                                </div>
                             </div>
-                            <div></div>
-                          </div>
                           <div className="flex flex-col">
                             <div>
                               Payment Method: <b>Net Banking</b>
@@ -202,11 +222,11 @@ const Orders = () => {
                               >
                                 Get Invoice
                               </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
                   </>
                 ))
               ) : (

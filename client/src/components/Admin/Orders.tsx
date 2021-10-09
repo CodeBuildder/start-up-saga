@@ -170,7 +170,10 @@ const Orders = () => {
                           <div className="pb-4">
                             Payment Method : <b>{item.paymentMode}</b>
                           </div>
-                          <div className="btn btn-outline btn-accent">
+                          <div
+                            className="btn btn-outline btn-accent"
+                            onClick={() => history.push(`/order/${item._id}`)}
+                          >
                             Add Updates
                           </div>
                         </div>
