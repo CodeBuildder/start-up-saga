@@ -120,6 +120,9 @@ const Orders = () => {
         <div className="w-100 flex h-full min-h-screen flex-col items-center justify-center">
           {loaded === true ? (
             <div className="w-full min-h-screen m-5 ">
+              <div className="w-full flex justify-center text-gray-800">
+                <h1 className="text-3xl  font-medium">MY ORDERS</h1>
+              </div>
               {Order.length > 0 ? (
                 Order?.map((item: any) => (
                   <>
@@ -139,18 +142,21 @@ const Orders = () => {
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-5 space-x-80">
                           <div className="flex flex-col space-y-1">
-                            <div className="flex flex-row font-bold">
-                              Date Ordered:{" "}
-                              <p className="ml-2">
+                            <div className="flex flex-row ">
+                              <p className="font-normal"> Date Ordered:</p>
+                              <p className="ml-2 font-bold">
                                 {moment(item.orderedOn).format("DD-MM-YYYY")}
                               </p>
                             </div>
                             <div>
-                              Shipping on :{" "}
-                              <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                              <p className="font-normal">Shipping on : </p>
+                              <p className="font-bold">
+                                {moment(item.date).format("DD-MM-YYYY")}
+                              </p>
                             </div>
-                            <div className="font-bold">
-                              Order ID : {item._id}
+                            <div>
+                              <p className="font-normal"> Order ID : </p>
+                              <p className="font-bold">{item._id}</p>
                             </div>
                           </div>
 
