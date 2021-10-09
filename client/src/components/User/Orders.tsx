@@ -99,9 +99,7 @@ const Orders = () => {
                     <div className="jusitfy-between p-7 w-2/4 h-full">
                       <div className=" m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                         <div className="flex flex-row text-lg font-bold space-x-5">
-                          <div className="text-xl w-48">
-                            {item.fromAddress}
-                            </div>
+                          <div className="text-xl w-48">{item.fromAddress}</div>
                           <div className="pt-3 pr-3">
                             <IconContext.Provider value={{ size: "24px" }}>
                               <BsFillArrowRightCircleFill />
@@ -114,15 +112,17 @@ const Orders = () => {
                         </div>
                         <div className="flex flex-row text-lg pb-1 pt-5 space-x-40">
                           <div className="flex flex-col space-y-1">
-                           <div className="flex flex-row">
-                            Date Ordered:{" "}
-                            <p>{moment(item.orderedOn).format("DD-MM-YYYY")}</p>                             
-                           </div>
-                          <div>
-                            Shipping on :{" "}
-                            <b>{moment(item.date).format("DD-MM-YYYY")}</b>
-                          </div>
-                          <div>Order ID : {item._id}</div>
+                            <div className="flex flex-row">
+                              Date Ordered:{" "}
+                              <p>
+                                {moment(item.orderedOn).format("DD-MM-YYYY")}
+                              </p>
+                            </div>
+                            <div>
+                              Shipping on :{" "}
+                              <b>{moment(item.date).format("DD-MM-YYYY")}</b>
+                            </div>
+                            <div>Order ID : {item._id}</div>
                           </div>
 
                           <div className="flex flex-col text-4xl pt-4">
@@ -134,9 +134,7 @@ const Orders = () => {
                           <div className="flex flex-col">
                             <div>
                               Expected Delivery:{" "}
-                              <b>
-                                {item.expectedDelivery} hours from shipping
-                              </b>
+                              <b>{item.expectedDelivery} hours from shipping</b>
                             </div>
                             <div>
                               {
@@ -168,7 +166,7 @@ const Orders = () => {
                                       </div>
                                     ) : (
                                       <div>
-                                          <div className="container w-24 mt-4 bg-green-500 text-white rounded">
+                                        {/* <div className="container w-24 mt-4 bg-green-500 text-white rounded">
                                           <div className="flex pt-1 p-2 justify-items-center">
                                             <div className="pt-1 flex flex-row">
                                               <IconContext.Provider value={{ size: "18px" }}>
@@ -178,12 +176,12 @@ const Orders = () => {
                                             <div>
                                               {0 == 0 ? (
                                                 <p className="text-sm pt-1">Not Rated</p>
-                                              ) : (
-                                                <p>{item.adminRating}</p>
-                                              )}
+                                              ) : ( */}
+                                        <p>{item.rating}</p>
+                                        {/* )}
                                             </div>
                                           </div>
-                                        </div>
+                                        </div> */}
                                       </div>
                                     )}
                                   </div>
