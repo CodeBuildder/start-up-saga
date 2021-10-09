@@ -36,8 +36,8 @@ const Hero: React.FC = () => {
   return (
     <div className="hero min-h-screen bg-base-200 ">
       <ToastContainer />
-      <div className="flex-col hero-content lg:flex-row flex-row bg-blue-400">
-        <div className="m-6 card bg-base-200 w-2/3  rounded h-2/3 ">
+      <div className="flex-col w-3/4 hero-content lg:flex-row flex-row bg-blue-400">
+        <div className="m-6 card bg-base-200 w-2/4  rounded h-2/3 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex ml-6">
               <div className="form-control my-4 mx-2 w-52">
@@ -128,18 +128,22 @@ const Hero: React.FC = () => {
             >
               REGISTER
             </button>
+            <a className="pl-5" href="/admin/signup">Want to register as a Company?</a>
           </form>
         </div>
         <div className="flex-col justify-center hero-content lg:flex-row">
           <div className="text-center lg:text-left">
             <h1 className="mb-5 text-5xl font-bold">
-              Lorem Ipsum re quia dolor sit a
+              User Signup
             </h1>
-            <p className="mb-5">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dui
-              sem, pellentesque ut fermentum ut, aliquet ac lacus. In hac
-              habitasse platea di
+            <p className="mb-5 text-lg">
+            Enter the required details to create your new account!
             </p>
+            <a
+                href="/login"
+              > <br /><br />
+                Already have an account?
+              </a>
           </div>
         </div>
       </div>
