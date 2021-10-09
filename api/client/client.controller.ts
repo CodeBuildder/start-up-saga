@@ -91,7 +91,7 @@ export const postRating = async (
     );
     const gaveRatingUpdate = await UserOrder.findByIdAndUpdate(
       { _id: id },
-      { gaveRating: true },
+      { gaveRating: true, rating: rating },
       { new: true }
     );
 

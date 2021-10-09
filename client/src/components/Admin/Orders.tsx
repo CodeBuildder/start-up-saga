@@ -51,7 +51,9 @@ const Orders = () => {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
-
+      if (orderClose.status === 200) {
+        toast.success("Order closed successfully");
+      }
       console.log(orderClose);
     } catch (err: any) {
       if (err.response) {
