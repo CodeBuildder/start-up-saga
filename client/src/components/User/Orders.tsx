@@ -86,21 +86,21 @@ const Orders = () => {
               {Order.length > 0 ? (
                 Order?.map((item: any) => (
                   <>
-                    <div className="jusitfy-between p-7 w-2/4 h-full">
+                    <div className="jusitfy-between p-7 w-4/6  h-full">
                       <div className=" m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                         <div className="flex flex-row text-lg font-bold space-x-5">
-                          <div className="text-xl w-48">{item.fromAddress}</div>
-                          <div className="pt-3 pr-3">
+                          <div className="text-xl w-66">{item.fromAddress}</div>
+                          <div className="pt-1 px-3">
                             <IconContext.Provider value={{ size: "24px" }}>
                               <BsFillArrowRightCircleFill />
                             </IconContext.Provider>
                           </div>
                           <div className="text-xl">{item.toAddress}</div>
-                          <div className="flex flex-col pl-10 ">
+                          <div className="flex flex-col pl-40 ">
                             <div className="">{item.weight} Kg(s)</div>
                           </div>
                         </div>
-                        <div className="flex flex-row text-lg pb-1 pt-5 space-x-40">
+                        <div className="flex flex-row text-lg pb-1 pt-5 space-x-80">
                           <div className="flex flex-col space-y-1">
                             <div className="flex flex-row">
                               Date Ordered:{" "}
@@ -115,12 +115,12 @@ const Orders = () => {
                             <div>Order ID : {item._id}</div>
                           </div>
 
-                          <div className="flex flex-col text-4xl pt-4">
+                          <div className="flex flex-col text-5xl pt-4 pl-5">
                             <b>₹{item.price}/-</b>
                           </div>
                         </div>
 
-                        <div className="flex flex-row text-lg space-x-10">
+                        <div className="flex flex-row text-lg space-x-60">
                           <div className="flex flex-col">
                             <div>
                               Expected Delivery:{" "}
@@ -135,15 +135,18 @@ const Orders = () => {
                                 ) : (
                                   <div>
                                     {item.gaveRating === false ? (
-                                      <div>
-                                        <p>Rate your experience with us</p>
-                                        <input
+                                      <div className="flex flex-col pt-2">
+                                        <div className="flex flex-row"> 
+                                          <p>Rate your experience:</p> <pre> </pre>
+                                        <input className="rounded  w-11 border-2"
                                           type="number"
                                           onChange={(e: any) =>
                                             setRating(e.target.value)
                                           }
                                         />
-                                        <button
+                                        </div>
+                                        <div className="pt-3">
+                                        <button className="btn btn-outline btn-secondary w-52"
                                           onClick={() =>
                                             updateRating({
                                               adminId: item.adminId._id,
@@ -151,8 +154,10 @@ const Orders = () => {
                                             })
                                           }
                                         >
-                                          RATING: RATE
-                                        </button>
+                                          Rate
+                                        </button>                                          
+                                        </div>
+
                                       </div>
                                     ) : (
                                       <div>
