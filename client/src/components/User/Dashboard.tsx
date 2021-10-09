@@ -226,10 +226,16 @@ export default function Dashboard() {
             <div className="jusitfy-between b-7 w-3/4 h-full">
               <div className="flex flex-row  text-black p-3 ml-5 space-x-12  text-sm border-b-2">
                 <div className="mt-3">Sort By:</div>
-                <button className="btn btn-outline text-black border-none text-xs">
+                <button
+                  className="btn btn-outline text-black border-none text-xs"
+                  onClick={() => searchCompany("-rating")}
+                >
                   Rating -- High to Low
                 </button>
-                <button className="btn btn-outline text-black border-none text-xs">
+                <button
+                  className="btn btn-outline text-black border-none text-xs"
+                  onClick={() => searchCompany("rating")}
+                >
                   Rating -- Low to High
                 </button>
                 <button
@@ -270,10 +276,10 @@ export default function Dashboard() {
                           </IconContext.Provider>
                         </div>
                         <div>
-                          {item.adminRating == 0 ? (
+                          {item.adminId.rating == 0 ? (
                             <p>NOT RATED</p>
                           ) : (
-                            <p>{item.adminRating}</p>
+                            <p>{item.adminId.rating}</p>
                           )}
                         </div>
                       </div>
