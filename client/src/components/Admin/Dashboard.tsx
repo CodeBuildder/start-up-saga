@@ -16,6 +16,7 @@ type FormData = {
   fromAddress: string;
   date: any;
   price: number;
+  expectedDelivery: string;
 };
 const Dashboard = () => {
   const history = useHistory();
@@ -34,6 +35,7 @@ const Dashboard = () => {
       toAddress: toLocation.value,
       price: data.price,
       date: value?.split(",").map((s) => s.trim()),
+      expectedDelivery: data.expectedDelivery,
     };
     console.log(userOrder);
     const postData: AxiosResponse = await axios.post(
@@ -49,7 +51,7 @@ const Dashboard = () => {
         history.push("/admin/myorders");
       }, 2000);
     }
-  }
+  };
   const logoutHandler = () => {
     localStorage.removeItem("token");
     toast.warn("Logging out !");
@@ -129,19 +131,21 @@ const Dashboard = () => {
                 />
               </div>
             </div>
-              <label className="label">
+            <label className="label">
               <span className="label-text-black">Price</span>
             </label>
             <input
               type="text"
+              placeholder="In rupees"
               className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("price", { required: true })}
             />
-              <label className="label">
+            <label className="label">
               <span className="label-text-black">Expected Delivery</span>
             </label>
             <input
               type="text"
+              placeholder="In hours"
               className="input rounded-sm bg-white border-gray-300 border-1 "
               {...register("expectedDelivery", { required: true })}
             />

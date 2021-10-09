@@ -76,6 +76,7 @@ export const postCompanyDetails = async (
       toAddress: companyData.toAddress,
       date: companyData.date,
       price: companyData.price,
+      expectedDelivery: companyData.expectedDelivery,
     };
     console.log(postData);
     const companyOrderData = new Company(postData);
