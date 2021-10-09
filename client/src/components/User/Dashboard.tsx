@@ -221,151 +221,153 @@ export default function Dashboard() {
           </div>
         </div>
         {post.length > 0 ? (
-          <div className="w-full mt-3 h-full flex justify-items-start mx-10 ">
-            {/* <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div> */}
-            <div className="jusitfy-between b-7 w-3/4 h-full">
-              <div className="flex flex-row  text-black p-3 ml-5 space-x-12  text-sm border-b-2">
-                <div className="mt-3">Sort By:</div>
-                <button
-                  className="btn btn-outline text-black border-none text-xs"
-                  onClick={() => searchCompany("-rating")}
-                >
-                  Rating -- High to Low
-                </button>
-                <button
-                  className="btn btn-outline text-black border-none text-xs"
-                  onClick={() => searchCompany("rating")}
-                >
-                  Rating -- Low to High
-                </button>
-                <button
-                  className="btn btn-outline text-black border-none text-xs"
-                  onClick={() => searchCompany("-price")}
-                >
-                  Price -- High to Low
-                </button>
-                <button
-                  className="btn btn-outline text-black border-none text-xs"
-                  onClick={() => searchCompany("price")}
-                >
-                  Price -- Low to High
-                </button>
-              </div>
-              {post.map((item: any) => (
-                <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-black">
-                  <div className="flex flex-row text-xl">
-                    <div className="w-1/1">
-                      <img
-                        className="rounded-full h-20 w-20 ml-6"
-                        src="https://www.pymnts.com/wp-content/uploads/2021/07/FedEx-Express-India-Delhivery-shipping.jpg"
-                        alt="FedEx"
-                      />
+          <div className="flex flex-col justify-center content-center">
+            <div className="w-full mt-3 h-full flex  mx-10 justify-self-center">
+              {/* <div className="w-1/6 h-80 bg-white mr-4">SIDEBAR</div> */}
+              <div className="jusitfy-between b-7 w-full h-full">
+                <div className="flex flex-row  text-black p-3 ml-5 space-x-12  text-sm border-b-2">
+                  <div className="mt-3">Sort By:</div>
+                  <button
+                    className="btn btn-outline text-black border-none text-xs"
+                    onClick={() => searchCompany("-rating")}
+                  >
+                    Rating -- High to Low
+                  </button>
+                  <button
+                    className="btn btn-outline text-black border-none text-xs"
+                    onClick={() => searchCompany("rating")}
+                  >
+                    Rating -- Low to High
+                  </button>
+                  <button
+                    className="btn btn-outline text-black border-none text-xs"
+                    onClick={() => searchCompany("-price")}
+                  >
+                    Price -- High to Low
+                  </button>
+                  <button
+                    className="btn btn-outline text-black border-none text-xs"
+                    onClick={() => searchCompany("price")}
+                  >
+                    Price -- Low to High
+                  </button>
+                </div>
+                {post.map((item: any) => (
+                  <div className="bg-gray-200 m-5 p-5 h-full rounded-md shadow-lg text-black mr-24">
+                    <div className="flex flex-row text-xl">
+                      <div className="w-1/1">
+                        <img
+                          className="rounded-full h-20 w-20 ml-6"
+                          src="https://www.pymnts.com/wp-content/uploads/2021/07/FedEx-Express-India-Delhivery-shipping.jpg"
+                          alt="FedEx"
+                        />
+                      </div>
+                      <div className="flex flex-row"></div>
+                      <p className="mt-5 ml-8 font-semibold text-3xl">
+                        {item.adminId.companyName}
+                      </p>
                     </div>
-                    <div className="flex flex-row"></div>
-                    <p className="mt-5 ml-8 font-semibold text-3xl">
-                      {item.adminId.companyName}
-                    </p>
-                  </div>
 
-                  <div className="flex flex-row ">
-                    <div className="container w-20 h-8 mt-4 mx-10 bg-green-500 text-white rounded">
-                      <div className="flex pt-1  p-2 justify-items-center">
-                        <div className="pt-1">
-                          <IconContext.Provider value={{ size: "17px" }}>
-                            <AiFillStar />
-                          </IconContext.Provider>
-                        </div>
-                        <div>
-                          {item.adminId.rating == 0 ? (
-                            <p>NOT RATED</p>
-                          ) : (
-                            <p>{item.adminId.rating}</p>
-                          )}
+                    <div className="flex flex-row ">
+                      <div className="container w-20 h-8 mt-4 mx-10 bg-green-500 text-white rounded">
+                        <div className="flex pt-1  p-2 justify-items-center">
+                          <div className="pt-1">
+                            <IconContext.Provider value={{ size: "17px" }}>
+                              <AiFillStar />
+                            </IconContext.Provider>
+                          </div>
+                          <div>
+                            {item.adminId.rating === 0 ? (
+                              <p>NOT RATED</p>
+                            ) : (
+                              <p>{item.adminId.rating}</p>
+                            )}
+                          </div>
                         </div>
                       </div>
+                      <div className="mt-3 text-2xl font-bold">
+                        {item.fromAddress}
+                      </div>
+                      <div className="mt-3 px-8">
+                        <IconContext.Provider value={{ size: "35px" }}>
+                          <BsFillArrowRightCircleFill />
+                        </IconContext.Provider>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold">
+                        {item.toAddress}
+                      </div>
+                      <div className="ml-20 mt-3 text-2xl  font-extrabold">
+                        (In {item.expectedDelivery} hours)
+                      </div>
                     </div>
-                    <div className="mt-3 text-2xl font-bold">
-                      {item.fromAddress}
-                    </div>
-                    <div className="mt-3 px-8">
-                      <IconContext.Provider value={{ size: "35px" }}>
-                        <BsFillArrowRightCircleFill />
-                      </IconContext.Provider>
-                    </div>
-                    <div className="mt-3 text-2xl font-bold">
-                      {item.toAddress}
-                    </div>
-                    <div className="ml-20 mt-3 text-2xl  font-extrabold">
-                      (In {item.expectedDelivery} hours)
-                    </div>
-                  </div>
-                  <div className="flex flex-row w-full  pt-10 ">
-                    <span className="pl-10 text-2xl font-bold">
-                      ₹{item.price}/Kg
-                    </span>
-                    <span>
-                      <Select
-                        value={weight}
-                        options={weightList}
-                        onChange={(weight) => {
-                          setWeight(weight);
-                        }}
-                        openMenuOnClick={false}
-                        placeholder="Select Weight"
-                        className="w-32 h-5 pl-10"
-                      />
-                    </span>
-                    <span className="flex flex-row ml-10 w-1/4 btn-group">
-                      {item.date.map((day: any) => (
+                    <div className="flex flex-row w-full  pt-10 ">
+                      <span className="pl-10 text-2xl font-bold">
+                        ₹{item.price}/Kg
+                      </span>
+                      <span>
+                        <Select
+                          value={weight}
+                          options={weightList}
+                          onChange={(weight) => {
+                            setWeight(weight);
+                          }}
+                          openMenuOnClick={false}
+                          placeholder="Select Weight"
+                          className="w-32 h-5 pl-10"
+                        />
+                      </span>
+                      <span className="flex flex-row ml-10 w-1/4 btn-group">
+                        {item.date.map((day: any) => (
+                          <input
+                            type="radio"
+                            name="options"
+                            id="option1"
+                            data-title={day}
+                            onChange={() => setDay(day)}
+                            className="btn mx-2 "
+                          />
+                        ))}
+                      </span>
+                      <div className="flex flex-row mr-10 ">
+                        <span className="label-text text-black mr-3">UPI</span>
                         <input
                           type="radio"
-                          name="options"
-                          id="option1"
-                          data-title={day}
-                          onChange={() => setDay(day)}
-                          className="btn mx-2 "
+                          name="method"
+                          onChange={() => setPayment("UPI")}
+                          className="radio radio-primary "
                         />
-                      ))}
-                    </span>
-                    <div className="flex flex-row mr-10 ">
-                      <span className="label-text text-black mr-3">UPI</span>
-                      <input
-                        type="radio"
-                        name="method"
-                        onChange={() => setPayment("UPI")}
-                        className="radio radio-primary "
-                      />
-                      <span className="label-text pl-10 text-black mr-3">
-                        Net Banking
-                      </span>
-                      <input
-                        type="radio"
-                        name="method"
-                        onChange={() => setPayment("netBanking")}
-                        className="radio radio-primary "
-                      />
-                      <span className="label-text pl-10 text-black mr-3">
-                        COD
-                      </span>
-                      <input
-                        type="radio"
-                        name="method"
-                        onChange={() => setPayment("COD")}
-                        className="radio radio-primary "
-                      />
-                    </div>
+                        <span className="label-text pl-10 text-black mr-3">
+                          Net Banking
+                        </span>
+                        <input
+                          type="radio"
+                          name="method"
+                          onChange={() => setPayment("netBanking")}
+                          className="radio radio-primary "
+                        />
+                        <span className="label-text pl-10 text-black mr-3">
+                          COD
+                        </span>
+                        <input
+                          type="radio"
+                          name="method"
+                          onChange={() => setPayment("COD")}
+                          className="radio radio-primary "
+                        />
+                      </div>
 
-                    <span>
-                      <button
-                        className=" btn btn-outline btn-accent w-48 h-1 float-right"
-                        onClick={() => bookSlot(item)}
-                      >
-                        Book Slot
-                      </button>
-                    </span>
+                      <span>
+                        <button
+                          className=" btn btn-outline btn-accent w-48 h-1 float-right"
+                          onClick={() => bookSlot(item)}
+                        >
+                          Book Slot
+                        </button>
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         ) : (
