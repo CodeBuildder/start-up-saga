@@ -148,7 +148,7 @@ const AdminSignup: React.FC = () => {
               </button>
               <a
                 href="/admin/login"
-                className="pl-20"
+                className="pl-16 text-blue-500"
               >
                 Already have an account?
               </a>
