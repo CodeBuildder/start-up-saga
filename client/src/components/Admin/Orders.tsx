@@ -109,10 +109,15 @@ const Orders = () => {
       <div className="w-100 min-h-screen text-black bg-gray-100">
         <div className="w-100 flex h-full min-h-screen flex-col items-center p-10 ">
           {loaded === true ? (
-            <div className="w-full min-h-screen m-5">
+            <div className="flex flex-col w-full min-h-screen m-5 ml-24 justify-center items-center">
+              <div className="w-full flex justify-center text-gray-800">
+                <h1 className="text-3xl  font-medium underline">
+                  ORDERS TO DELIVER
+                </h1>
+              </div>
               {Order.length > 0 ? (
                 Order?.map((item: companyOrder) => (
-                  <div className="jusitfy-between p-7 w-3/6 h-full">
+                  <div className="jusitfy-between p-7 w-7/12 h-full">
                     <div className="m-5 p-5 h-full rounded-md shadow-lg text-black font-light">
                       <div className="flex flex-row space-x-4 text-lg font-bold">
                         <div className="text-xl">{item.fromAddress}</div>

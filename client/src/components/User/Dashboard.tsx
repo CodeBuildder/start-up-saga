@@ -69,7 +69,9 @@ export default function Dashboard() {
       }
     );
     if (response.status === 200)
-      toast.success("Your order has been successfully booked !");
+      toast.success(
+        "Your order has been successfully booked ! You will be contacted by our executive shortly !"
+      );
     console.log(postData);
   };
 
@@ -271,7 +273,7 @@ export default function Dashboard() {
                     <div className="flex flex-row ">
                       <div className="container w-20 h-8 mt-4 mx-10 bg-green-500 text-white rounded">
                         <div className="flex pt-1  p-2 justify-items-center">
-                          <div className="pt-1">
+                          <div className="pt-1 pr-2">
                             <IconContext.Provider value={{ size: "17px" }}>
                               <AiFillStar />
                             </IconContext.Provider>

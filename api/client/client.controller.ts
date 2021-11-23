@@ -1,6 +1,9 @@
 import { UserOrder } from "./client.schema";
 import HttpError from "http-errors";
-import { sendOrderConfirmationEmail, sendInvoiceEmail } from "../emails/account";
+import {
+  sendOrderConfirmationEmail,
+  sendInvoiceEmail,
+} from "../emails/account";
 import { Company, Admin } from "../admin/admin.schema";
 import { User } from "../auth/auth.schema";
 import mongoose from "mongoose";
@@ -29,25 +32,27 @@ export const userOrderDetails = async (
       paymentMode: userOrderData.paymentMode,
     };
 
-    const email = await sendOrderConfirmationEmail(
-      findUser.email,
-      findUser.username,
-      newUserOrderData.userId,
-      newUserOrderData.fromAddress,
-      newUserOrderData.toAddress,
-      newUserOrderData.expectedDelivery
-    );
-
     console.log(email);
 
     console.log(newUserOrderData);
     const data = new UserOrder(newUserOrderData);
     const response = await data.save();
-
+    const email = await sendOrderConfirmationEmail(
+      findUser.email,
+      findUser.username,
+      response._id,
+      newUserOrderData.fromAddress,
+      newUserOrderData.toAddress,
+      newUserOrderData.expectedDelivery
+    );
     if (!response) {
       throw HttpError(500, "Internal Server Error!");
     }
-
+    const createUpdateOrder = new orderUpdate({
+      orderId: response._id,
+      update: [],
+    });
+    await createUpdateOrder.save();
     return response;
   } catch (err) {
     throw err;
@@ -151,15 +156,11 @@ export const addUpdate = async (
   }
 };
 
-
 export const sendInvoice = async (id: mongoose.Schema.Types.ObjectId) => {
   try {
     const findOrder = await UserOrder.findOne({
-
-      _id: id
-    }).populate("userId")
-
-
+      _id: id,
+    }).populate("userId");
 
     const invoice = await sendInvoiceEmail(
       findOrder.userId.username,
@@ -172,14 +173,11 @@ export const sendInvoice = async (id: mongoose.Schema.Types.ObjectId) => {
       findOrder.price,
       findOrder.orderedOn,
       findOrder.paymentMode
-    )
+    );
   } catch (error) {
-    throw error
+    throw error;
   }
-
-}
-
-
+};
 
 export const getUpdate = async (id: mongoose.Schema.Types.ObjectId) => {
   try {
